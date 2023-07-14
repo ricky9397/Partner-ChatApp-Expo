@@ -7,6 +7,7 @@ import SigninScreen from '../SigninScreen/SigninScreen';
 import SignupScreen from '../SignupScreen/SignupScreen';
 // import MyArticlesScreen from './MyArticlesScreen';
 import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
+import ChatList from '../ChatScreen/ChatList';
 // import WriteScreen from './WriteScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,7 +27,7 @@ function RootStack() {
         options={{title: '게시글'}}
         component={ArticleScreen}
       /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Signin"
         component={SigninScreen}
         options={{title: '로그인'}}
@@ -35,7 +36,12 @@ function RootStack() {
         name="Signup"
         component={SignupScreen}
         options={{title: '회원가입'}}
-      />
+      /> */}
+      {/* <Stack.Screen
+        name="ChatList"
+        component={ChatList}
+        options={{title: '메시지'}}
+      /> */}
       {/* <Stack.Screen
         name="MyArticles"
         component={MyArticlesScreen}

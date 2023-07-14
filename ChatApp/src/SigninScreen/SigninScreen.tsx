@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import useLogin from '../hooks/useLogin';
+// import GoogleSignin from '@react-native-google-signin/google-signin';
 
 const styles = StyleSheet.create({
   container: {
