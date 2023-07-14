@@ -11,8 +11,6 @@ export const RootApp:React.FC =()=>{
                 onFinishLoad={()=> setInitialize(true)}
             />
         );
-
-
     return (
         <NavigationContainer>
             <RootStackNavigation/>

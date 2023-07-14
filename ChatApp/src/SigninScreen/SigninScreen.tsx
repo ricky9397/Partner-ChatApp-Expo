@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
 });
 
 const SigninScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userEmail, setEmail] = useState('');
+  const [userPassword, setPassword] = useState('');
   const { signin, processingSignin } = useContext(AuthContext);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -93,31 +93,31 @@ const SigninScreen = () => {
     }
 
     login({
-      email,
-      password,
+      userEmail,
+      userPassword
     });
     
   }
 
   const emailErrorText = useMemo(() => {
-    if (email.length === 0) {
+    if (userEmail.length === 0) {
       return '이메일을 입력해주세요.';
     }
-    if (!validator.isEmail(email)) {
+    if (!validator.isEmail(userEmail)) {
       return '올바른 이메일이 아닙니다.';
     }
     return null;
-  }, [email]);
+  }, [userEmail]);
 
   const passwordErrorText = useMemo(() => {
-    if (password.length === 0) {
+    if (userPassword.length === 0) {
       return '비밀번호를 입력해주세요.';
     }
-    if (password.length < 6) {
+    if (userPassword.length < 6) {
       return '비밀번호는 6자리 이상이여야합니다';
     }
     return null;
-  }, [password]);
+  }, [userPassword]);
 
   const onChangeEmailText = useCallback((text: string) => {
     setEmail(text);
@@ -162,7 +162,7 @@ const SigninScreen = () => {
             <View style={styles.section}>
               <Text style={styles.title}>이메일</Text>
               <TextInput
-                value={email}
+                value={userEmail}
                 style={styles.input}
                 onChangeText={onChangeEmailText}
               />
@@ -173,7 +173,7 @@ const SigninScreen = () => {
             <View style={styles.section}>
               <Text style={styles.title}>비밀번호</Text>
               <TextInput
-                value={password}
+                value={userPassword}
                 style={styles.input}
                 secureTextEntry
                 onChangeText={onChangePasswordText}

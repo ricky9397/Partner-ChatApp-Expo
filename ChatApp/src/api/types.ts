@@ -2,8 +2,8 @@ import {AxiosError} from 'axios';
 
 export interface User {
   id: number;
-  username: string;
-  email: string;
+  userName: string;
+  userEmail: string;
   provider: string;
   confirmed: boolean;
   blocked: null | boolean;

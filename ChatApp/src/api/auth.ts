@@ -20,12 +20,12 @@ export async function getLoginStatus() {
 }
  
 interface RegisterParams {
-  username: string;
-  email: string;
-  password: string;
+  userName: string;
+  userEmail: string;
+  userPassword: string;
 }
 
 interface LoginParams {
-  email: string;
-  password: string;
+  userEmail: string;
+  userPassword: string;
 }

@@ -17,6 +17,7 @@ import AuthContext from '../components/AuthContext';
 import Screen from '../components/Screen';
 import Colors from '../modules/Colors';
 import { RootStackParamList } from '../types';
+import useRegister from '../hooks/useRegister';
 
 const styles = StyleSheet.create({
   container: {
@@ -75,36 +76,52 @@ const styles = StyleSheet.create({
 });
 
 const SignupScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userEmail, setEmail] = useState('');
+  const [userPassword, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
-  const [name, setName] = useState('');
+  const [userName, setName] = useState('');
   const { processingSignup, signup } = useContext(AuthContext);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  const {mutate: register, isLoading: registerLoading} = useRegister();
+
+  const isLoading = registerLoading;
+
+  const onPress = () => {
+    if(isLoading) {
+      return;
+    }
+
+    register({
+      userEmail,
+      userPassword,
+      userName
+    });
+  }
+
   const emailErrorText = useMemo(() => {
-    if (email.length === 0) {
+    if (userEmail.length === 0) {
       return '이메일을 입력해주세요.';
     }
-    if (!validator.isEmail(email)) {
+    if (!validator.isEmail(userEmail)) {
       return '올바른 이메일이 아닙니다.';
     }
     return null;
-  }, [email]);
+  }, [userEmail]);
 
   const passwordErrorText = useMemo(() => {
-    if (password.length === 0) {
+    if (userPassword.length === 0) {
       return '비밀번호를 입력해주세요.';
     }
-    if (password.length < 6) {
+    if (userPassword.length < 6) {
       return '비밀번호는 6자리 이상이여야합니다';
     }
-    if (password !== confirmedPassword) {
+    if (userPassword !== confirmedPassword) {
       return '비밀번호를 확인해주세요.';
     }
     return null;
-  }, [password, confirmedPassword]);
+  }, [userPassword, confirmedPassword]);
 
   const confirmedPasswordErrorText = useMemo(() => {
     if (confirmedPassword.length === 0) {
@@ -113,17 +130,17 @@ const SignupScreen = () => {
     if (confirmedPassword.length < 6) {
       return '비밀번호는 6자리 이상이여야합니다';
     }
-    if (password !== confirmedPassword) {
+    if (userPassword !== confirmedPassword) {
       return '비밀번호를 확인해주세요.';
     }
-  }, [password, confirmedPassword]);
+  }, [userPassword, confirmedPassword]);
 
   const nameErrorText = useMemo(() => {
-    if (name.length === 0) {
+    if (userName.length === 0) {
       return '이름을 입력해주세요.';
     }
     return null;
-  }, [name.length]);
+  }, [userName.length]);
 
   const onChangeEmailText = useCallback((text: string) => {
     setEmail(text);
@@ -162,13 +179,14 @@ const SignupScreen = () => {
     return [styles.signupButton, styles.disabledSignupButton];
   }, [signupButtonEnabled]);
 
-  const onPressSignupButton = useCallback(async () => {
-    try {
-      await signup(email, password, name);
-    } catch (error: any) {
-      Alert.alert(error.message);
-    }
-  }, [signup, email, password, name]);
+  // const onPressSignupButton = useCallback(async () => {
+  //   try {
+  //     await signup(email, password, name);
+  //   } catch (error: any) {
+  //     Alert.alert(error.message);
+  //   }
+  // }, [signup, email, password, name]);
+  
   const onPressSigninButton = useCallback(() => {
     navigate('Signin');
   }, [navigate]);
@@ -184,7 +202,7 @@ const SignupScreen = () => {
           <View style={styles.section}>
             <Text style={styles.title}>이메일</Text>
             <TextInput
-              value={email}
+              value={userEmail}
               style={styles.input}
               onChangeText={onChangeEmailText}
             />
@@ -195,7 +213,7 @@ const SignupScreen = () => {
           <View style={styles.section}>
             <Text style={styles.title}>비밀번호</Text>
             <TextInput
-              value={password}
+              value={userPassword}
               style={styles.input}
               secureTextEntry
               onChangeText={onChangePasswordText}
@@ -219,7 +237,7 @@ const SignupScreen = () => {
           <View style={styles.section}>
             <Text style={styles.title}>이름</Text>
             <TextInput
-              value={name}
+              value={userName}
               style={styles.input}
               onChangeText={onChangeNameText}
             />
@@ -230,7 +248,7 @@ const SignupScreen = () => {
           <View>
             <TouchableOpacity
               style={signupButtonStyle}
-              onPress={onPressSignupButton}
+              onPress={onPress}
               disabled={!signupButtonEnabled}>
               <Text style={styles.signupButtonText}>회원 가입</Text>
             </TouchableOpacity>
