@@ -40,13 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), userSecurityService);
         http
                 .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
-                .csrf().ignoringAntMatchers("/oauth2/login/**") // /oauth2/login/** 구글,네이버등 로그인 제외
+                .csrf().
+                ignoringAntMatchers("/oauth2/login/**") // /oauth2/login/** 구글,네이버등 로그인 제외
                 .disable() // csrf 보안 설정을 비활성화한다.
                 .cors() // 화면 cors
                 .and()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 시큐리티 세션을 사용하지 않음.
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class) // 로그인처리필터
-                .addFilterAt(checkFilter, BasicAuthenticationFilter.class) // 토큰검증필터
+//                .addFilterAt(checkFilter, BasicAuthenticationFilter.class) // 토큰검증필터
                 .authorizeRequests(config -> config
                         .antMatchers("/**").permitAll()
                         .antMatchers("/auth/**").permitAll()

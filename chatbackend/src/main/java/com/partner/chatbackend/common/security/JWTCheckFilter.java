@@ -26,12 +26,14 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
     public JWTCheckFilter(AuthenticationManager authenticationManager, UserSecurityService userSecurityService) {
         super(authenticationManager);
         this.userSecurityService = userSecurityService;
+
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String authToken = request.getHeader(Constants.AUTH_TOKEN);
         logger.info("#####################################Token 체크 시작##########################################");
+        logger.info(request.getHeaderNames());
 
         // header가 있는지 확인
         if (authToken == null || !authToken.startsWith("Bearer ")) {

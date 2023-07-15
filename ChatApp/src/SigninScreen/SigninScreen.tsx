@@ -88,6 +88,7 @@ const SigninScreen = () => {
   const isLoading = loginLoading;
 
   const onPress = () => {
+    console.log("ddd")
     if(isLoading) {
       return;
     }

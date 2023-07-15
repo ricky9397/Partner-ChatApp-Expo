@@ -80,6 +80,7 @@ const SignupScreen = () => {
   const [userPassword, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [userName, setName] = useState('');
+  const [userPhone, setPhone] = useState('');
   const { processingSignup, signup } = useContext(AuthContext);
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -96,7 +97,8 @@ const SignupScreen = () => {
     register({
       userEmail,
       userPassword,
-      userName
+      userName,
+      userPhone
     });
   }
 
@@ -141,7 +143,16 @@ const SignupScreen = () => {
     }
     return null;
   }, [userName.length]);
-
+  
+  const phoneErrorText = useMemo(() => {
+    if (userPhone.length === 0) {
+      return '핸드폰번호를 입력해주세요.';
+    }
+    if (!validator.isMobilePhone(userPhone)) {
+      return '올바른 핸드폰 번호가 아닙니다.';
+    }
+    return null;
+  }, [userPhone]);
   const onChangeEmailText = useCallback((text: string) => {
     setEmail(text);
   }, []);
@@ -156,6 +167,10 @@ const SignupScreen = () => {
 
   const onChangeNameText = useCallback((text: string) => {
     setName(text);
+  }, []);
+
+  const onChangePhenText = useCallback((text: string) => {
+    setPhone(text);
   }, []);
 
   const signupButtonEnabled = useMemo(() => {
@@ -192,12 +207,12 @@ const SignupScreen = () => {
   }, [navigate]);
 
   return (
-    <Screen title="회원가입">
-      {processingSignup ? (
-        <View style={styles.signingContainer}>
-          <ActivityIndicator />
-        </View>
-      ) : (
+    // <Screen title="회원가입">
+    //   {processingSignup ? (
+    //     <View style={styles.signingContainer}>
+    //       <ActivityIndicator />
+    //     </View>
+    //   ) : (
         <ScrollView style={styles.container}>
           <View style={styles.section}>
             <Text style={styles.title}>이메일</Text>
@@ -245,6 +260,17 @@ const SignupScreen = () => {
               <Text style={styles.errorText}>{nameErrorText}</Text>
             )}
           </View>
+          <View style={styles.section}>
+            <Text style={styles.title}>연락처</Text>
+            <TextInput
+              value={userPhone}
+              style={styles.input}
+              onChangeText={onChangePhenText}
+            />
+            {nameErrorText && (
+              <Text style={styles.errorText}>{nameErrorText}</Text>
+            )}
+          </View>
           <View>
             <TouchableOpacity
               style={signupButtonStyle}
@@ -261,8 +287,8 @@ const SignupScreen = () => {
             </TouchableOpacity>
           </View>
         </ScrollView>
-      )}
-    </Screen>
+    //   )}
+    // </Screen>
   );
 };
 

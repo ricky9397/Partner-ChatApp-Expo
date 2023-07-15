@@ -2,6 +2,7 @@ import client from './client';
 import {AuthResult, User} from './types';
 
 export async function register(params: RegisterParams) {
+  console.log(params);
   const response = await client.post<AuthResult>(
     '/auth/register',
     params,
@@ -23,6 +24,7 @@ interface RegisterParams {
   userName: string;
   userEmail: string;
   userPassword: string;
+  userPhone: string;
 }
 
 interface LoginParams {

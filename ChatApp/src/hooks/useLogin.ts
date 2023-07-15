@@ -16,9 +16,9 @@ export default function useLogin() {
   const mutation = useMutation(login, {
     onSuccess: data => {
       setUser(data.user);
-      navigation.pop();
-      applyToken(data.jwt);
-      authStorage.set(data);
+      // navigation.pop();  
+      // applyToken(data.jwt);
+      // authStorage.set(data);
     },
     onError: (error: AuthError) => {
       const message =

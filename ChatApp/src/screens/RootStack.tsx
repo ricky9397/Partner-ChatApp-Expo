@@ -27,16 +27,16 @@ function RootStack() {
         options={{title: '게시글'}}
         component={ArticleScreen}
       /> */}
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Signin"
         component={SigninScreen}
-        options={{title: '로그인'}}
+        options={{title: '짝꿍'}}
       />
       <Stack.Screen
         name="Signup"
         component={SignupScreen}
         options={{title: '회원가입'}}
-      /> */}
+      />
       {/* <Stack.Screen
         name="ChatList"
         component={ChatList}
