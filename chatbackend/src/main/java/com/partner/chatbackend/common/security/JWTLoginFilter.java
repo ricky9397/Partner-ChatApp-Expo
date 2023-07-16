@@ -20,6 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -42,7 +44,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         logger.info("############################로그인시도####################################");
         UserLogin userLogin = objectMapper.readValue(request.getInputStream(), UserLogin.class);
         String refreshToken = request.getHeader(Constants.REFRESH_TOKEN);
-        if (refreshToken == null) {
+        if (refreshToken == null || refreshToken.equals("undefined")) {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userLogin.getUserEmail(), userLogin.getUserPassword(), null
             );
@@ -57,7 +59,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             if (verify.isSuccess()) {
 
                 // DB에 담긴 토큰을 가져온다.
-                User user = userSecurityService.findByRefreshToken(userLogin.getUserId());
+                User user = userSecurityService.findByRefreshToken(userLogin.getUserEmail());
 
                 // DB에 담긴토큰과 받아온 토큰이 일치하면 auth 토큰을 재갱신 해준다.
                 if (!user.getRefreshToken().isEmpty() && user.getRefreshToken().equals(refreshToken)) {
@@ -86,13 +88,17 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         UserDetail userDetail = (UserDetail) authResult.getPrincipal(); // 성공한 유저정보를 UserDetail객체에 담는다.
 
         String refreshToken = JWTUtil.makeRefreshToken(userDetail);
+        String authToken = JWTUtil.makeAuthToken(userDetail);
 
         userSecurityService.updateRefreshToken(refreshToken, userDetail.getUser().getId()); // 로그인 성공 후 토큰 DB저장.
 
         response.setHeader(Constants.REFRESH_TOKEN, refreshToken);
-        response.setHeader(Constants.AUTH_TOKEN, JWTUtil.makeAuthToken(userDetail));
+        response.setHeader(Constants.AUTH_TOKEN, authToken);
 
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(userDetail.getUser()));
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("user", userDetail.getUser());
+
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(resultMap));
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     }
 

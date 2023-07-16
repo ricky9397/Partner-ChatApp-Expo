@@ -30,9 +30,7 @@ const SigninScreen = () => {
   const isLoading = loginLoading;
 
   const onPress = () => {
-    console.log("#########로그인페이지 onPress 실행##############")
     if(isLoading) {
-      console.log("로그인페이지 isLoading = ", isLoading);
       return;
     }
     login({

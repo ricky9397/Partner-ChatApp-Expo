@@ -9,20 +9,21 @@ import authStorage from '../storages/authStorage';
 import useInform from './useInform';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RootApp } from '../RootApp';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 
 export default function useLogin() {
   const [, setUser] = useUserState();
-  const navigation = useNavigation<RootStackParamList>();
+  // const navigation = useNavigation<RootStackParamList>();
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const inform = useInform();
 
   const mutation = useMutation(login, {
     onSuccess: data => {
-      console.log(data);
-      setUser(data.user);
-
-      // navigation.pop();
-      // applyToken(data.jwt);
-      // authStorage.set(data);
+      setUser(data.body.user);
+      applyToken(data.headers.auth_token, data.headers.refresh_token);
+      authStorage.set(data.body);
+      navigate('RootApp');
     },
     onError: (error: AuthError) => {
       const message =

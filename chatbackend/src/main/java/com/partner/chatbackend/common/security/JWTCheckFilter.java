@@ -36,7 +36,7 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
         logger.info(request.getHeaderNames());
 
         // header가 있는지 확인
-        if (authToken == null || !authToken.startsWith("Bearer ")) {
+        if (authToken == null || authToken.equals("undefined") || !authToken.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
         }

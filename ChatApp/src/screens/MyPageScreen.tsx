@@ -8,6 +8,7 @@ export const MyPageScreen:React.FC = () => {
         <View style={{flex:1}}>
             <Header>
                 <Header.Title title="MY PAGE"></Header.Title>
+                
             </Header>
         </View>
     )

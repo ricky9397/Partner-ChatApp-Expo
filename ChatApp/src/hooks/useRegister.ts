@@ -15,11 +15,10 @@ export default function useRegister() {
 
   const mutation = useMutation(register, {
     onSuccess: data => {
-      console.log(data);
       setUser(data.user);
-      navigation.pop();
-      applyToken(data.jwt);
-      authStorage.set(data);
+      // navigation.pop();
+      // applyToken(data.jwt);
+      // authStorage.set(data);
     },
     onError: (error: AuthError) => {
       console.log(error);

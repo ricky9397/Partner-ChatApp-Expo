@@ -3,14 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import SignupScreen from './src/SignupScreen/SignupScreen';
 import SigninScreen from './src/SigninScreen/SigninScreen';
-import { RootStackParamList } from './src/types';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import RootStack from './src/screens/RootStack';
 import {UserContextProvider} from './src/contexts/UserContext';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { RootApp } from './src/RootApp';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
 const queryClient = new QueryClient();
 
 const Screens = () => {

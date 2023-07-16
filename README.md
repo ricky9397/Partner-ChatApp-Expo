@@ -10,7 +10,7 @@
 - yarn add react-native-async-storage/async-storage
 - yarn add validator
 - yarn add @types/validator --dev
-
+- yarn add styled-components
 
 # expo SDK4.9 버전업그레이드
 - npm i -g eas-cli

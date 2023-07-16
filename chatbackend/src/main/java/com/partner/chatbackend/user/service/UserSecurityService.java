@@ -29,8 +29,8 @@ public class UserSecurityService implements UserDetailsService {
     }
 
     // 토큰 체크
-    public User findByRefreshToken(Long userId) {
-        return userRepository.findByRefreshToken(userId);
+    public User findByRefreshToken(String userEmail) {
+        return userRepository.findByRefreshToken(userEmail);
     }
 
 

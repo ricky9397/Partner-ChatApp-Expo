@@ -7,15 +7,22 @@ const baseURL = 'http://192.168.219.105:8080';
 //   : 'https://articles.example.com';
 
 const client = axios.create({
-  baseURL,
+  headers: {
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Headers' : 'Content-Type',
+    'Content-Type' : 'application/json',
+  },
+  baseURL, 
 });
 
-export function applyToken(jwt: string) {
-  client.defaults.headers.Authorization = `Bearer ${jwt}`;
+export function applyToken(auth_token: string, refresh_token: string) {
+  client.defaults.headers.auth_token = `Bearer ${auth_token}`;
+  client.defaults.headers.refresh_token = `${refresh_token}`;
 }
 
 export function clearToken() {
-  delete client.defaults.headers.Authorization;
+  delete client.defaults.headers.auth_token;
+  delete client.defaults.headers.refresh_token;
 }
 
 export default client;

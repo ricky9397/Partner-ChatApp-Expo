@@ -10,8 +10,25 @@ export async function register(params: RegisterParams) {
 }
 
 export async function login(params: LoginParams) {
-  const response = await client.post<AuthResult>('/auth/login', params);
-  return response.data;
+
+  const refresh_token = client.defaults.headers.refresh_token;
+  const auth_token = client.defaults.headers.auth_token
+
+  const response = await client.post<AuthResult>(
+    '/auth/login', 
+    params,
+    {
+      headers: {
+        refresh_token: refresh_token,
+        auth_token: auth_token
+      }
+    }
+  )
+  const data = {
+    'headers' : response.headers,
+    'body' : response.data
+  }
+  return data;
 }
 
 export async function getLoginStatus() {

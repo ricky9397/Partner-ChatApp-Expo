@@ -8,7 +8,7 @@ import SignupScreen from '../SignupScreen/SignupScreen';
 // import MyArticlesScreen from './MyArticlesScreen';
 import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 import { RootApp } from '../RootApp';
-import ChatList from '../ChatScreen/ChatList';
+import {useUserState} from '../contexts/UserContext';
 // import WriteScreen from './WriteScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -16,18 +16,22 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootStack() {
   useAuthLoadEffect();
 
+  const [user] = useUserState();
+
+  if(!!user) {
+    return (
+      <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
+        <Stack.Screen
+          name="RootApp"
+          component={RootApp}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    )
+  }
+
   return (
     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
-      {/* <Stack.Screen
-        name="MainTab"
-        component={MainTab}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Article"
-        options={{title: '게시글'}}
-        component={ArticleScreen}
-      /> */}
       <Stack.Screen
         name="Signin"
         component={SigninScreen}
@@ -39,24 +43,9 @@ function RootStack() {
         options={{title: '회원가입'}}
       />
       {/* <Stack.Screen
-        name="RootApp"
-        component={RootApp}
-        options={{headerShown: false}}
-      /> */}
-      {/* <Stack.Screen
         name="ChatList"
         component={ChatList}
         options={{title: '메시지'}}
-      /> */}
-      {/* <Stack.Screen
-        name="MyArticles"
-        component={MyArticlesScreen}
-        options={{title: '내가 쓴 글'}}
-      />
-      <Stack.Screen
-        name="Write"
-        component={WriteScreen}
-        options={{title: '새 게시글 작성'}}
       /> */}
     </Stack.Navigator>
   );

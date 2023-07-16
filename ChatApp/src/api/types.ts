@@ -7,14 +7,13 @@ export interface User {
   userPhone: string;
   // provider: string;
   // confirmed: boolean;
-  // blocked: null | boolean;
+  blocked: null | boolean;
   role: string;
   regDate: string;
   modDate: string;
   loginDate: string;
   loginFailCnt: number;
   lockedYn: string;
-  refreshToken: string;
 }
 
 export interface Article {
@@ -37,7 +36,8 @@ export interface Comment {
 }
 
 export interface AuthResult {
-  jwt: string;
+  refresh_token: string;
+  auth_token: string;
   user: User;
 }
 
