@@ -4,12 +4,7 @@ import {AuthResult, User} from './types';
 export async function register(params: RegisterParams) {
   const response = await client.post<AuthResult>(
     '/auth/register',
-    params,
-    {
-      headers: {
-        Authorization: `Bearer `
-      },
-    }
+    params
   );
   return response.data;
 }

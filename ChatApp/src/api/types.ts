@@ -4,12 +4,17 @@ export interface User {
   id: number;
   userName: string;
   userEmail: string;
-  provider: string;
-  confirmed: boolean;
-  blocked: null | boolean;
-  role: number;
-  created_at: string;
-  updated_at: string;
+  userPhone: string;
+  // provider: string;
+  // confirmed: boolean;
+  // blocked: null | boolean;
+  role: string;
+  regDate: string;
+  modDate: string;
+  loginDate: string;
+  loginFailCnt: number;
+  lockedYn: string;
+  refreshToken: string;
 }
 
 export interface Article {

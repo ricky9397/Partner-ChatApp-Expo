@@ -19,85 +19,26 @@ import { RootStackParamList } from '../types';
 import useLogin from '../hooks/useLogin';
 // import GoogleSignin from '@react-native-google-signin/google-signin';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  section: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: Colors.BLACK,
-  },
-  input: {
-    marginTop: 10,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.GRAY,
-    fontSize: 16,
-  },
-  errorText: {
-    fontSize: 15,
-    color: Colors.RED,
-    marginTop: 4,
-  },
-  signinButton: {
-    backgroundColor: Colors.BLACK,
-    borderRadius: 10,
-    alignItems: 'center',
-    padding: 20,
-  },
-  signinButtonText: {
-    color: Colors.WHITE,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  disabledSigninButton: {
-    backgroundColor: Colors.GRAY,
-  },
-  signingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  signinTextButton: {
-    marginTop: 5,
-    alignItems: 'center',
-    padding: 10,
-  },
-  signupButtonText: {
-    fontSize: 16,
-    color: Colors.BLACK,
-  },
-});
-
 const SigninScreen = () => {
   const [userEmail, setEmail] = useState('');
   const [userPassword, setPassword] = useState('');
   const { signin, processingSignin } = useContext(AuthContext);
-  const { navigate } =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  
   const {mutate: login, isLoading: loginLoading} = useLogin();
 
   const isLoading = loginLoading;
 
   const onPress = () => {
-    console.log("ddd")
+    console.log("#########로그인페이지 onPress 실행##############")
     if(isLoading) {
+      console.log("로그인페이지 isLoading = ", isLoading);
       return;
     }
-
     login({
       userEmail,
       userPassword
     });
-    
   }
 
   const emailErrorText = useMemo(() => {
@@ -206,3 +147,60 @@ const SigninScreen = () => {
 };
 
 export default SigninScreen;
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.BLACK,
+  },
+  input: {
+    marginTop: 10,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.GRAY,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 15,
+    color: Colors.RED,
+    marginTop: 4,
+  },
+  signinButton: {
+    backgroundColor: Colors.BLACK,
+    borderRadius: 10,
+    alignItems: 'center',
+    padding: 20,
+  },
+  signinButtonText: {
+    color: Colors.WHITE,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  disabledSigninButton: {
+    backgroundColor: Colors.GRAY,
+  },
+  signingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signinTextButton: {
+    marginTop: 5,
+    alignItems: 'center',
+    padding: 10,
+  },
+  signupButtonText: {
+    fontSize: 16,
+    color: Colors.BLACK,
+  },
+});

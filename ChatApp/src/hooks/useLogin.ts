@@ -3,20 +3,24 @@ import {login} from '../api/auth';
 import {AuthError} from '../api/types';
 import {useNavigation} from '@react-navigation/core';
 import {useUserState} from '../contexts/UserContext';
-import {RootStackNavigationProp} from '../screens/types';
+import {RootStackParamList} from '../screens/types';
 import {applyToken} from '../api/client';
 import authStorage from '../storages/authStorage';
 import useInform from './useInform';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { RootApp } from '../RootApp';
 
 export default function useLogin() {
   const [, setUser] = useUserState();
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<RootStackParamList>();
   const inform = useInform();
 
   const mutation = useMutation(login, {
     onSuccess: data => {
+      console.log(data);
       setUser(data.user);
-      // navigation.pop();  
+
+      // navigation.pop();
       // applyToken(data.jwt);
       // authStorage.set(data);
     },

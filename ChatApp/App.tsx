@@ -18,10 +18,6 @@ const Screens = () => {
     <UserContextProvider>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
-          {/* <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name='Signup' component={SignupScreen} />
-            <Stack.Screen name='Signin' component={SigninScreen} />
-          </Stack.Navigator> */}
           <RootStack />
         </NavigationContainer>
       </QueryClientProvider>
@@ -32,11 +28,6 @@ const Screens = () => {
 
 const App = () => {
   return <Screens />;
-  // return (
-  //   <SafeAreaProvider>
-  //     <RootApp />
-  //   </SafeAreaProvider>
-  // );
 };
 
 export default App;

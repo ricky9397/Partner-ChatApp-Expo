@@ -7,6 +7,7 @@ import SigninScreen from '../SigninScreen/SigninScreen';
 import SignupScreen from '../SignupScreen/SignupScreen';
 // import MyArticlesScreen from './MyArticlesScreen';
 import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
+import { RootApp } from '../RootApp';
 import ChatList from '../ChatScreen/ChatList';
 // import WriteScreen from './WriteScreen';
 
@@ -37,6 +38,11 @@ function RootStack() {
         component={SignupScreen}
         options={{title: '회원가입'}}
       />
+      {/* <Stack.Screen
+        name="RootApp"
+        component={RootApp}
+        options={{headerShown: false}}
+      /> */}
       {/* <Stack.Screen
         name="ChatList"
         component={ChatList}

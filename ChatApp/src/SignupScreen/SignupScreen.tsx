@@ -19,62 +19,6 @@ import Colors from '../modules/Colors';
 import { RootStackParamList } from '../types';
 import useRegister from '../hooks/useRegister';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  section: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: Colors.BLACK,
-  },
-  input: {
-    marginTop: 10,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.GRAY,
-    fontSize: 16,
-  },
-  errorText: {
-    fontSize: 15,
-    color: Colors.RED,
-    marginTop: 4,
-  },
-  signupButton: {
-    backgroundColor: Colors.BLACK,
-    borderRadius: 10,
-    alignItems: 'center',
-    padding: 20,
-  },
-  signupButtonText: {
-    color: Colors.WHITE,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  disabledSignupButton: {
-    backgroundColor: Colors.GRAY,
-  },
-  signinTextButton: {
-    marginTop: 5,
-    alignItems: 'center',
-    padding: 10,
-  },
-  signinButtonText: {
-    fontSize: 16,
-    color: Colors.BLACK,
-  },
-  signingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 const SignupScreen = () => {
   const [userEmail, setEmail] = useState('');
   const [userPassword, setPassword] = useState('');
@@ -82,11 +26,9 @@ const SignupScreen = () => {
   const [userName, setName] = useState('');
   const [userPhone, setPhone] = useState('');
   const { processingSignup, signup } = useContext(AuthContext);
-  const { navigate } =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const {mutate: register, isLoading: registerLoading} = useRegister();
-
   const isLoading = registerLoading;
 
   const onPress = () => {
@@ -293,3 +235,59 @@ const SignupScreen = () => {
 };
 
 export default SignupScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.BLACK,
+  },
+  input: {
+    marginTop: 10,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.GRAY,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 15,
+    color: Colors.RED,
+    marginTop: 4,
+  },
+  signupButton: {
+    backgroundColor: Colors.BLACK,
+    borderRadius: 10,
+    alignItems: 'center',
+    padding: 20,
+  },
+  signupButtonText: {
+    color: Colors.WHITE,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  disabledSignupButton: {
+    backgroundColor: Colors.GRAY,
+  },
+  signinTextButton: {
+    marginTop: 5,
+    alignItems: 'center',
+    padding: 10,
+  },
+  signinButtonText: {
+    fontSize: 16,
+    color: Colors.BLACK,
+  },
+  signingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

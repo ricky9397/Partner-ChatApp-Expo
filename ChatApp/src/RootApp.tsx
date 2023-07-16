@@ -12,8 +12,8 @@ export const RootApp:React.FC =()=>{
             />
         );
     return (
-        <NavigationContainer>
+        // <NavigationContainer>
             <RootStackNavigation/>
-        </NavigationContainer>
+        // </NavigationContainer>
     )
 }

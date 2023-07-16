@@ -28,10 +28,10 @@ export type RootStackParamList = {
   };
   Signup: undefined;
   Signin: undefined;
+  RootApp: undefined;
   MyArticles: undefined;
   Write: {
     articleId?: number;
   };
 };
-export type RootStackNavigationProp =
-  NativeStackNavigationProp<RootStackParamList>;
+export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
