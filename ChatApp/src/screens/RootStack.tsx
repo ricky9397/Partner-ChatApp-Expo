@@ -17,7 +17,7 @@ function RootStack() {
   useAuthLoadEffect();
 
   const [user] = useUserState();
-
+  
   if(!!user) {
     return (
       <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
