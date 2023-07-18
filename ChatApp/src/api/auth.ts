@@ -31,6 +31,14 @@ export async function login(params: LoginParams) {
   return data;
 }
 
+export async function matching(params: matchingParams){
+
+}
+
+export async function matchingList(params: matchingList){
+  
+}
+
 export async function getLoginStatus() {
   const response = await client.get<User>('/users/me');
   return response.data;
@@ -47,3 +55,13 @@ interface LoginParams {
   userEmail: string;
   userPassword: string;
 }
+
+interface matchingParams {
+  userEmail: string;
+  userPassword: string;
+}
+interface matchingList {
+  userEmail: string;
+  userPassword: string;
+}
+

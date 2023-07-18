@@ -33,7 +33,6 @@ const MyProfile = () => {
             <Text style={styles.topTextMsg}>메세지</Text>
             <View style={{ flexDirection: "row" }}>
             <FlatList 
-                style={styles.userList}
                 data={DATA}
                 renderItem={({ item: user }) => (
                     <TouchableOpacity 
@@ -65,9 +64,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingLeft: 5,
         color: Colors.GRAY
-    },
-    userList: {
-        //backgroundColor: 'red'
     },
     profile: {
         width: 48,
