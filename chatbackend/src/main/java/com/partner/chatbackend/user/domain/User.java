@@ -7,10 +7,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -40,9 +38,13 @@ public class User extends BaseTimeEntity {
     @Column(name = "USER_PHONE")
     private String userPhone;
 
+    @NotNull
+    @Column(name = "GENDER")
+    private String gender;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
-    private List<Authority> authorities = new ArrayList<>();
+    @JoinColumn(name ="USER_ID")
+    private Set<Authority> authorities;
 
     @ColumnDefault(value = "0")
     @Column(name = "LOGIN_FAIL_CNT")
@@ -72,4 +74,22 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "PROVIDER")
     private String provider;
+
+    @Builder
+    public User(Long id, String userEmail, String userPassword, String userName, String userPhone, String gender, int loginFailCnt, String userYn, String lockedYn, String useYn, String role, String refreshToken, String providerId, String provider) {
+        this.id = id;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.gender = gender;
+        this.loginFailCnt = loginFailCnt;
+        this.userYn = userYn;
+        this.lockedYn = lockedYn;
+        this.useYn = useYn;
+        this.role = role;
+        this.refreshToken = refreshToken;
+        this.providerId = providerId;
+        this.provider = provider;
+    }
 }

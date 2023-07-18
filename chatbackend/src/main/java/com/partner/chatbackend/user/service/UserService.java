@@ -21,12 +21,6 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Long register(User user) throws Exception{
-//        user.setLockedYn(Constants.NO);
-//        user.setUseYn(Constants.YES);
-//        user.setRole(Constants.ROLE_USER);
-//        user.setModDate(Constants.MODDATE);
-//        user.setLoginDate(Constants.LOGINDATE);
-//        user.setRegDate(Constants.REGDATE);
         return userRepository.save(user).getId();
     }
 
