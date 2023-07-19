@@ -28,16 +28,14 @@ public class MatchingController extends Utils {
         try {
 
             if(matchings == null) {
+                // 매칭전 테이블 저장
                 matchingService.addLike(beforeMatching);
-                return new ResponseEntity<>("성공", HttpStatus.OK);
             } else {
-                // TODO TB_BF_MATCHING 테이블 데이터 삭제 로직
-                // TODO 삭제 -> TB_AF_MATCHING 저장(채팅방 생성) -> 사용자에게 매칭성공 return
-//                matchingService.addMatching(fromId);
+                // TODO TB_AF_MATCHING 저장(채팅방 생성) -> 사용자에게 매칭성공 return
+                // 매칭테이블 저장
                 afterMatchingService.addAfterMatching(matchings);
-                return new ResponseEntity<>("성공", HttpStatus.OK);
             }
-
+            return new ResponseEntity<>("성공", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
         }

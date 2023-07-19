@@ -46,6 +46,9 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name ="USER_ID")
     private Set<Authority> authorities;
 
+    @OneToOne
+    private Profile profile;
+
     @ColumnDefault(value = "0")
     @Column(name = "LOGIN_FAIL_CNT")
     private int loginFailCnt;
