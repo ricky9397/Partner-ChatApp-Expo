@@ -14,6 +14,7 @@ export interface User {
   loginDate: string;
   loginFailCnt: number;
   lockedYn: string;
+  gender: string;
 }
 
 export interface Article {
