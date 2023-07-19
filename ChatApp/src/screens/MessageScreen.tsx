@@ -9,7 +9,7 @@ export const MessageScreen:React.FC = () => {
             <Header>
                 <Header.Title title="채팅방"></Header.Title>
             </Header>
-            
+             
         </View>
 
     )

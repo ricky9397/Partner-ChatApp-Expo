@@ -23,7 +23,7 @@ export const BottomTabNavigation = ()=>{
                 if(route.name === 'Chat'){
                     return 'chatbubble'
                 } 
-
+  
 
                 return 'home';
             }
