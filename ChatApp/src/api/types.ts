@@ -55,3 +55,20 @@ export type AuthError = AxiosError<{
   message: AuthErrorData;
   data: AuthErrorData;
 }>;
+
+export interface ChatResult {
+  resultCode: number;
+  msg: string;
+  data: ChatList;
+}
+
+export interface ChatList {
+  sendMessage : string;
+  regDate : string;
+  imagePath : string;
+  matchingId : number;
+  userId : number;
+  userName : string;
+  success : boolean;
+  fail : boolean;
+}

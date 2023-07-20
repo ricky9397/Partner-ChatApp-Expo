@@ -27,8 +27,7 @@ public class MatchingController extends Utils {
         BeforeMatching matchings = matchingService.findByMatching(beforeMatching);
 
         try {
-
-            if(matchings == null) {
+            if(Utils.isEmpty(matchings)) {
                 // 매칭전 테이블 저장
                 matchingService.addLike(beforeMatching);
             } else {

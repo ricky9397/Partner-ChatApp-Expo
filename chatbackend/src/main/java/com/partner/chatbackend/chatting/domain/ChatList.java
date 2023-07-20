@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 
 public interface ChatList {
 
-    Long getMatching_Id();
-    Long getUser_Id();
-    String getImage_Path();
-    String getUser_Name();
-    String getSend_Message();
-    LocalDateTime getReg_Date();
+    Long getMatchingId();
+    Long getId();
+    String getImagePath();
+    String getUserName();
+    String getSendMessage();
+    LocalDateTime getRegDate();
 
 
 }

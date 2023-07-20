@@ -31,17 +31,7 @@ export async function login(params: LoginParams) {
   return data;
 }
 
-export async function matching(params: matchingParams){
 
-}
-
-export async function matchingList(params: matchingList){
-  const response = await client.post<AuthResult>(
-    '/matching/chatList',
-    params
-  );
-  return response.data;
-}
 
 export async function getLoginStatus() {
   const response = await client.get<User>('/users/me');
@@ -60,12 +50,4 @@ interface LoginParams {
   userPassword: string;
 }
 
-interface matchingParams {
-  userEmail: string;
-  userPassword: string;
-}
-interface matchingList {
-  userEmail: string;
-  userPassword: string;
-}
 
