@@ -16,3 +16,7 @@
 - npm i -g eas-cli
 - yarn add expo@^49.0.0
 - npx expo install --fix
+
+
+#redis 참고자료
+https://hudi.blog/refresh-token-in-spring-boot-with-redis/
