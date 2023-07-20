@@ -8,6 +8,7 @@ import com.partner.chatbackend.user.domain.Profile;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,5 @@ public class AfterMatchingService {
         } else {
             return afterMatchingRepository.findByManChatList(user.getId());
         }
-
-
     }
 }

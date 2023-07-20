@@ -39,8 +39,9 @@ public class User extends BaseTimeEntity {
     private String userPhone;
 
     @NotNull
-    @Column(name = "GENDER")
-    private String gender;
+     @Column(name = "GENDER")
+     private String gender;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name ="USER_ID")

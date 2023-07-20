@@ -1,5 +1,6 @@
 package com.partner.chatbackend.matching.controller;
 
+import com.partner.chatbackend.common.rest.RestData;
 import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.matching.domain.BeforeMatching;
 import com.partner.chatbackend.matching.service.AfterMatchingService;
@@ -21,7 +22,7 @@ public class MatchingController extends Utils {
     private final AfterMatchingService afterMatchingService;
 
     @PostMapping("/addLike")
-    public ResponseEntity<?> addLike(@RequestBody BeforeMatching beforeMatching) {
+    public ResponseEntity<RestData> addLike(@RequestBody BeforeMatching beforeMatching) {
 
         BeforeMatching matchings = matchingService.findByMatching(beforeMatching);
 
@@ -35,9 +36,10 @@ public class MatchingController extends Utils {
                 // 매칭테이블 저장
                 afterMatchingService.addAfterMatching(matchings);
             }
-            return new ResponseEntity<>("성공", HttpStatus.OK);
+            return Utils.spring.responseEntityOf(RestData.of(200, "매칭성공"));
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+            return Utils.spring.responseEntityOf(RestData.of(500, "매칭성공", e.getMessage()));
         }
 
     }
