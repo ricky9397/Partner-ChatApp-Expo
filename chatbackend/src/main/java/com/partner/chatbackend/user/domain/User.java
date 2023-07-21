@@ -43,9 +43,9 @@ public class User extends BaseTimeEntity {
      private String gender;
 
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name ="USER_ID")
-    private Set<Authority> authorities;
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name ="USER_ID")
+//    private Set<Authority> authorities;
 
     @OneToOne
     private Profile profile;

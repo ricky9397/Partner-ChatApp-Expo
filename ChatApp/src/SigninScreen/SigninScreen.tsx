@@ -1,13 +1,12 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Pressable,
+  Button 
 } from 'react-native';
 import validator from 'validator';
 import AuthContext from '../components/AuthContext';
@@ -17,7 +16,11 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import useLogin from '../hooks/useLogin';
-// import GoogleSignin from '@react-native-google-signin/google-signin';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+// import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+
+WebBrowser.maybeCompleteAuthSession();
 
 const SigninScreen = () => {
   const [userEmail, setEmail] = useState('');
@@ -78,17 +81,32 @@ const SigninScreen = () => {
     return [styles.signinButton, styles.disabledSigninButton];
   }, [signinButtonEnabled]);
 
-  // const onPressSigninButton = useCallback(async () => {
-  //   try {
-  //     await signin(email, password);
-  //   } catch (error: any) {
-  //     Alert.alert(error.message);
-  //   }
-  // }, [email, password, signin]);
-
   const onPressSignupButton = useCallback(() => {
     navigate('Signup');
   }, [navigate]);
+
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    webClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+  });
+
+  // const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
+  //   {
+  //       clientId: 'myandroid-token.apps.googleusercontent.com',
+  //   },
+  //   { native: 'com.example.chatapp://' }
+  // );
+
+
+ 
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      }
+  }, [response]);
 
   return (
     <Screen title="로그인">
@@ -136,6 +154,15 @@ const SigninScreen = () => {
                   회원가입 하시겠습니까?
                 </Text>
               </TouchableOpacity>
+              {/* <GoogleSigninButton onPress={}/> */}
+            </View>
+            <View>
+              <Button 
+              disabled={!request}
+              title="gogle"
+              onPress={() => {
+                promptAsync();
+                }}/>
             </View>
           </>
         )}

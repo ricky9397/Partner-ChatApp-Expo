@@ -13,6 +13,6 @@ public class UserLogin {
     private String userEmail;
     private String userPassword;
     private String refreshToken;
-    private boolean rememberme;
+//    private boolean rememberme;
 
 }

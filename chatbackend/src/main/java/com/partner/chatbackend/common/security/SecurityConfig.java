@@ -1,10 +1,8 @@
 package com.partner.chatbackend.common.security;
 
 import com.partner.chatbackend.common.config.CorsConfig;
-import com.partner.chatbackend.common.oauth2.domain.PrincipalOauth2User;
+import com.partner.chatbackend.common.oauth2.handler.OAuth2SuccessHandler;
 import com.partner.chatbackend.common.oauth2.service.PrincipalOauth2UserService;
-import com.partner.chatbackend.common.oauth2.service.PrincipalOidcUserService;
-import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @RequiredArgsConstructor
 @Configuration
@@ -28,7 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserSecurityService userSecurityService;
     private final CorsConfig corsConfig;
     private final PrincipalOauth2UserService principalOauth2UserService;
-    private final PrincipalOidcUserService principalOidcUserService;
+//    private final OidcUserService principalOidcUserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
 
     @Bean // bean 은 해당 메서드의 리턴되는 오브젝트를 Ioc 로 등록해준다.
     public BCryptPasswordEncoder encoderPwd() {
@@ -42,6 +39,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http
+//                .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
+//                .httpBasic().disable() // Http basic Auth  기반으로 로그인 인증창이 뜸.  disable 시에 인증창 뜨지 않음.
+//                .formLogin().disable() // formLogin disable
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .csrf().disable()
+//                .authorizeRequests(
+//                        config -> config
+//                                .antMatchers("/").permitAll()
+//                                .antMatchers("/oauth2/**").permitAll()
+//                                .anyRequest().authenticated() )
+                .oauth2Login( // oauth2Login 설정 시작
+                        oauth2 -> oauth2.userInfoEndpoint( // oauth2Login 성공 이후의 설정을 시작
+                                userInfo -> userInfo.userService(principalOauth2UserService) // 카카오 페이스북 등 Oauth2User
+//                                        .oidcUserService(principalOidcUserService) // google OidcUser
+                        )
+                                .successHandler(oAuth2SuccessHandler)
+
+                );
 //        JWTLoginFilter loginFilter = new JWTLoginFilter(authenticationManager(), userSecurityService);
 //        JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), userSecurityService);
 //        http
@@ -60,45 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .antMatchers("/admin/**").hasAuthority("ROLE_USER")
 //                        .antMatchers("/oauth2/**").permitAll()
 //                );
-        http
-                .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
-                .httpBasic().disable() // Http basic Auth  기반으로 로그인 인증창이 뜸.  disable 시에 인증창 뜨지 않음.
-                .formLogin().disable()
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf().disable()
-                .authorizeRequests(
-                        config -> config
-                                .antMatchers("/").permitAll()
-                                .antMatchers("/oauth2/**").permitAll()
-                                .anyRequest().authenticated() )
-                .oauth2Login( // oauth2Login 설정 시작
-                        oauth2 -> oauth2.userInfoEndpoint( // oauth2Login 성공 이후의 설정을 시작
-                                userInfo -> userInfo.userService(principalOauth2UserService)
-                                        .oidcUserService(principalOidcUserService)
-                        )
-                                .successHandler((request, response, authentication) -> {
-                                    Object principal = authentication.getPrincipal();
-
-                                    System.out.println(principal.toString());
-
-                                    if(principal instanceof OAuth2User){
-                                        if(principal instanceof OidcUser){
-                                            // google
-//                                            PrincipalOauth2User googleUser = PrincipalOauth2User.OAuth2Provider.google.convert((OAuth2User) principal);
-//                                            UserDetail user = UserSecurityService.loadUser(googleUser);
-//                                            SecurityContextHolder.getContext().setAuthentication(
-//                                                    new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities())
-//                                            );
-                                        } else {
-                                            // naver, kakao
-                                        }
-                                    }
-
-
-                                })
-
-                );
-
 
     }
 
