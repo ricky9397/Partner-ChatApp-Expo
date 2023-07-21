@@ -17,7 +17,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier" : "com.example.chatapp"
+      "bundleIdentifier" : "com.example.chatapp",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["com.googleusercontent.apps.596950358351-5eehbsc5251gs1b9dgb4sluqbp51gaev"]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {

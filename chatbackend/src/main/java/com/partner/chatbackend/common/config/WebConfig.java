@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .allowedOrigins("http://localhost:8080")
                 .allowedOrigins("http://192.168.219.106:19000")
-                .allowedOrigins("exp://192.168.219.106:1900")
+                .allowedOrigins("exp://192.168.219.105:19000")
                 .allowedHeaders("*") // 어떤 헤더들을 허용할 것인지
                 .allowedMethods( // 어떤 메서드를 허용할 것인지 (GET, POST...)
                         HttpMethod.GET.name(),

@@ -27,6 +27,7 @@ export type RootStackParamList = {
     id: number;
   };
   Signup: undefined;
+  Google: undefined;
   Signin: undefined;
   RootApp: undefined;
   MyArticles: undefined;

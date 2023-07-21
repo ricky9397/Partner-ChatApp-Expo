@@ -10,6 +10,7 @@ import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 import { RootApp } from '../RootApp';
 import {useUserState} from '../contexts/UserContext';
 // import WriteScreen from './WriteScreen';
+import GoogleScreen from '../SigninScreen/GoogleScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -42,6 +43,11 @@ function RootStack() {
         name="Signup"
         component={SignupScreen}
         options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="Google"
+        component={GoogleScreen}
+        options={{title: 'Google'}}
       />
       {/* <Stack.Screen
         name="ChatList"

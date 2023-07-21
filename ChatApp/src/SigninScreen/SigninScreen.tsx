@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Button 
+  Button,
 } from 'react-native';
 import validator from 'validator';
 import AuthContext from '../components/AuthContext';
@@ -85,17 +85,21 @@ const SigninScreen = () => {
     navigate('Signup');
   }, [navigate]);
 
+  const onPressGoogleButton = useCallback(() => {
+    navigate('Google');
+  }, [navigate]);
+
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
-    iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
-    androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
-    webClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    expoClientId: '596950358351-0ccok8064bagb9b1jge5uq9evtoelp30.apps.googleusercontent.com',
+    iosClientId: '596950358351-5eehbsc5251gs1b9dgb4sluqbp51gaev.apps.googleusercontent.com',
+    androidClientId: '596950358351-pq9k8qnmmi3k5kgmh97rar6v99t4vasa.apps.googleusercontent.com',
+    webClientId: '596950358351-0ccok8064bagb9b1jge5uq9evtoelp30.apps.googleusercontent.com',
   });
 
   // const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
   //   {
-  //       clientId: 'myandroid-token.apps.googleusercontent.com',
+  //       clientId: '596950358351-5eehbsc5251gs1b9dgb4sluqbp51gaev.apps.googleusercontent.com',
   //   },
   //   { native: 'com.example.chatapp://' }
   // );
@@ -154,7 +158,13 @@ const SigninScreen = () => {
                   회원가입 하시겠습니까?
                 </Text>
               </TouchableOpacity>
-              {/* <GoogleSigninButton onPress={}/> */}
+              <TouchableOpacity
+                style={styles.signinTextButton}
+                onPress={onPressGoogleButton}>
+                <Text style={styles.signupButtonText}>
+                  구글스타뚜~
+                </Text>
+              </TouchableOpacity>
             </View>
             <View>
               <Button 
@@ -162,8 +172,10 @@ const SigninScreen = () => {
               title="gogle"
               onPress={() => {
                 promptAsync();
-                }}/>
+                }}
+                />
             </View>
+            
           </>
         )}
       </View>
