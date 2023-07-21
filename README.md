@@ -20,6 +20,8 @@
 
 #redis 참고자료
 https://hudi.blog/refresh-token-in-spring-boot-with-redis/
+#시큐리티 참고자료
+https://lotuus.tistory.com/79
 
 
 # portainer (docker 관리자 모드 설치)
