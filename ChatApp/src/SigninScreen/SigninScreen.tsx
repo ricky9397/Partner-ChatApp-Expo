@@ -89,7 +89,6 @@ const SigninScreen = () => {
     navigate('Google');
   }, [navigate]);
 
-
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: '596950358351-0ccok8064bagb9b1jge5uq9evtoelp30.apps.googleusercontent.com',
     iosClientId: '596950358351-5eehbsc5251gs1b9dgb4sluqbp51gaev.apps.googleusercontent.com',
@@ -97,15 +96,6 @@ const SigninScreen = () => {
     webClientId: '596950358351-0ccok8064bagb9b1jge5uq9evtoelp30.apps.googleusercontent.com',
   });
 
-  // const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
-  //   {
-  //       clientId: '596950358351-5eehbsc5251gs1b9dgb4sluqbp51gaev.apps.googleusercontent.com',
-  //   },
-  //   { native: 'com.example.chatapp://' }
-  // );
-
-
- 
   React.useEffect(() => {
     if (response?.type === 'success') {
       const { authentication } = response;

@@ -27,12 +27,14 @@ export type RootStackParamList = {
     id: number;
   };
   Signup: undefined;
-  Google: undefined;
   Signin: undefined;
   RootApp: undefined;
   MyArticles: undefined;
   Write: {
     articleId?: number;
   };
+
+  Google: undefined;
+  Auth: undefined;
 };
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;

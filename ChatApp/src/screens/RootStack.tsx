@@ -11,6 +11,7 @@ import { RootApp } from '../RootApp';
 import {useUserState} from '../contexts/UserContext';
 // import WriteScreen from './WriteScreen';
 import GoogleScreen from '../SigninScreen/GoogleScreen';
+import AuthScreen from '../screens/AuthScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -34,6 +35,11 @@ function RootStack() {
 
   return (
     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
+      <Stack.Screen
+        name="Auth"
+        component={AuthScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Signin"
         component={SigninScreen}
