@@ -1,19 +1,27 @@
 package com.partner.chatbackend.user.domain;
 
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-@Data
-public class UserDetail implements UserDetails {
+@Getter
+public class UserDetail implements UserDetails, OAuth2User {
 
     private User user;
+    private Map<String, Object> attributes;
 
     public UserDetail(User user) {
         this.user = user;
+    }
+
+    public UserDetail(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
     }
 
     // pk값
@@ -58,5 +66,15 @@ public class UserDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+    @Override
+    public String getName() {
+        String sub = attributes.get("sub").toString();
+        return sub;
     }
 }

@@ -1,4 +1,4 @@
-package com.partner.chatbackend.common.security;
+package com.partner.chatbackend.common.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

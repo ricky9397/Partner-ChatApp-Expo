@@ -1,8 +1,9 @@
-package com.partner.chatbackend.common.security;
+package com.partner.chatbackend.common.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
+import com.partner.chatbackend.common.security.UserLogin;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.service.UserSecurityService;

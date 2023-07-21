@@ -18,13 +18,14 @@ public interface AfterMatchingRepository extends JpaRepository<AfterMatching, Lo
             "     , B.IMAGE_PATH AS imagePath" +
             "     , C.USER_NAME AS username" +
             "     , D.SEND_MESSAGE AS sendMessage" +
-            "     , ( CASE " +
-            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() , '%Y/%m/%d')" +
-            "         THEN DATE_FORMAT(D.REG_DATE, '%H:%i') " +
-            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() - INTERVAL 1 DAY, '%Y/%m/%d')" +
-            "         THEN '어제'" +
-            "         ELSE DATE_FORMAT(D.REG_DATE, '%Y/%m/%d')" +
-            "         END ) AS regDate" +
+            "     , D.REG_DATE AS regDate" +
+//            "     , ( CASE " +
+//            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() , '%Y/%m/%d')" +
+//            "         THEN DATE_FORMAT(D.REG_DATE, '%H:%i') " +
+//            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() - INTERVAL 1 DAY, '%Y/%m/%d')" +
+//            "         THEN '어제'" +
+//            "         ELSE DATE_FORMAT(D.REG_DATE, '%Y/%m/%d')" +
+//            "         END ) AS regDate" +
             "  FROM TB_AF_MATCHING A" +
             "  JOIN TB_PROFILE B" +
             "    ON A.WOMEN_ID = B.USER_ID " +
@@ -42,13 +43,14 @@ public interface AfterMatchingRepository extends JpaRepository<AfterMatching, Lo
             "     , B.IMAGE_PATH AS imagePath" +
             "     , C.USER_NAME AS userName" +
             "     , D.SEND_MESSAGE AS sendMessage" +
-            "     , ( CASE " +
-            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() , '%Y/%m/%d')" +
-            "         THEN DATE_FORMAT(D.REG_DATE, '%H:%i') " +
-            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() - INTERVAL 1 DAY, '%Y/%m/%d')" +
-            "         THEN '어제'" +
-            "         ELSE DATE_FORMAT(D.REG_DATE, '%Y/%m/%d')" +
-            "         END ) AS regDate" +
+            "     , D.REG_DATE AS regDate" +
+//            "     , ( CASE " +
+//            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() , '%Y/%m/%d')" +
+//            "         THEN DATE_FORMAT(D.REG_DATE, '%H:%i') " +
+//            "         WHEN DATE_FORMAT(D.REG_DATE, '%Y/%m/%d') = DATE_FORMAT(SYSDATE() - INTERVAL 1 DAY, '%Y/%m/%d')" +
+//            "         THEN '어제'" +
+//            "         ELSE DATE_FORMAT(D.REG_DATE, '%Y/%m/%d')" +
+//            "         END ) AS regDate" +
             "  FROM TB_AF_MATCHING A" +
             "  JOIN TB_PROFILE B" +
             "    ON A.MAN_ID = B.USER_ID " +

@@ -1,4 +1,4 @@
-package com.partner.chatbackend.common.security;
+package com.partner.chatbackend.common.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.partner.chatbackend.common.cm.Constants;

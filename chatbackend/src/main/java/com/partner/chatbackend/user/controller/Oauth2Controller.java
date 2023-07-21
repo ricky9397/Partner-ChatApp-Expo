@@ -1,7 +1,7 @@
 package com.partner.chatbackend.user.controller;
 
 import com.partner.chatbackend.common.cm.Constants;
-import com.partner.chatbackend.common.security.JWTUtil;
+import com.partner.chatbackend.common.jwt.JWTUtil;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import com.partner.chatbackend.user.service.UserService;

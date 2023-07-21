@@ -9,7 +9,7 @@ server:
 
 spring:
   redis:
-    host: localhost
+    host: 132.226.22.62
     port: 6379
 
   security:
