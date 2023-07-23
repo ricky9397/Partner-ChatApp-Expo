@@ -7,10 +7,11 @@ import {RootStackParamList} from '../screens/types';
 import {applyToken} from '../api/client';
 import authStorage from '../storages/authStorage';
 import useInform from './useInform';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { RootApp } from '../RootApp';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+import * as WebBrowser from 'expo-web-browser';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function useLogin() {
   const [, setUser] = useUserState();

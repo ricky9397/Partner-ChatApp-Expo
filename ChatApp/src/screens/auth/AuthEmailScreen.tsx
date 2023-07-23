@@ -7,32 +7,40 @@ import {
     TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
 import {useUserState} from '../../contexts/UserContext';
+import validator from 'validator';
 
-const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 const AuthEmailScreen = () => {
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+    
     const [userEmail, setEmail] = useState('');
-
     const [user] = useUserState();
+
+    const emailErrorText = useMemo(() => {
+        if (!validator.isEmail(userEmail)) {
+            return '올바른 이메일이 아닙니다.';
+        }
+        return null;
+    }, [userEmail]);
 
     const onChangeEmailText = useCallback((text: string) => {
         setEmail(text);
     }, []);
 
-    const onPressEmailButton = useCallback(() => {
-        if(!!!user) {
-            navigate('AuthPassword', {
-                userEmail : userEmail,
-            });
-        } else {
-            navigate('AuthPhone', {
-                userEmail : userEmail,
-            });
+
+    const signinButtonEnabled = useMemo(() => {
+        return emailErrorText == null;
+    }, [emailErrorText]);
+    
+    const signinButtonStyle = useMemo(() => {
+        if (signinButtonEnabled) {
+          return styles.signinButton;
         }
-      }, [navigate]);
+        return [styles.signinButton, styles.disabledSigninButton];
+    }, [signinButtonEnabled]);
 
     return (
         <View style={styles.container}>
@@ -48,8 +56,15 @@ const AuthEmailScreen = () => {
             </View>
             <View style={styles.footer}>
             <TouchableOpacity 
-                style={styles.button}
-                onPress={onPressEmailButton}>
+                style={signinButtonStyle}
+                onPress={() => {
+                    if(!!!user){
+                        navigation.navigate("AuthPassword", {userEmail: userEmail});
+                    } else {
+                        navigation.navigate('AuthPhone', { userEmail : userEmail });
+                    }
+                }}
+                disabled={!signinButtonEnabled}>
                 <Text style={styles.buttonText}>
                     계속하기
                 </Text>
@@ -85,19 +100,9 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       backgroundColor: 'white',
     },
-    button: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
-        borderRadius: 20,
-        backgroundColor: '#FF9100',
-    },
     buttonText: {
         fontSize: 15,
-        titleColor: 'rgb(0, 0, 0)',
+        color: 'rgb(0, 0, 0)',
     },
     input: {
         alignItems: 'center',
@@ -110,5 +115,25 @@ const styles = StyleSheet.create({
         borderColor: '#dcdcdc',
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    signinButton: {
+        backgroundColor: '#FF9100',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 20,
+    },
+    disabledSigninButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 20,
+        backgroundColor: 'gray',
     },
 });

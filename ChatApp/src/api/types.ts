@@ -3,7 +3,7 @@ import {AxiosError} from 'axios';
 export interface User {
   id: number;
   userName: string;
-  userEmail: string;
+  userEmail: string | undefined;
   userPhone: string;
   // provider: string;
   // confirmed: boolean;

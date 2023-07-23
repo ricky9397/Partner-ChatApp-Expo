@@ -63,7 +63,7 @@ interface RegisterParams {
 }
 
 interface LoginParams {
-  userEmail: string;
+  userEmail: string | undefined;
   userPassword: string;
 }
 

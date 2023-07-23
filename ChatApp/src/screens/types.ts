@@ -24,11 +24,9 @@ export type MainTabRouteProp = RouteProp<RootStackParamList, 'MainTab'>;
 export type RootStackParamList = {
   Auth: undefined;
   Kakao: undefined;
-  AuthPhone: undefined;
   AuthEmail: undefined;
-  AuthPassword: {
-    useEmail: string;
-  };
+  AuthPhone: undefined;
+  AuthPassword: undefined;
   RootApp: undefined;
 
   MainTab: MainTabNavigationScreenParams;

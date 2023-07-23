@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState, useMemo} from 'react';
 import {
     StyleSheet,
     Text,
@@ -6,14 +6,15 @@ import {
     View,
     TextInput,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types';
 import useLogin from '../../hooks/useLogin';
 
 const AuthPasswordScreen = () => {
-    // const route = useRoute<RouteProp<RootStackParamList, 'AuthPassword'>>();
-    // console.log(route.params?.userEmail);
+    const route = useRoute<RouteProp<RootStackParamList>>();
+    const userEmail = route.params?.userEmail;
+    const [userPassword, setPassword] = useState('');
 
     const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -21,19 +22,19 @@ const AuthPasswordScreen = () => {
         navigate('RootApp');
     }, [navigate]);
 
-    // const {mutate: login, isLoading: loginLoading} = useLogin();
+    const {mutate: login, isLoading: loginLoading} = useLogin();
 
-    // const isLoading = loginLoading;
+    const isLoading = loginLoading;
 
-    // const onPress = () => {
-    //     if(isLoading) {
-    //         return;
-    //     }
-    //     login({
-    //         userEmail,
-    //         userPassword
-    //     });
-    // }
+    const onPress = () => {
+        if(isLoading) {
+            return;
+        }
+        login({
+            userEmail,
+            userPassword
+        });
+    }
 
     return (
         <View style={styles.container}>
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     },
         buttonText: {
         fontSize: 15,
-        titleColor: 'rgb(0, 0, 0)',
+        color: 'rgb(0, 0, 0)',
     },
     input: {
         alignItems: 'center',
