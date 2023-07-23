@@ -90,10 +90,10 @@ const SigninScreen = () => {
   }, [navigate]);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: '596950358351-0ccok8064bagb9b1jge5uq9evtoelp30.apps.googleusercontent.com',
-    iosClientId: '596950358351-5eehbsc5251gs1b9dgb4sluqbp51gaev.apps.googleusercontent.com',
-    androidClientId: '596950358351-pq9k8qnmmi3k5kgmh97rar6v99t4vasa.apps.googleusercontent.com',
-    webClientId: '596950358351-0ccok8064bagb9b1jge5uq9evtoelp30.apps.googleusercontent.com',
+    expoClientId: 'google.apps.googleusercontent.com',
+    iosClientId: 'google.apps.googleusercontent.com',
+    androidClientId: 'google.apps.googleusercontent.com',
+    webClientId: 'google.apps.googleusercontent.com',
   });
 
   React.useEffect(() => {

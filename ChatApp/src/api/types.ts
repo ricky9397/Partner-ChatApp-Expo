@@ -37,6 +37,7 @@ export interface Comment {
 }
 
 export interface AuthResult {
+  identityToken: string;
   refresh_token: string;
   auth_token: string;
   user: User;

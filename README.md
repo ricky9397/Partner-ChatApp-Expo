@@ -12,6 +12,8 @@
 - yarn add @types/validator --dev
 - yarn add styled-components
 
+- npx expo install expo-apple-authentication (애플로그인)
+
 # expo SDK4.9 버전업그레이드
 - npm i -g eas-cli
 - yarn add expo@^49.0.0

@@ -11,17 +11,24 @@ import { RootApp } from '../RootApp';
 import {useUserState} from '../contexts/UserContext';
 // import WriteScreen from './WriteScreen';
 import GoogleScreen from '../SigninScreen/GoogleScreen';
-import AuthScreen from '../screens/AuthScreen';
+import AuthScreen from './auth/AuthScreen';
+import AuthPhoneScreen from './auth/AuthPhoneScreen';
+import AuthEmailScreen from './auth/AuthEmailScreen';
+import AuthPasswordScreen from './auth/AuthPasswordScreen';
+import KakaoScreen from '../SigninScreen/KakaoSecreen';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
   useAuthLoadEffect();
 
+  const title = '짝꿍';
+
   const [user] = useUserState();
   
 
-  if(!!!user) {
+  if(!!user) {
     return (
       <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
         <Stack.Screen
@@ -41,9 +48,29 @@ function RootStack() {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="Kakao"
+        component={KakaoScreen}
+        options={{title: 'Kakao'}}
+      />
+      <Stack.Screen
+        name="AuthEmail"
+        component={AuthEmailScreen}
+        options={{title: title}}
+      />
+      <Stack.Screen
+        name="AuthPassword"
+        component={AuthPasswordScreen}
+        options={{title: title}}
+      />
+      <Stack.Screen
+        name="AuthPhone"
+        component={AuthPhoneScreen}
+        options={{title: title}}
+      />
+      <Stack.Screen
         name="Signin"
         component={SigninScreen}
-        options={{title: '짝꿍'}}
+        options={{title: title}}
       />
       <Stack.Screen
         name="Signup"

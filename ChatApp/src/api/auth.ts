@@ -2,11 +2,15 @@ import client from './client';
 import {AuthResult, User} from './types';
 
 export async function register(params: RegisterParams) {
-  const response = await client.post<AuthResult>(
-    '/auth/register',
-    params
-  );
-  return response.data;
+  try {
+    const response = await client.post<AuthResult>(
+      '/auth/register',
+      params
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);   
+  }
 }
 
 export async function login(params: LoginParams) {
@@ -31,7 +35,20 @@ export async function login(params: LoginParams) {
   return data;
 }
 
-
+export async function appleLoginOrRegister(identityToken: string) {
+  // Apple 사이트 개발자등록 후 사용 가능 ( 유료 )
+  // try {
+  //   const response = await client.post<AuthResult>(
+  //     '/oauth2/login/apple',
+  //     identityToken
+  //   )
+  //   if (response) return response.data;
+  //   return null;  
+  // } catch(error){
+  //   console.log(error);
+  // }
+  
+}
 
 export async function getLoginStatus() {
   const response = await client.get<User>('/users/me');

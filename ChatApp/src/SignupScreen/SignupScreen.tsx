@@ -10,6 +10,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import validator from 'validator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,6 +20,8 @@ import Screen from '../components/Screen';
 import Colors from '../modules/Colors';
 import { RootStackParamList } from '../types';
 import useRegister from '../hooks/useRegister';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { RadioButton } from 'react-native-paper';
 
 const SignupScreen = () => {
   const [userEmail, setEmail] = useState('');
@@ -25,8 +29,14 @@ const SignupScreen = () => {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [userName, setName] = useState('');
   const [userPhone, setPhone] = useState('');
+  const [userBirthDay, setBirthDay] = useState('');
   const { processingSignup, signup } = useContext(AuthContext);
+  const [checked, setChecked] = useState('');
+
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  // DateTimePickerModal
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const {mutate: register, isLoading: registerLoading} = useRegister();
   const isLoading = registerLoading;
@@ -43,6 +53,21 @@ const SignupScreen = () => {
       userPhone
     });
   }
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+
+  const handleConfirm = (data: Date) => {
+      hideDatePicker();
+      onChangeBirthDayText(new Date(data).toLocaleDateString());
+  };
+
 
   const emailErrorText = useMemo(() => {
     if (userEmail.length === 0) {
@@ -95,6 +120,15 @@ const SignupScreen = () => {
     }
     return null;
   }, [userPhone]);
+
+  const birthDayErrorText = useMemo(() => {
+    if (userBirthDay.length === 0) {
+      return '생년월일을 선택하세요.';
+    }
+    return null;
+  }, [userBirthDay]);
+
+
   const onChangeEmailText = useCallback((text: string) => {
     setEmail(text);
   }, []);
@@ -115,18 +149,24 @@ const SignupScreen = () => {
     setPhone(text);
   }, []);
 
+  const onChangeBirthDayText = useCallback((text: string) => {
+    setBirthDay(text);
+  }, []);
+
   const signupButtonEnabled = useMemo(() => {
     return (
       emailErrorText == null &&
       passwordErrorText == null &&
       confirmedPasswordErrorText == null &&
-      nameErrorText == null
+      nameErrorText == null &&
+      birthDayErrorText == null
     );
   }, [
     emailErrorText,
     passwordErrorText,
     confirmedPasswordErrorText,
     nameErrorText,
+    birthDayErrorText,
   ]);
 
   const signupButtonStyle = useMemo(() => {
@@ -149,88 +189,118 @@ const SignupScreen = () => {
   }, [navigate]);
 
   return (
-    // <Screen title="회원가입">
-    //   {processingSignup ? (
-    //     <View style={styles.signingContainer}>
-    //       <ActivityIndicator />
-    //     </View>
-    //   ) : (
-        <ScrollView style={styles.container}>
-          <View style={styles.section}>
-            <Text style={styles.title}>이메일</Text>
+    <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.select({ios: 'padding', android: undefined})}
+          style={styles.avoid}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+        {/* <View style={styles.section}>
+          <Text style={styles.title}>이메일</Text>
+          <TextInput
+            value={userEmail}
+            style={styles.input}
+            onChangeText={onChangeEmailText}
+          />
+          {emailErrorText && (
+            <Text style={styles.errorText}>{emailErrorText}</Text>
+          )}
+        </View> */}
+        <View style={styles.section}>
+          <Text style={styles.title}>비밀번호</Text>
+          <TextInput
+            value={userPassword}
+            style={styles.input}
+            secureTextEntry
+            onChangeText={onChangePasswordText}
+          />
+          {passwordErrorText && (
+            <Text style={styles.errorText}>{passwordErrorText}</Text>
+          )}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.title}>비밀번호 확인</Text>
+          <TextInput
+            value={confirmedPassword}
+            style={styles.input}
+            secureTextEntry
+            onChangeText={onChangeConfirmedPasswordText}
+          />
+          {confirmedPasswordErrorText && (
+            <Text style={styles.errorText}>{confirmedPasswordErrorText}</Text>
+          )}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.title}>이름</Text>
+          <TextInput
+            value={userName}
+            style={styles.input}
+            onChangeText={onChangeNameText}
+          />
+          {nameErrorText && (
+            <Text style={styles.errorText}>{nameErrorText}</Text>
+          )}
+        </View>
+        <View>
+          <Text style={styles.title}>성별</Text>
+          <RadioButton
+            value="M"
+            status={ checked === 'first' ? 'checked' : 'unchecked' }
+            onPress={() => setChecked('first')} />
+          <RadioButton
+            value="F"
+            status={ checked === 'second' ? 'checked' : 'unchecked' }
+            onPress={() => setChecked('second')}
+          />
+        </View>
+        {/* <View style={styles.section}>
+          <Text style={styles.title}>생년월일</Text>
+          <TextInput
+            value={userPhone}
+            style={styles.input}
+            onChangeText={onChangePhenText}
+          />
+          {nameErrorText && (
+            <Text style={styles.errorText}>{nameErrorText}</Text>
+          )}
+        </View> */}
+        <View style={styles.section}>
+          <TouchableOpacity onPress={showDatePicker}>
+            <Text style={styles.title}>생년월일</Text>
             <TextInput
-              value={userEmail}
+              pointerEvents="none"
+              value={userBirthDay}
               style={styles.input}
-              onChangeText={onChangeEmailText}
-            />
-            {emailErrorText && (
-              <Text style={styles.errorText}>{emailErrorText}</Text>
-            )}
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.title}>비밀번호</Text>
-            <TextInput
-              value={userPassword}
-              style={styles.input}
-              secureTextEntry
-              onChangeText={onChangePasswordText}
-            />
-            {passwordErrorText && (
-              <Text style={styles.errorText}>{passwordErrorText}</Text>
-            )}
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.title}>비밀번호 확인</Text>
-            <TextInput
-              value={confirmedPassword}
-              style={styles.input}
-              secureTextEntry
-              onChangeText={onChangeConfirmedPasswordText}
-            />
-            {confirmedPasswordErrorText && (
-              <Text style={styles.errorText}>{confirmedPasswordErrorText}</Text>
-            )}
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.title}>이름</Text>
-            <TextInput
-              value={userName}
-              style={styles.input}
-              onChangeText={onChangeNameText}
+              onPressIn={showDatePicker}
             />
             {nameErrorText && (
               <Text style={styles.errorText}>{nameErrorText}</Text>
             )}
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.title}>연락처</Text>
-            <TextInput
-              value={userPhone}
-              style={styles.input}
-              onChangeText={onChangePhenText}
+            <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
             />
-            {nameErrorText && (
-              <Text style={styles.errorText}>{nameErrorText}</Text>
-            )}
-          </View>
-          <View>
-            <TouchableOpacity
-              style={signupButtonStyle}
-              onPress={onPress}
-              disabled={!signupButtonEnabled}>
-              <Text style={styles.signupButtonText}>회원 가입</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.signinTextButton}
-              onPress={onPressSigninButton}>
-              <Text style={styles.signinButtonText}>
-                이미 계정이 있으신가요?
-              </Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={signupButtonStyle}
+            onPress={onPress}
+            disabled={!signupButtonEnabled}>
+            <Text style={styles.signupButtonText}>회원 가입</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
+            style={styles.signinTextButton}
+            onPress={onPressSigninButton}>
+            <Text style={styles.signinButtonText}>
+              이미 계정이 있으신가요?
+            </Text>
+          </TouchableOpacity> */}
+        </View>
         </ScrollView>
-    //   )}
-    // </Screen>
+        </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -240,6 +310,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: 'white'
+  },
+  avoid: {
+    flex: 1,
   },
   section: {
     marginBottom: 20,
@@ -247,14 +321,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: Colors.BLACK,
+    color: '#c8c8c8',
   },
   input: {
     marginTop: 10,
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
-    borderColor: Colors.GRAY,
+    borderColor: '#dcdcdc',
     fontSize: 16,
   },
   errorText: {
@@ -263,7 +337,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   signupButton: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: '#FF9100',
     borderRadius: 10,
     alignItems: 'center',
     padding: 20,
@@ -274,7 +348,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   disabledSignupButton: {
-    backgroundColor: Colors.GRAY,
+    backgroundColor: '#dcdcdc',
   },
   signinTextButton: {
     marginTop: 5,

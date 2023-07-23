@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 
 @RequiredArgsConstructor
 @Configuration
@@ -23,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserSecurityService userSecurityService;
     private final CorsConfig corsConfig;
     private final PrincipalOauth2UserService principalOauth2UserService;
-//    private final OidcUserService principalOidcUserService;
+    private final OidcUserService principalOidcUserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
 
@@ -40,20 +42,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
-//                .httpBasic().disable() // Http basic Auth  기반으로 로그인 인증창이 뜸.  disable 시에 인증창 뜨지 않음.
-//                .formLogin().disable() // formLogin disable
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .csrf().disable()
-//                .authorizeRequests(
-//                        config -> config
-//                                .antMatchers("/").permitAll()
-//                                .antMatchers("/oauth2/**").permitAll()
-//                                .anyRequest().authenticated() )
+                .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
+                .httpBasic().disable() // Http basic Auth  기반으로 로그인 인증창이 뜸.  disable 시에 인증창 뜨지 않음.
+                .formLogin().disable() // formLogin disable
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf().disable()
+                .authorizeRequests(
+                        config -> config
+                                .antMatchers("/").permitAll()
+                                .antMatchers("/oauth2/**").permitAll()
+                                .anyRequest().authenticated() )
                 .oauth2Login( // oauth2Login 설정 시작
                         oauth2 -> oauth2.userInfoEndpoint( // oauth2Login 성공 이후의 설정을 시작
                                 userInfo -> userInfo.userService(principalOauth2UserService) // 카카오 페이스북 등 Oauth2User
-//                                        .oidcUserService(principalOidcUserService) // google OidcUser
+                                        .oidcUserService(principalOidcUserService) // google OidcUser
                         )
                                 .successHandler(oAuth2SuccessHandler)
 

@@ -22,19 +22,27 @@ export type MainTabRouteProp = RouteProp<RootStackParamList, 'MainTab'>;
 
 /* RootStack */
 export type RootStackParamList = {
+  Auth: undefined;
+  Kakao: undefined;
+  AuthPhone: undefined;
+  AuthEmail: undefined;
+  AuthPassword: {
+    useEmail: string;
+  };
+  RootApp: undefined;
+
   MainTab: MainTabNavigationScreenParams;
   Article: {
     id: number;
   };
   Signup: undefined;
   Signin: undefined;
-  RootApp: undefined;
   MyArticles: undefined;
   Write: {
     articleId?: number;
   };
 
   Google: undefined;
-  Auth: undefined;
+
 };
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;

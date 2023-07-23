@@ -11,10 +11,11 @@ import java.io.IOException;
 
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
-    
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Object principal = authentication.getPrincipal();
+        System.out.println("test```````````````````````````````");
         System.out.println("onAuthenticationSuccess" + principal);
         System.out.println(authentication.getAuthorities());
 //        if(principal instanceof OAuth2User){
