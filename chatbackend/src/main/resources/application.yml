@@ -1,6 +1,8 @@
 server:
   port: 8080
   servlet:
+    session:
+      tracking-modes: 'cookie'
     context-path: /
     encoding:
       charset: UTF-8
@@ -20,8 +22,9 @@ spring:
             client-id: 0ff01f0a268ff9f9adefd55604b125d7
             client-secret: bGMpDbPwFSfSozVo6LCIhuj6d29p40xv
             client-name: Kakao
+            scope: profile_nickname, account_email
             authorization-grant-type: authorization_code
-            redirect-uri: http://192.168.219.105:8080/login/oauth2/code/kakao
+            redirect-uri: http://172.22.16.1:8080/login/oauth2/code/kakao
             client-authentication-method: POST
         provider:
           kakao:
