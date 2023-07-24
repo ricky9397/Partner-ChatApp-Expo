@@ -13,7 +13,7 @@ import authStorage from '../../storages/authStorage';
 const LoginOut = () => {
 
     const [, setUser] = useUserState();
-
+ 
     const onLogout = () => {
         setUser(null);
         clearToken();
