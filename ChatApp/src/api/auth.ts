@@ -32,7 +32,9 @@ export async function login(params: LoginParams) {
     'headers' : response.headers,
     'body' : response.data
   }
+
   return data;
+  
 }
 
 export async function appleLoginOrRegister(identityToken: string) {

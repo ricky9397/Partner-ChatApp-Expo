@@ -12,7 +12,7 @@ export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props)=>{
 
     return (
         <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-            <Typography fontSize={36}>SPLASH VIEW</Typography>
+            <Typography fontSize={36}>짝궁 베이비~</Typography>
         </View>
     )
 

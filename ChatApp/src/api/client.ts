@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // __DEV__ 값을 통해 현재 환경이 개발 환경인지 아닌지 판단할 수 있습니다.
-const baseURL = 'http://192.168.219.105:8080';
+const baseURL = 'http://172.22.16.1:8080';
 // __DEV__
-//   ? 'http://localhost:1337'
-//   : 'https://articles.example.com';
+  // ? 'http://localhost:1337'
+  // : 'https://articles.example.com';
 
 const client = axios.create({
   headers: {
@@ -32,8 +32,11 @@ export const KAKAO_REDIRECT_URI = `${baseURL}/login/oauth2/code/kakao`;
 
 
 
-export async function kakaoLoginOrRegister(options: string[]) {
+export async function kakaoLoginOrRegister(options: any) {
   const requestTokenUrl = 'https://kauth.kakao.com/oauth/token';
+
+  console.log(options);
+
   const response = await axios.post(requestTokenUrl, options, {
     headers: {
       'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -43,7 +46,9 @@ export async function kakaoLoginOrRegister(options: string[]) {
 
   }).catch(function (error) {
         console.log('error', error);
-    });
+  });
   
+
+
   return response;
 }

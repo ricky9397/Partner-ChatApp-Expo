@@ -26,7 +26,6 @@ function RootStack() {
   const title = '짝꿍';
 
   const [user] = useUserState();
-  
 
   if(!!user) {
     return (

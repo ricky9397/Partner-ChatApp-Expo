@@ -2,7 +2,8 @@ import React from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { WebView } from "react-native-webview";
 import { KAKAO_LOGIN_API_URI, KAKAO_REDIRECT_URI, kakaoLoginOrRegister } from '../api/client';
-import * as Linking from 'expo-linking';
+
+const REST_API_KEY = process.env.EXPO_PUBLIC_KAKAO_API_KEY;
 
 export default function KakaoScreen() {
 
@@ -10,6 +11,7 @@ export default function KakaoScreen() {
 
     const getCode = (target: string) => {
       const exp = 'code=';
+      console.log(target)
       const condition = target.indexOf(exp);
       if (condition !== -1) {
         const requestCode = target.substring(condition + exp.length);
@@ -20,18 +22,18 @@ export default function KakaoScreen() {
     const requestToken = async (requestCode: string,) => {
       const bodyData = {
         grant_type : 'authorization_code',
-        client_id : process.env.EXPO_PUBLIC_KAKAO_API_KEY,
+        client_id : REST_API_KEY,
         client_secret : process.env.EXPO_PUBLIC_KAKAO_SECRET_KEY,
         redirect_uri : KAKAO_REDIRECT_URI,
         code : requestCode,
       };
 
-      const queryStringBody = Object.keys(bodyData)
-      Object.entries(bodyData).map( ([key,value]) => ( value && key+'='+value )).filter(v=>v).join('&');
+      Object.keys(bodyData);
+      const queryStringBody = Object.entries(bodyData).map( ([key,value]) => ( value && key+'='+value )).filter(v=>v).join('&');
         
-      const result = kakaoLoginOrRegister(queryStringBody);
+      // const result = kakaoLoginOrRegister(queryStringBody);
 
-      console.log(result)
+      // console.log(result)
 
       // try {
       //   const result = kakaoLoginOrRegister(options);
@@ -53,7 +55,26 @@ export default function KakaoScreen() {
       // }
     };
 
-
+    const loginAccess = async (data: string) => {
+      // const { id, nickname, avatar, accessToken }: response = JSON.parse(data);
+      // setMemberId(id);
+      // setMemberNicknameState(nickname);
+      // setMemberAvatar(avatar);
+      // setProfile({ avatar: "", nickname, score: 0 });
+  
+      // if (accessToken) {
+      //   toggleModal();
+      //   await DeviceStorage.storeToken(accessToken);
+  
+      //   if (nickname === null) {
+      //     navigation.navigate("JoinScreen");
+      //     return;
+      //   }
+      //   await navigateByOrganizationList();
+      // } else {
+      //   console.log("not aceess token");
+      // }
+    };
 
     return (
       <View style={styles.webContainer}>
@@ -62,7 +83,8 @@ export default function KakaoScreen() {
           scalesPageToFit={true}
           javaScriptEnabled={true}
           injectedJavaScript={INJECTED_JAVASCRIPT}
-          source={{ uri: KAKAO_LOGIN_API_URI }}
+          // source={{ uri: KAKAO_LOGIN_API_URI }}
+          source={{ uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}` }}
           onMessage={(event) => getCode(event.nativeEvent.url)}
         />
         </View>

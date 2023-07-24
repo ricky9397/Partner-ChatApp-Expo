@@ -22,10 +22,12 @@ const DATA = [
     },
 ]
 
-type MsgList = {userName: string, message: string};
+type MsgList = {
+    userName: string, 
+    message: string
+};
 
 const MyProfile = () => {
-    const [user, setUser] = useUserState();
 
     return (
         

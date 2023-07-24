@@ -18,23 +18,45 @@ const AuthPasswordScreen = () => {
 
     const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-    const onPressPhoneButton = useCallback(() => {
-        navigate('RootApp');
-    }, [navigate]);
-
     const {mutate: login, isLoading: loginLoading} = useLogin();
 
     const isLoading = loginLoading;
 
     const onPress = () => {
+        if(userEmail === undefined) 
+            return navigate('AuthEmail');
+
         if(isLoading) {
             return;
         }
+
         login({
             userEmail,
             userPassword
         });
     }
+
+    const onChangePasswordText = useCallback((text: string) => {
+        setPassword(text);
+    }, []);
+
+    const passwordErrorText = useMemo(() => {
+        if (userPassword.length < 4) {
+            return '비밀번호는 4자리 이상이여야합니다';
+        }
+    return null;
+    }, [userPassword]);
+
+    const signinButtonEnabled = useMemo(() => {
+        return passwordErrorText == null;
+      }, [passwordErrorText]);
+    
+      const signinButtonStyle = useMemo(() => {
+        if (signinButtonEnabled) {
+          return styles.signinButton;
+        }
+        return [styles.signinButton, styles.disabledSigninButton];
+      }, [signinButtonEnabled]);
 
     return (
         <View style={styles.container}>
@@ -43,13 +65,16 @@ const AuthPasswordScreen = () => {
             </View>
             <View style={styles.content}>
                 <TextInput 
+                    value={userPassword}
                     style={styles.input}
+                    secureTextEntry
+                    onChangeText={onChangePasswordText}
                 />
             </View>
             <View style={styles.footer}>
             <TouchableOpacity 
-                style={styles.button}
-                onPress={onPressPhoneButton}>
+                style={signinButtonStyle}
+                onPress={onPress}>
                 <Text style={styles.buttonText}>
                     계속하기
                 </Text>
@@ -85,17 +110,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       backgroundColor: 'white',
     },
-    button: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
-        borderRadius: 20,
-        backgroundColor: '#FF9100',
-    },
-        buttonText: {
+    buttonText: {
         fontSize: 15,
         color: 'rgb(0, 0, 0)',
     },
@@ -111,4 +126,24 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
       },
+    disabledSigninButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 20,
+        backgroundColor: 'gray',
+    },
+    signinButton: {
+        backgroundColor: '#FF9100',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 20,
+    },
 });

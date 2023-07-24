@@ -15,7 +15,7 @@ export default function useRegister() {
 
   const mutation = useMutation(register, {
     onSuccess: data => {
-      setUser(data.user);
+      // setUser(data.user);
       // navigation.pop();
       // applyToken(data.jwt);
       // authStorage.set(data);
