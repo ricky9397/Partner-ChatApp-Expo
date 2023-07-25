@@ -34,7 +34,6 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
         String authToken = request.getHeader(Constants.AUTH_TOKEN);
         logger.info("#####################################Token 체크 시작##########################################");
         logger.info(request.getHeaderNames());
-
         // header가 있는지 확인
         if (authToken == null || authToken.equals("undefined") || !authToken.startsWith("Bearer ")) {
             chain.doFilter(request, response);

@@ -5,13 +5,11 @@ import com.partner.chatbackend.common.exception.AuthenticationUserException;
 import com.partner.chatbackend.common.utils.Utils;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import javax.naming.AuthenticationException;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 

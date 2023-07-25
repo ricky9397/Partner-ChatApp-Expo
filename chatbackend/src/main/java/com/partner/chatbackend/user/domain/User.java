@@ -96,4 +96,5 @@ public class User extends BaseTimeEntity {
         this.providerId = providerId;
         this.provider = provider;
     }
+
 }

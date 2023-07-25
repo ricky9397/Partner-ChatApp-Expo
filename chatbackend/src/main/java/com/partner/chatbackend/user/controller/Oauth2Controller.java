@@ -2,9 +2,11 @@ package com.partner.chatbackend.user.controller;
 
 import com.partner.chatbackend.common.cm.Constants;
 import com.partner.chatbackend.common.jwt.JWTUtil;
+import com.partner.chatbackend.common.oauth2.service.PrincipalOauth2UserService;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import com.partner.chatbackend.user.service.UserService;
+import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,14 +27,14 @@ public class Oauth2Controller {
     private final UserSecurityService userSecurityService;
 
     /**
-     * OAuth2 로그인 / 회원가입 {urlid} = (구글, 네이버, 카카오)
+     * OAuth2 로그인 / 회원가입 {urlId} = (구글, 네이버)
      * @param data
      * @param response
      * @return
      * @throws Exception
      */
-    @PostMapping("/login/{urlid}")
-    public ResponseEntity<?> LoginWithGoogleOauth2(@PathVariable("urlid") String urlid, @RequestBody Map<String, Object> data, HttpServletResponse response) throws Exception {
+    @PostMapping("/login/{urlId}")
+    public ResponseEntity<?> LoginWithGoogleOauth2(@PathVariable("urlId") String urlid, @RequestBody Map<String, Object> data, HttpServletResponse response) throws Exception {
         User user;
         Optional<User> userInfo = userService.findByUserEmail((String) data.get("email"));
 

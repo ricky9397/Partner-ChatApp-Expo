@@ -74,7 +74,7 @@ public class UserDetail implements UserDetails, OAuth2User {
     }
     @Override
     public String getName() {
-        String sub = attributes.get("sub").toString();
-        return sub;
+//        String sub = attributes.get("sub").toString();
+        return null;
     }
 }

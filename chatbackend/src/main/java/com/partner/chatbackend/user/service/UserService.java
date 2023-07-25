@@ -34,13 +34,6 @@ public class UserService {
                 .userPassword(bCryptPasswordEncoder.encode("google"))
                 .userName((String) data.get("name"))
                 .userPhone("00000000000")
-//                .userYn(Constants.YES)
-//                .lockedYn(Constants.NO)
-//                .regDate(Constants.REGDATE)
-//                .modDate(Constants.MODDATE)
-//                .loginDate(Constants.LOGINDATE)
-//                .useYn(Constants.YES)
-//                .role(Constants.ROLE_USER)
                 .providerId((String) data.get("googleId"))
                 .provider("google")
                 .build();

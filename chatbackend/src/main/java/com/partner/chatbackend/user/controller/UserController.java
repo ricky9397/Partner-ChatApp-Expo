@@ -59,11 +59,11 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/test")
-    public OAuth2User test(@AuthenticationPrincipal OAuth2User user) {
-        return user;
-    }
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/test")
+//    public OAuth2User test(@AuthenticationPrincipal OAuth2User user) {
+//        return user;
+//    }
 
 
 }
