@@ -19,7 +19,7 @@ public class UserSecurityService implements UserDetailsService {
 
     @Override // 시큐리티 session(내부 Authentication(내부 UserDetails))
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByUserEmail(username).orElseThrow(()->new IllegalArgumentException(username+" 사용자가 존재하지 않습니다"));
+        User userEntity = userRepository.findByUserEmail(username).orElseThrow(()->new IllegalArgumentException(username + " 사용자가 존재하지 않습니다"));
         return new UserDetail(userEntity);
     }
 

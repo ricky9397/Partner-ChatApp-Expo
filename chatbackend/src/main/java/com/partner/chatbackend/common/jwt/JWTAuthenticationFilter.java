@@ -1,5 +1,6 @@
 package com.partner.chatbackend.common.jwt;
 
+import com.partner.chatbackend.user.service.UserSecurityService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -11,6 +12,13 @@ import java.io.IOException;
 
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
+
+    private UserSecurityService userSecurityService;
+
+    public JWTAuthenticationFilter(UserSecurityService userSecurityService) {
+        this.userSecurityService = userSecurityService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 

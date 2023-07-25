@@ -2,6 +2,7 @@ package com.partner.chatbackend.common.argresolver;
 
 import com.partner.chatbackend.common.annotation.LoginUserId;
 import com.partner.chatbackend.common.exception.AuthenticationUserException;
+import com.partner.chatbackend.common.exception.ErrorCode;
 import com.partner.chatbackend.common.utils.Utils;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentRes
         String googleId = Objects.requireNonNull(webRequest.getUserPrincipal(), "인증된 사용자가 존재하지 않습니다.").getName();
 
         if(Utils.isNull(googleId)) {
-            return new AuthenticationUserException("인증된 사용자가 존재하지 않습니다.");
+            return new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "인증된 사용자가 존재하지 않습니다.");
         }
         return null;
     }

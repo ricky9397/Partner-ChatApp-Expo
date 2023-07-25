@@ -4,7 +4,7 @@ import {AuthResult, User} from './types';
 export async function register(params: RegisterParams) {
   try {
     const response = await client.post<AuthResult>(
-      '/auth/register',
+      '/api/v1/auth/register',
       params
     );
     return response.data;
@@ -19,7 +19,7 @@ export async function login(params: LoginParams) {
   const auth_token = client.defaults.headers.auth_token
 
   const response = await client.post<AuthResult>(
-    '/auth/login', 
+    '/api/v1/auth/login', 
     params,
     {
       headers: {

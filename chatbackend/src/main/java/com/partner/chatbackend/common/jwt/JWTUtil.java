@@ -18,6 +18,18 @@ public class JWTUtil {
     private static final long AUTH_TIME = 10;
     private static final long REFRESH_TIME = 60*60*24*7; // 7일
 
+
+//    public static  String createToken(String userName, String key, long expireTimeMs) {
+//        Claims claim = Jwts.claims();
+//        claim.put("userName", userName);
+//        return Jwts.builder()
+//                .setClaims(claim)
+//                .setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
+//                .signWith(SignatureAlgorithm.HS256, key)
+//                .compact();
+//    }
+
     public static String makeAuthToken(UserDetail userDetail) { // AuthToken 토큰발행
         // TODO: JJWT 사용! RSA방식은 아님 Hash암호방식
         return JWT.create()

@@ -43,8 +43,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             } else {
                 // kakao
                 String kakaoId = String.valueOf(((OAuth2User) principal).getAttributes().get("id"));
-                User user = userRepository.findByProviderId(kakaoId).orElseThrow(() -> new AuthenticationCredentialsNotFoundException("회원 인증을 실패하였습니다."));
-                String refreshToken = JWTUtil.makeAuthToken(user);
+//                User user = userRepository.findByProviderId(kakaoId).orElseThrow(() -> new AuthenticationCredentialsNotFoundException("회원 인증을 실패하였습니다."));
+//                String refreshToken = JWTUtil.makeAuthToken(user);
 
             }
         }

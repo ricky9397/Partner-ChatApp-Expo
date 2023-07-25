@@ -1,9 +1,15 @@
 package com.partner.chatbackend.common.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class AuthenticationUserException extends RuntimeException{
-    public AuthenticationUserException(String msg) {super(msg);}
+
+    private ErrorCode errorCode;
+    private String message;
 
 }
