@@ -1,10 +1,16 @@
 package com.partner.chatbackend.common.oauth2.handler;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.partner.chatbackend.common.jwt.JWTUtil;
+import com.partner.chatbackend.common.jwt.VerifyResult;
 import com.partner.chatbackend.user.domain.User;
+import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -38,7 +44,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 // kakao
                 String kakaoId = String.valueOf(((OAuth2User) principal).getAttributes().get("id"));
                 User user = userRepository.findByProviderId(kakaoId).orElseThrow(() -> new AuthenticationCredentialsNotFoundException("회원 인증을 실패하였습니다."));
-                
+                String refreshToken = JWTUtil.makeAuthToken(user);
 
             }
         }
