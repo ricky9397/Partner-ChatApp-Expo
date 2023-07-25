@@ -3,7 +3,7 @@ package com.partner.chatbackend.common.jwt;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
-import com.partner.chatbackend.common.security.UserLogin;
+import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.service.UserSecurityService;
@@ -36,7 +36,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     ) {
         this.authenticationManager = authenticationManager;
         this.userSecurityService = userSecurityService;
-        setFilterProcessesUrl("/auth/login");
+        setFilterProcessesUrl("/api/v1/auth/login");
     }
 
     @SneakyThrows  // try, catch 역할 어너테이션
@@ -52,6 +52,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             // 1. UserDetailsService 의 findByUserEmail() 함수 실행됨.
             // 2. UserDetailsService 의 사용자가 있으면 권한부여 받고 -> successfulAuthentication()로 호출한다.
             return authenticationManager.authenticate(authToken);
+
         } else {
 
             VerifyResult verify = JWTUtil.verify(refreshToken);
@@ -76,7 +77,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                 throw new TokenExpiredException("403");
             }
         }
-//                .rememberme(request.getParameter("remember-me") != null)
     }
 
     @Override
@@ -88,8 +88,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         UserDetail userDetail = (UserDetail) authResult.getPrincipal(); // 성공한 유저정보를 UserDetail객체에 담는다.
 
-        String refreshToken = JWTUtil.makeRefreshToken(userDetail);
-        String authToken = JWTUtil.makeAuthToken(userDetail);
+        String refreshToken = JWTUtil.makeRefreshToken(userDetail.getName());
+        String authToken = JWTUtil.makeAuthToken(userDetail.getName());
 
         userSecurityService.updateRefreshToken(refreshToken, userDetail.getUser().getId()); // 로그인 성공 후 토큰 DB저장.
 
@@ -109,6 +109,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
+        
+        // TODO 로그인 실패 로직
         System.out.println("===================================================로그인실패");
         super.unsuccessfulAuthentication(request, response, failed);
     }

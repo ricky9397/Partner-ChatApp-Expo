@@ -1,4 +1,4 @@
-package com.partner.chatbackend.common.security;
+package com.partner.chatbackend.common.config.security;
 
 import com.partner.chatbackend.common.config.CorsConfig;
 import com.partner.chatbackend.common.jwt.JWTAuthenticationFilter;
@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @RequiredArgsConstructor
 @Configuration
@@ -40,9 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        JWTLoginFilter loginFilter = new JWTLoginFilter(authenticationManager(), userSecurityService);
-        JWTCheckFilter checkFilter = new JWTCheckFilter(authenticationManager(), userSecurityService);
-
         http
                 .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
                 .httpBasic().disable() // Http basic Auth  기반으로 로그인 인증창이 뜸.  disable 시에 인증창 뜨지 않음.
@@ -59,16 +57,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/api/v1/auth/login").permitAll()
                                 .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 )
-                .addFilterBefore(new JWTAuthenticationFilter(userSecurityService), UsernamePasswordAuthenticationFilter.class);
-//                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class); // 로그인처리필터
-//                .addFilterAt(checkFilter, BasicAuthenticationFilter.class); // 토큰검증필터
+                .addFilterAt(new JWTLoginFilter(authenticationManager(), userSecurityService), UsernamePasswordAuthenticationFilter.class) // 로그인처리필터
+                .addFilterAt(new JWTCheckFilter(authenticationManager(), userSecurityService), BasicAuthenticationFilter.class); // 토큰검증필터
 
 
         http
-//                .addFilter(corsConfig.corsFilter()) // 시큐리티 cors
-                .httpBasic().disable() // Http basic Auth  기반으로 로그인 인증창이 뜸.  disable 시에 인증창 뜨지 않음.
-                .formLogin().disable() // formLogin disable
-                .csrf().disable() // csrf 보안 설정을 비활성화한다.
+                .httpBasic().disable()
+                .formLogin().disable()
+                .csrf().disable()
                 .cors().and()
                 .authorizeRequests(config -> config
                                     .antMatchers("/oauth2/**").permitAll()

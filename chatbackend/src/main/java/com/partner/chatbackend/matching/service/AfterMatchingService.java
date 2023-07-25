@@ -4,11 +4,10 @@ import com.partner.chatbackend.chatting.domain.ChatList;
 import com.partner.chatbackend.matching.domain.AfterMatching;
 import com.partner.chatbackend.matching.domain.BeforeMatching;
 import com.partner.chatbackend.matching.repository.AfterMatchingRepository;
-import com.partner.chatbackend.user.domain.Profile;
+import com.partner.chatbackend.profile.domain.Profile;
 import com.partner.chatbackend.user.domain.User;
-import com.partner.chatbackend.user.repository.ProfileRepository;
+import com.partner.chatbackend.profile.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

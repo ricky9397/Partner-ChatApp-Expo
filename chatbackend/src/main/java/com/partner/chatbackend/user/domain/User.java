@@ -1,13 +1,12 @@
 package com.partner.chatbackend.user.domain;
 
 import com.partner.chatbackend.common.cm.BaseTimeEntity;
+import com.partner.chatbackend.profile.domain.Profile;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,24 +22,20 @@ public class User extends BaseTimeEntity {
     @Column(name = "USER_ID")
     private Long id;
 
-    @Column(name = "USER_EMAIL", unique = true)
+    @Column(name = "USER_EMAIL")
     private String userEmail;
 
-    @NotNull
     @Column(name = "USER_PASSWORD")
     private String userPassword;
 
-    @NotNull
     @Column(name = "USER_NAME")
     private String userName;
 
-    @NotNull
     @Column(name = "USER_PHONE")
     private String userPhone;
 
-    @NotNull
-     @Column(name = "GENDER")
-     private String gender;
+    @Column(name = "GENDER")
+    private String gender;
 
 
 //    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -93,6 +88,13 @@ public class User extends BaseTimeEntity {
         this.useYn = useYn;
         this.role = role;
         this.refreshToken = refreshToken;
+        this.providerId = providerId;
+        this.provider = provider;
+    }
+
+    public User(Long id, String role, String providerId, String provider) {
+        this.id = id;
+        this.role = role;
         this.providerId = providerId;
         this.provider = provider;
     }

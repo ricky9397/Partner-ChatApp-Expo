@@ -58,7 +58,7 @@ const AuthEmailScreen = () => {
             <TouchableOpacity 
                 style={signinButtonStyle}
                 onPress={() => {
-                    if(!!!user){
+                    if(!!user){
                         navigation.navigate("AuthPassword", {userEmail: userEmail});
                     } else {
                         navigation.navigate('AuthPhone', { userEmail : userEmail });

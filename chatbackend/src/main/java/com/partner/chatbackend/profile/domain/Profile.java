@@ -1,4 +1,4 @@
-package com.partner.chatbackend.user.domain;
+package com.partner.chatbackend.profile.domain;
 
 
 import lombok.*;

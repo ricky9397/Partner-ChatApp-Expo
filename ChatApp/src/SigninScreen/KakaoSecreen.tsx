@@ -1,95 +1,80 @@
 import React from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { WebView } from "react-native-webview";
-import { KAKAO_LOGIN_API_URI, KAKAO_REDIRECT_URI, kakaoLoginOrRegister } from '../api/client';
+import { KAKAO_LOGIN_API_URI, } from '../api/client';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
-const REST_API_KEY = process.env.EXPO_PUBLIC_KAKAO_API_KEY;
+
+// const REST_API_KEY = process.env.EXPO_PUBLIC_KAKAO_API_KEY;
+interface response {
+  id: number;
+  userEmail: string;
+  refresh_token: string;
+  auth_token: string;
+}
 
 export default function KakaoScreen() {
 
-    const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-    const getCode = (target: string) => {
-      const exp = 'code=';
-      console.log(target)
-      const condition = target.indexOf(exp);
-      if (condition !== -1) {
-        const requestCode = target.substring(condition + exp.length);
-        requestToken(requestCode);
-      } 
-    };
+    // const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
+  const INJECTED_JAVASCRIPT = ` (function() {
+    document.getElementsByTagName('pre')[0].style.display="none";
+    window.ReactNativeWebView.postMessage(document.getElementsByTagName('pre')[0].innerHTML);
+    })();
+    true;`;
 
-    const requestToken = async (requestCode: string,) => {
-      const bodyData = {
-        grant_type : 'authorization_code',
-        client_id : REST_API_KEY,
-        client_secret : process.env.EXPO_PUBLIC_KAKAO_SECRET_KEY,
-        redirect_uri : KAKAO_REDIRECT_URI,
-        code : requestCode,
-      };
+  const loginAccess = async (data: string) => {
+    try {
+      const { id, userEmail, refresh_token, auth_token }: response = JSON.parse(data);
+      
+      console.log(id);
+      console.log(userEmail);
+      console.log(refresh_token);
+      console.log(auth_token);
 
-      Object.keys(bodyData);
-      const queryStringBody = Object.entries(bodyData)
-        .map( ([key,value]) => ( value && key+'='+value ))
-        .filter(v=>v).join('&');
-        
-      // const result = kakaoLoginOrRegister(queryStringBody);
+      if(userEmail === undefined || userEmail === null) {
+        navigate('AuthEmail');
+      }
 
-
-      // try {
-      //   const result = kakaoLoginOrRegister(options);
-      //   const ACCESS_TOKEN = tokenResponse.data.access_token;
+    } catch ( error ) {
+        console.log(error);
+    }
     
-      //   const body = {
-      //     ACCESS_TOKEN,
-      //   };
-      //   const response = await axios.post(REDIRECT_URI, body);
-      //   const value = response.data;
-      //   const result = await storeUser(value);
-      //   if (result === 'stored') {
-      //     const user = await getData('user');
-      //     dispatch(read_S(user));
-      //     await navigation.navigate('Main');
-      //   }
-      // } catch (e) {
-      //   console.log(e);
-      // }
-    };
+    // setMemberId(id);
+    // setMemberNicknameState(nickname);
+    // setMemberAvatar(avatar);
+    // setProfile({ avatar: "", nickname, score: 0 });
 
-    const loginAccess = async (data: string) => {
-      // const { id, nickname, avatar, accessToken }: response = JSON.parse(data);
-      // setMemberId(id);
-      // setMemberNicknameState(nickname);
-      // setMemberAvatar(avatar);
-      // setProfile({ avatar: "", nickname, score: 0 });
-  
-      // if (accessToken) {
-      //   toggleModal();
-      //   await DeviceStorage.storeToken(accessToken);
-  
-      //   if (nickname === null) {
-      //     navigation.navigate("JoinScreen");
-      //     return;
-      //   }
-      //   await navigateByOrganizationList();
-      // } else {
-      //   console.log("not aceess token");
-      // }
-    };
+    // if (accessToken) {
+    //   toggleModal();
+    //   await DeviceStorage.storeToken(accessToken);
 
-    return (
-      <View style={styles.webContainer}>
-        <WebView
-          incognito={true}
-          scalesPageToFit={true}
-          javaScriptEnabled={true}
-          injectedJavaScript={INJECTED_JAVASCRIPT}
-          source={{ uri: KAKAO_LOGIN_API_URI }}
-          onMessage={(event) => getCode(event.nativeEvent.url)}
-        />
-        </View>
-    );
-  }
+    //   if (nickname === null) {
+    //     navigation.navigate("JoinScreen");
+    //     return;
+    //   }
+    //   await navigateByOrganizationList();
+    // } else {
+    //   console.log("not aceess token");
+    // }
+  };
+
+  return (
+    <View style={styles.webContainer}>
+      <WebView
+        incognito={true}
+        scalesPageToFit={true}
+        javaScriptEnabled={true}
+        injectedJavaScript={INJECTED_JAVASCRIPT}
+        source={{ uri: KAKAO_LOGIN_API_URI }}
+        onMessage={(event) => loginAccess(event.nativeEvent.data)}
+      />
+      </View>
+  );
+}
 
 const styles = StyleSheet.create({
   webContainer: {

@@ -24,6 +24,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getServletPath();
 
+        System.out.println(path);
+
         // 로그인일 경우 건너뛰기
         if(path.startsWith("/oauth2/**")) {
             System.out.println("oauth2 로그인~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");

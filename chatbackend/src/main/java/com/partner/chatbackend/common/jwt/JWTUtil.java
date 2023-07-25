@@ -18,49 +18,22 @@ public class JWTUtil {
     private static final long AUTH_TIME = 10;
     private static final long REFRESH_TIME = 60*60*24*7; // 7일
 
-
-//    public static  String createToken(String userName, String key, long expireTimeMs) {
-//        Claims claim = Jwts.claims();
-//        claim.put("userName", userName);
-//        return Jwts.builder()
-//                .setClaims(claim)
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
-//                .signWith(SignatureAlgorithm.HS256, key)
-//                .compact();
-//    }
-
-    public static String makeAuthToken(UserDetail userDetail) { // AuthToken 토큰발행
+    public static String makeAuthToken(String userName) { // AuthToken 토큰발행
         // TODO: JJWT 사용! RSA방식은 아님 Hash암호방식
         return JWT.create()
-                .withSubject(userDetail.getUsername())
+                .withSubject(userName)
 //                .withExpiresAt(new Date(System.currentTimeMillis()+AUTH_TIME)) // 어느시간이 지나면 로그인 x ( System.currentTimeMillis() = 현재시간 )
                 .withClaim("exp", Instant.now().getEpochSecond() + AUTH_TIME)
                 .sign(ALGORITHM);
     }
 
-    public static String makeAuthToken(User user) { // AuthToken 토큰발행
-        // TODO: JJWT 사용! RSA방식은 아님 Hash암호방식
+    public static String makeRefreshToken(String userName){ // RefreshToken 토큰발행
         return JWT.create()
-                .withSubject(user.getUserEmail())
-//                .withExpiresAt(new Date(System.currentTimeMillis()+AUTH_TIME)) // 어느시간이 지나면 로그인 x ( System.currentTimeMillis() = 현재시간 )
-                .withClaim("exp", Instant.now().getEpochSecond() + AUTH_TIME)
-                .sign(ALGORITHM);
-    }
-
-    public static String makeRefreshToken(UserDetail userDetail){ // RefreshToken 토큰발행
-        return JWT.create()
-                .withSubject(userDetail.getUsername())
+                .withSubject(userName)
                 .withClaim("exp", Instant.now().getEpochSecond()+REFRESH_TIME)
                 .sign(ALGORITHM);
     }
 
-    public static String makeRefreshToken(User user){ // RefreshToken 토큰발행
-        return JWT.create()
-                .withSubject(user.getUserEmail())
-                .withClaim("exp", Instant.now().getEpochSecond()+REFRESH_TIME)
-                .sign(ALGORITHM);
-    }
 
     public static VerifyResult verify(String token){
         try {

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
         buttonText: {
         fontSize: 15,
-        titleColor: 'rgb(0, 0, 0)',
+        color: 'rgb(0, 0, 0)',
     },
     input: {
         alignItems: 'center',

@@ -5,7 +5,7 @@ import com.partner.chatbackend.common.rest.RestData;
 import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.matching.domain.AfterMatching;
 import com.partner.chatbackend.matching.service.AfterMatchingService;
-import com.partner.chatbackend.user.domain.Profile;
+import com.partner.chatbackend.profile.domain.Profile;
 import com.partner.chatbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

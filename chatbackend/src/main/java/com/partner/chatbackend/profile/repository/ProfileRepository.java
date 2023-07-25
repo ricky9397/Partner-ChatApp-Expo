@@ -1,7 +1,7 @@
-package com.partner.chatbackend.user.repository;
+package com.partner.chatbackend.profile.repository;
 
 import com.partner.chatbackend.matching.domain.AfterMatching;
-import com.partner.chatbackend.user.domain.Profile;
+import com.partner.chatbackend.profile.domain.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

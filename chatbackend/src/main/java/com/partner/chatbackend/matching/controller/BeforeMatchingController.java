@@ -4,9 +4,8 @@ import com.partner.chatbackend.common.rest.RestData;
 import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.matching.domain.BeforeMatching;
 import com.partner.chatbackend.matching.service.AfterMatchingService;
-import com.partner.chatbackend.matching.service.MatchingService;
+import com.partner.chatbackend.matching.service.BeforeMatchingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/matching")
-public class MatchingController extends Utils {
+public class BeforeMatchingController extends Utils {
 
-    private final MatchingService matchingService;
+    private final BeforeMatchingService matchingService;
     private final AfterMatchingService afterMatchingService;
 
     @PostMapping("/addLike")

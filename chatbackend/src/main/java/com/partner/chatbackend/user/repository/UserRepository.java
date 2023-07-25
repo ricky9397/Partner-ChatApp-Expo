@@ -19,6 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM TB_USERS WHERE USER_EMAIL = :userEmail", nativeQuery = true)
     User findByRefreshToken(@Param("userEmail") String userEmail);
 
-//    @Query(value = "SELECT * FROM TB_USER WHERE PROVIDER_ID = :id", nativeQuery = true)
-//    Optional<User> findByProviderId(@Param("id") String id);
+    Optional<User> findByProviderId(String providerId);
 }

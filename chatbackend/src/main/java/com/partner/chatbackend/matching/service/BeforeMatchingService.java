@@ -2,7 +2,7 @@ package com.partner.chatbackend.matching.service;
 
 import com.partner.chatbackend.matching.domain.BeforeMatching;
 import com.partner.chatbackend.matching.repository.AfterMatchingRepository;
-import com.partner.chatbackend.matching.repository.MatchingRepository;
+import com.partner.chatbackend.matching.repository.BeforeMatchingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MatchingService {
+public class BeforeMatchingService {
 
-    private final MatchingRepository matchingRepository;
+    private final BeforeMatchingRepository matchingRepository;
     private final AfterMatchingRepository afterMatchingRepository;
 
     public void addLike(BeforeMatching beforeMatching) {

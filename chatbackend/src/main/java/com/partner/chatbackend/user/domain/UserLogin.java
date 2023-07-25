@@ -1,4 +1,4 @@
-package com.partner.chatbackend.common.security;
+package com.partner.chatbackend.user.domain;
 
 import lombok.*;
 
