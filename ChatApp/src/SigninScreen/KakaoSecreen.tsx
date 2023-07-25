@@ -29,11 +29,12 @@ export default function KakaoScreen() {
       };
 
       Object.keys(bodyData);
-      const queryStringBody = Object.entries(bodyData).map( ([key,value]) => ( value && key+'='+value )).filter(v=>v).join('&');
+      const queryStringBody = Object.entries(bodyData)
+        .map( ([key,value]) => ( value && key+'='+value ))
+        .filter(v=>v).join('&');
         
       // const result = kakaoLoginOrRegister(queryStringBody);
 
-      // console.log(result)
 
       // try {
       //   const result = kakaoLoginOrRegister(options);
@@ -83,8 +84,7 @@ export default function KakaoScreen() {
           scalesPageToFit={true}
           javaScriptEnabled={true}
           injectedJavaScript={INJECTED_JAVASCRIPT}
-          // source={{ uri: KAKAO_LOGIN_API_URI }}
-          source={{ uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}` }}
+          source={{ uri: KAKAO_LOGIN_API_URI }}
           onMessage={(event) => getCode(event.nativeEvent.url)}
         />
         </View>
