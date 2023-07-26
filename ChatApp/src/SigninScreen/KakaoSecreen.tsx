@@ -3,7 +3,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { WebView } from "react-native-webview";
 import { KAKAO_LOGIN_API_URI, } from '../api/client';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 
 
@@ -17,7 +17,7 @@ interface response {
 
 export default function KakaoScreen() {
 
-  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     // const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
   const INJECTED_JAVASCRIPT = ` (function() {
@@ -36,7 +36,9 @@ export default function KakaoScreen() {
       console.log(auth_token);
 
       if(userEmail === undefined || userEmail === null) {
-        navigate('AuthEmail');
+        navigation.navigate('AuthEmail');
+      } else {
+        navigation.navigate('AuthPhone', { userEmail : userEmail });
       }
 
     } catch ( error ) {
