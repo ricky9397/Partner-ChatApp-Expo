@@ -17,25 +17,6 @@ export interface User {
   gender: string;
 }
 
-export interface Article {
-  id: number;
-  title: string;
-  body: string;
-  user: User;
-  published_at: string;
-  created_at: string;
-  updated_at: string; 
-}
-
-export interface Comment {
-  id: number;
-  message: string;
-  user: User;
-  published_at: string;
-  created_at: string;
-  updated_at: string;
-}
-
 export interface AuthResult {
   identityToken: string;
   refresh_token: string;
@@ -72,4 +53,24 @@ export interface ChatList {
   userName : string;
   success : boolean;
   fail : boolean;
+}
+
+
+export interface Article {
+  id: number;
+  title: string;
+  body: string;
+  user: User;
+  published_at: string;
+  created_at: string;
+  updated_at: string; 
+}
+
+export interface Comment {
+  id: number;
+  message: string;
+  user: User;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
 }

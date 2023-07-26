@@ -14,26 +14,27 @@ export async function register(params: RegisterParams) {
 }
 
 export async function login(params: LoginParams) {
-
-  const refresh_token = client.defaults.headers.refresh_token;
-  const auth_token = client.defaults.headers.auth_token
-
   const response = await client.post<AuthResult>(
     '/api/v1/auth/login', 
     params,
-    {
-      headers: {
-        refresh_token: refresh_token,
-        auth_token: auth_token
-      }
-    }
   )
   const data = {
     'headers' : response.headers,
     'body' : response.data
   }
 
+  console.log(data.headers)
+
   return data;
+  
+}
+
+export async function getEmailCheck(userEmail: EmailParam) {
+    const response = await client.post(
+      '/api/v1/auth/emailCheck',
+      userEmail
+    )
+    return response.data;
   
 }
 
@@ -67,6 +68,10 @@ interface RegisterParams {
 interface LoginParams {
   userEmail: string | undefined;
   userPassword: string;
+}
+
+interface EmailParam {
+  userEmail: string;
 }
 
 

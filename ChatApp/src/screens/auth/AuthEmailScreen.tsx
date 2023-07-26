@@ -11,7 +11,15 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
 import {useUserState} from '../../contexts/UserContext';
 import validator from 'validator';
+import { getEmailCheck } from '../../api/auth';
 
+interface Response {
+    data : number;
+    fail : boolean;
+    msg : string;
+    resultCode : number;
+    success : boolean;
+}
 
 const AuthEmailScreen = () => {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -28,8 +36,18 @@ const AuthEmailScreen = () => {
 
     const onChangeEmailText = useCallback((text: string) => {
         setEmail(text);
-    }, []);
+    }, [userEmail]);
 
+    const onPressEmailCheck = useCallback(async () => {
+
+        const { data } :Response = await getEmailCheck({ userEmail: userEmail });
+        
+        if(data > 0) {
+            navigation.navigate("AuthPassword", {userEmail: userEmail});
+        } else {
+            navigation.navigate('AuthPhone', { userEmail : userEmail });
+        }
+    }, [userEmail]) ;
 
     const signinButtonEnabled = useMemo(() => {
         return emailErrorText == null;
@@ -57,13 +75,7 @@ const AuthEmailScreen = () => {
             <View style={styles.footer}>
             <TouchableOpacity 
                 style={signinButtonStyle}
-                onPress={() => {
-                    if(!!user){
-                        navigation.navigate("AuthPassword", {userEmail: userEmail});
-                    } else {
-                        navigation.navigate('AuthPhone', { userEmail : userEmail });
-                    }
-                }}
+                onPress={onPressEmailCheck}
                 disabled={!signinButtonEnabled}>
                 <Text style={styles.buttonText}>
                     계속하기

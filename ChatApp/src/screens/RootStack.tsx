@@ -21,13 +21,12 @@ import KakaoScreen from '../SigninScreen/KakaoSecreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
+  const title = '짝꿍';
+  const [user] = useUserState();
   useAuthLoadEffect();
 
-  const title = '짝꿍';
-
-  const [user] = useUserState();
-
   if(!!user) {
+
     return (
       <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
         <Stack.Screen
