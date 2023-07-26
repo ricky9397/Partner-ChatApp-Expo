@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByRefreshToken(@Param("userEmail") String userEmail);
 
     Optional<User> findByProviderId(String providerId);
+
+    Long countByUserEmail(String userEmail);
 }

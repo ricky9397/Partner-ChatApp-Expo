@@ -1,7 +1,6 @@
 package com.partner.chatbackend.common.config.security;
 
 import com.partner.chatbackend.common.config.CorsConfig;
-import com.partner.chatbackend.common.jwt.JWTAuthenticationFilter;
 import com.partner.chatbackend.common.jwt.JWTCheckFilter;
 import com.partner.chatbackend.common.jwt.JWTLoginFilter;
 import com.partner.chatbackend.common.oauth2.handler.OAuth2SuccessHandler;
@@ -55,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/").permitAll()
                                 .antMatchers("/api/v1/auth/register").permitAll()
                                 .antMatchers("/api/v1/auth/login").permitAll()
+                                .antMatchers("/api/v1/auth/emailCheck").permitAll()
                                 .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 )
                 .addFilterAt(new JWTLoginFilter(authenticationManager(), userSecurityService), UsernamePasswordAuthenticationFilter.class) // 로그인처리필터

@@ -8,12 +8,15 @@ import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,6 +40,17 @@ public class UserController {
         }
         return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다."));
     }
+
+    @PostMapping("/emailCheck")
+    public ResponseEntity<RestData> getEmailCheck(@RequestBody User user) {
+
+        Long cnt = userSecurityService.countByUserEmail(user.getUserEmail());
+
+        System.out.println(cnt);
+
+        return Utils.spring.responseEntityOf(RestData.successOf(cnt));
+    }
+
 
     /**+
      * 어드민 + 유저 같이 있는 페이지가 있을 경우 적용.

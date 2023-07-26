@@ -31,6 +31,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             Iterator<? extends GrantedAuthority> iterator = (oAuth2User.getAuthorities()).iterator();
 
             String role = iterator.next().getAuthority();
+
             ifPresentOrElse(userRepository.findByProviderId(kakaoId),
                     user -> user.setRole(role),
                     () -> userRepository.save(User.builder()

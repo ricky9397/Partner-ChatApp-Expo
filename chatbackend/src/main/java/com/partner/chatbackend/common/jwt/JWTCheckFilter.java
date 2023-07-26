@@ -31,6 +31,14 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+        String path = request.getServletPath();
+        // 로그인일 경우 건너뛰기
+        if(path.startsWith("/api/v1/auth/emailCheck")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String authToken = request.getHeader(Constants.AUTH_TOKEN);
         logger.info("#####################################Token 체크 시작##########################################");
         logger.info(request.getHeaderNames());
