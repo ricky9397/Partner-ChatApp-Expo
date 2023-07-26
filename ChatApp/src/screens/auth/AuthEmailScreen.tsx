@@ -39,9 +39,7 @@ const AuthEmailScreen = () => {
     }, [userEmail]);
 
     const onPressEmailCheck = useCallback(async () => {
-
         const { data } :Response = await getEmailCheck({ userEmail: userEmail });
-        
         if(data > 0) {
             navigation.navigate("AuthPassword", {userEmail: userEmail});
         } else {

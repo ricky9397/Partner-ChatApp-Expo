@@ -5,10 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
 import com.partner.chatbackend.common.jwt.JWTUtil;
 import com.partner.chatbackend.common.jwt.VerifyResult;
+import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
+import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import net.minidev.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,9 +29,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -45,13 +47,22 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             } else {
                 // kakao
                 String kakaoId = String.valueOf(((OAuth2User) principal).getAttributes().get("id"));
+                Map<String, Object> map = (Map<String, Object>) ((OAuth2User) principal).getAttributes().get("kakao_account");
+                String userEmail = String.valueOf(map.get("email"));
+
                 User user = userRepository.findByProviderId(kakaoId).orElseThrow(() -> new AuthenticationCredentialsNotFoundException("회원 인증을 실패하였습니다."));
                 String authToken = JWTUtil.makeAuthToken(user.getProviderId());
                 String refreshToken = JWTUtil.makeRefreshToken(user.getProviderId());
 
                 Map<String, Object> resultMap = new HashMap<>();
+
+                if(Utils.isNull(userEmail)) {
+                    resultMap.put("userEmail", user.getUserEmail());
+                } else {
+                    resultMap.put("userEmail", userEmail);
+                }
+
                 resultMap.put("id", user.getId());
-                resultMap.put("userEmail", user.getUserEmail());
                 resultMap.put(Constants.REFRESH_TOKEN, refreshToken);
                 resultMap.put(Constants.AUTH_TOKEN, authToken);
 
