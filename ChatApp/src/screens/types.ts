@@ -24,23 +24,38 @@ export type MainTabRouteProp = RouteProp<RootStackParamList, 'MainTab'>;
 export type RootStackParamList = {
   Auth: undefined;
   Kakao: undefined;
-  AuthEmail: undefined;
-  AuthPhone: undefined;
-  AuthPassword: undefined;
   RootApp: undefined;
+  AuthEmail: undefined;
+  AuthPhone: {
+    userEmail: string | undefined;
+    provider: string;
+  }; // 핸드폰 입력 화면
+  AuthPassword: {
+      userEmail: string;
+  }; // 패스워드 입력 화면
+
+  Signup: {
+    userEmail: string | undefined;
+    userPhone: string;
+  };
+
+  KakaoLoginSignup : {
+    userEmail: string | undefined;
+    userPhone: string;
+  }
+
+  Google: undefined;
 
   MainTab: MainTabNavigationScreenParams;
   Article: {
     id: number;
   };
-  Signup: undefined;
-  Signin: undefined;
   MyArticles: undefined;
   Write: {
     articleId?: number;
   };
 
-  Google: undefined;
+  
 
 };
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;

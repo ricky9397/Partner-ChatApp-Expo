@@ -15,6 +15,7 @@ export default function useAuthLoadEffect() {
       }
       setUser(auth.user);
       applyToken(auth.auth_token, auth.refresh_token);
+
     };
     fn();
   }, [setUser]);

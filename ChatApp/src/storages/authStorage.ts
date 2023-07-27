@@ -6,7 +6,6 @@ const key = 'auth';
 const authStorage = {
   async get() {
     const rawData = await AsyncStorage.getItem(key);
-
     if (!rawData) {
       return null;
     }

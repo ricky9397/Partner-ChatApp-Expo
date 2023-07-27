@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import { RootStackParamList } from '../../types';
+import { RootStackParamList } from '../types';
 import {useUserState} from '../../contexts/UserContext';
 import validator from 'validator';
 import { getEmailCheck } from '../../api/auth';

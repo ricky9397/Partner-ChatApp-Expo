@@ -1,14 +1,14 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useCallback, useMemo, useState } from 'react';
 import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { RadioButton } from 'react-native-paper';
@@ -16,13 +16,11 @@ import useRegister from '../hooks/useRegister';
 import Colors from '../modules/Colors';
 import { RootStackParamList } from '../screens/types';
 
-const SignupScreen = () => {
+const KakaoLoginSignup = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Signup'>>();
   const userEmail = route.params?.userEmail;
   const userPhone = route.params?.userPhone;
 
-  const [userPassword, setPassword] = useState('');
-  const [confirmedPassword, setConfirmedPassword] = useState('');
   const [userName, setName] = useState('');
   const [userBirthDay, setBirthDay] = useState('');
   const [checked, setChecked] = useState('');
@@ -38,12 +36,11 @@ const SignupScreen = () => {
       return;
     }
 
-    register({
-      userEmail,
-      userPassword,
-      userName,
-      userPhone
-    });
+    // register({
+    //   userEmail,
+    //   userName,
+    //   userPhone
+    // });
   }
 
   const showDatePicker = () => {
@@ -59,30 +56,6 @@ const SignupScreen = () => {
       onChangeBirthDayText(new Date(data).toLocaleDateString());
   };
 
-  const passwordErrorText = useMemo(() => {
-    if (userPassword.length === 0) {
-      return '비밀번호를 입력해주세요.';
-    }
-    if (userPassword.length < 6) {
-      return '비밀번호는 6자리 이상이여야합니다';
-    }
-    if (userPassword !== confirmedPassword) {
-      return '비밀번호를 확인해주세요.';
-    }
-    return null;
-  }, [userPassword, confirmedPassword]);
-
-  const confirmedPasswordErrorText = useMemo(() => {
-    if (confirmedPassword.length === 0) {
-      return '비밀번호를 입력해주세요.';
-    }
-    if (confirmedPassword.length < 6) {
-      return '비밀번호는 6자리 이상이여야합니다';
-    }
-    if (userPassword !== confirmedPassword) {
-      return '비밀번호를 확인해주세요.';
-    }
-  }, [userPassword, confirmedPassword]);
 
   const nameErrorText = useMemo(() => {
     if (userName.length === 0) {
@@ -99,33 +72,20 @@ const SignupScreen = () => {
     return null;
   }, [userBirthDay]);
 
-
-  const onChangePasswordText = useCallback((text: string) => {
-    setPassword(text);
-  }, []);
-
-  const onChangeConfirmedPasswordText = useCallback((text: string) => {
-    setConfirmedPassword(text);
-  }, []);
-
   const onChangeNameText = useCallback((text: string) => {
     setName(text);
-  }, []);
+  }, [userName]);
 
   const onChangeBirthDayText = useCallback((text: string) => {
     setBirthDay(text);
-  }, []);
+  }, [userBirthDay]);
 
   const signupButtonEnabled = useMemo(() => {
     return (
-      passwordErrorText == null &&
-      confirmedPasswordErrorText == null &&
       nameErrorText == null &&
       birthDayErrorText == null
     );
   }, [
-    passwordErrorText,
-    confirmedPasswordErrorText,
     nameErrorText,
     birthDayErrorText,
   ]);
@@ -144,30 +104,6 @@ const SignupScreen = () => {
           behavior={Platform.select({ios: 'padding', android: undefined})}
           style={styles.avoid}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.section}>
-          <Text style={styles.title}>비밀번호</Text>
-          <TextInput
-            value={userPassword}
-            style={styles.input}
-            secureTextEntry
-            onChangeText={onChangePasswordText}
-          />
-          {passwordErrorText && (
-            <Text style={styles.errorText}>{passwordErrorText}</Text>
-          )}
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.title}>비밀번호 확인</Text>
-          <TextInput
-            value={confirmedPassword}
-            style={styles.input}
-            secureTextEntry
-            onChangeText={onChangeConfirmedPasswordText}
-          />
-          {confirmedPasswordErrorText && (
-            <Text style={styles.errorText}>{confirmedPasswordErrorText}</Text>
-          )}
-        </View>
         <View style={styles.section}>
           <Text style={styles.title}>이름</Text>
           <TextInput
@@ -201,7 +137,7 @@ const SignupScreen = () => {
               onPressIn={showDatePicker}
             />
             {nameErrorText && (
-              <Text style={styles.errorText}>{nameErrorText}</Text>
+              <Text style={styles.errorText}>{birthDayErrorText}</Text>
             )}
             <DateTimePickerModal
                   isVisible={isDatePickerVisible}
@@ -225,7 +161,7 @@ const SignupScreen = () => {
   );
 };
 
-export default SignupScreen;
+export default KakaoLoginSignup;
 
 const styles = StyleSheet.create({
   container: {

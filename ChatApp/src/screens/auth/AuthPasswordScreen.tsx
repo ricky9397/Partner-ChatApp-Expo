@@ -8,14 +8,13 @@ import {
 } from 'react-native';
 import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types';
+import { RootStackParamList } from '../../screens/types';
 import useLogin from '../../hooks/useLogin';
 
 const AuthPasswordScreen = () => {
-    const route = useRoute<RouteProp<RootStackParamList>>();
+    const route = useRoute<RouteProp<RootStackParamList, 'AuthPassword'>>();
     const userEmail = route.params?.userEmail;
     const [userPassword, setPassword] = useState('');
-
     const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const {mutate: login, isLoading: loginLoading} = useLogin();
@@ -38,7 +37,7 @@ const AuthPasswordScreen = () => {
 
     const onChangePasswordText = useCallback((text: string) => {
         setPassword(text);
-    }, []);
+    }, [userPassword]);
 
     const passwordErrorText = useMemo(() => {
         if (userPassword.length < 4) {

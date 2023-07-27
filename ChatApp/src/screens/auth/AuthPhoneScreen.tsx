@@ -1,45 +1,80 @@
-import React, {useCallback} from 'react';
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    TextInput,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types';
+import React, { useCallback, useMemo, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import validator from 'validator';
+import { RootStackParamList } from '../types';
 
 const AuthPhoneScreen = () => {
+  const route = useRoute<RouteProp<RootStackParamList, 'AuthPhone'>>();
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-    const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const userEmail = route.params?.userEmail;
+  const provider = route.params?.provider;
 
-    const onPressPhoneButton = useCallback(() => {
-        navigate('Signup');
-      }, [navigate]);
+  const [userPhone, setUserPhone] = useState('');
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.title}>
-                <Text style={{fontSize:35,color:'#000', marginLeft: 20}}>휴대폰번호</Text>
-            </View>
-            <View style={styles.content}>
-                <TextInput 
-                    style={styles.input}
-                    keyboardType="number-pad"
-                />
-            </View>
-            <View style={styles.footer}>
-            <TouchableOpacity 
-                style={styles.button}
-                onPress={onPressPhoneButton}>
-                <Text style={styles.buttonText}>
-                    계속하기
-                </Text>
-            </TouchableOpacity>
-            </View>
-      </View>
-    );
+  const onChangeUserPhoneText = useCallback((text: string) => {
+    setUserPhone(text);
+  }, [userPhone]);
+
+  const phoneErrorText = useMemo(() => {
+    if (userPhone.length === 0) {
+      return '핸드폰번호를 입력해주세요.';
+    }
+    if (!validator.isMobilePhone(userPhone)) {
+      return '올바른 핸드폰 번호가 아닙니다.';
+    }
+    return null;
+  }, [userPhone]);
+
+  const onPressPhoneButton = useCallback(() => {
+
+    if(provider === "kakao") {
+      navigate('KakaoLoginSignup', {
+        userEmail: userEmail,
+        userPhone: userPhone,
+      });
+      return;
+    }
+
+    navigate('Signup', {
+      userEmail: userEmail,
+      userPhone: userPhone,
+    });
+
+  }, [navigate]);
+
+  return (
+      <View style={styles.container}>
+          <View style={styles.title}>
+              <Text style={{fontSize:35,color:'#000', marginLeft: 20}}>휴대폰번호</Text>
+          </View>
+          <View style={styles.content}>
+              <TextInput 
+                  value={userPhone}
+                  style={styles.input}
+                  keyboardType="number-pad"
+                  onChangeText={onChangeUserPhoneText}
+              />
+          </View>
+          <View style={styles.footer}>
+          <TouchableOpacity 
+              style={styles.button}
+              onPress={onPressPhoneButton}>
+              <Text style={styles.buttonText}>
+                  계속하기
+              </Text>
+          </TouchableOpacity>
+          </View>
+    </View>
+  );
 };
 
 export default AuthPhoneScreen;

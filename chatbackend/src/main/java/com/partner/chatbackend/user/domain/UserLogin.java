@@ -13,7 +13,7 @@ public class UserLogin {
     private String userEmail;
     private String userPassword;
     private String refreshToken;
-    private String email;
-//    private boolean rememberme;
+
+
 
 }

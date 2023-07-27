@@ -1,11 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import SignupScreen from './src/SignupScreen/SignupScreen';
-import SigninScreen from './src/SigninScreen/SigninScreen';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { UserContextProvider } from './src/contexts/UserContext';
 import RootStack from './src/screens/RootStack';
-import {UserContextProvider} from './src/contexts/UserContext';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +15,6 @@ const Screens = () => {
         </NavigationContainer>
       </QueryClientProvider>
     </UserContextProvider>
-
   )  
 };
 

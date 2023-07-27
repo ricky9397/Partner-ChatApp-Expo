@@ -6,6 +6,7 @@ import com.partner.chatbackend.common.cm.Constants;
 import com.partner.chatbackend.common.jwt.JWTUtil;
 import com.partner.chatbackend.common.jwt.VerifyResult;
 import com.partner.chatbackend.common.utils.Utils;
+import com.partner.chatbackend.user.domain.KakaoUser;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.domain.UserLogin;
@@ -47,24 +48,27 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             } else {
                 // kakao
                 String kakaoId = String.valueOf(((OAuth2User) principal).getAttributes().get("id"));
-                Map<String, Object> map = (Map<String, Object>) ((OAuth2User) principal).getAttributes().get("kakao_account");
-                String userEmail = String.valueOf(map.get("email"));
 
                 User user = userRepository.findByProviderId(kakaoId).orElseThrow(() -> new AuthenticationCredentialsNotFoundException("회원 인증을 실패하였습니다."));
-                String authToken = JWTUtil.makeAuthToken(user.getProviderId());
-                String refreshToken = JWTUtil.makeRefreshToken(user.getProviderId());
+
+                String authToken = JWTUtil.makeAuthToken(user.getUserEmail());
+                String refreshToken = JWTUtil.makeRefreshToken(user.getUserEmail());
+
+                KakaoUser kakaoUser = KakaoUser.builder()
+                        .id(user.getId())
+                        .userEmail(user.getUserEmail())
+                        .userName(user.getUserName())
+                        .userPhone(user.getUserPhone())
+                        .gender(user.getGender())
+                        .lockedYn(user.getLockedYn())
+                        .provider(user.getProvider())
+                        .build();
 
                 Map<String, Object> resultMap = new HashMap<>();
 
-                if(Utils.isNull(userEmail)) {
-                    resultMap.put("userEmail", user.getUserEmail());
-                } else {
-                    resultMap.put("userEmail", userEmail);
-                }
-
-                resultMap.put("id", user.getId());
-                resultMap.put(Constants.REFRESH_TOKEN, refreshToken);
+                resultMap.put("user", kakaoUser);
                 resultMap.put(Constants.AUTH_TOKEN, authToken);
+                resultMap.put(Constants.REFRESH_TOKEN, refreshToken);
 
                 response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                 response.setStatus(HttpStatus.OK.value());

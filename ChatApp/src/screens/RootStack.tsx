@@ -1,21 +1,21 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {RootStackParamList} from './types';
+import { RootStackParamList } from './types';
 // import MainTab from './MainTab';
 // import ArticleScreen from './ArticleScreen';
-import SigninScreen from '../SigninScreen/SigninScreen';
 import SignupScreen from '../SignupScreen/SignupScreen';
 // import MyArticlesScreen from './MyArticlesScreen';
-import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 import { RootApp } from '../RootApp';
-import {useUserState} from '../contexts/UserContext';
+import { useUserState } from '../contexts/UserContext';
+import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 // import WriteScreen from './WriteScreen';
 import GoogleScreen from '../SigninScreen/GoogleScreen';
-import AuthScreen from './auth/AuthScreen';
-import AuthPhoneScreen from './auth/AuthPhoneScreen';
+import KakaoScreen from '../SigninScreen/KakaoSecreen';
 import AuthEmailScreen from './auth/AuthEmailScreen';
 import AuthPasswordScreen from './auth/AuthPasswordScreen';
-import KakaoScreen from '../SigninScreen/KakaoSecreen';
+import AuthPhoneScreen from './auth/AuthPhoneScreen';
+import AuthScreen from './auth/AuthScreen';
+import KakaoLoginSignup from '../SignupScreen/KakaoLoginSignup';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,7 +26,6 @@ function RootStack() {
   useAuthLoadEffect();
 
   if(!!user) {
-
     return (
       <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
         <Stack.Screen
@@ -66,8 +65,8 @@ function RootStack() {
         options={{title: title}}
       />
       <Stack.Screen
-        name="Signin"
-        component={SigninScreen}
+        name="KakaoLoginSignup"
+        component={KakaoLoginSignup}
         options={{title: title}}
       />
       <Stack.Screen

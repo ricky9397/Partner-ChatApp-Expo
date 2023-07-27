@@ -22,11 +22,7 @@ export async function login(params: LoginParams) {
     'headers' : response.headers,
     'body' : response.data
   }
-
-  console.log(data.headers)
-
   return data;
-  
 }
 
 export async function getEmailCheck(userEmail: EmailParam) {
@@ -35,7 +31,11 @@ export async function getEmailCheck(userEmail: EmailParam) {
       userEmail
     )
     return response.data;
-  
+}
+
+export async function kakaoLoginOrRegister(data: string) {
+  const response: AuthResult = JSON.parse(data);
+  return response;
 }
 
 export async function appleLoginOrRegister(identityToken: string) {
@@ -60,7 +60,7 @@ export async function getLoginStatus() {
  
 interface RegisterParams {
   userName: string;
-  userEmail: string;
+  userEmail: string | undefined;
   userPassword: string;
   userPhone: string;
 }

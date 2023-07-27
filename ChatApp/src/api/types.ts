@@ -5,7 +5,7 @@ export interface User {
   userName: string;
   userEmail: string | undefined;
   userPhone: string;
-  // provider: string;
+  provider: string;
   // confirmed: boolean;
   blocked: null | boolean;
   role: string;

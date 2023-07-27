@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.data.util.Optionals.ifPresentOrElse;
@@ -28,6 +29,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if(provider.equals("kakao")) {
             String kakaoId = oAuth2User.getName();
+            Map<String, Object> map = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+            String userEmail = String.valueOf(map.get("email"));
+
             Iterator<? extends GrantedAuthority> iterator = (oAuth2User.getAuthorities()).iterator();
 
             String role = iterator.next().getAuthority();
@@ -35,6 +39,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             ifPresentOrElse(userRepository.findByProviderId(kakaoId),
                     user -> user.setRole(role),
                     () -> userRepository.save(User.builder()
+                                    .userEmail(userEmail)
                                     .role(role)
                                     .providerId(kakaoId)
                                     .provider(provider)

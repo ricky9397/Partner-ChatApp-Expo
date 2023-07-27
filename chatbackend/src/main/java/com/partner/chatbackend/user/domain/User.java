@@ -92,8 +92,9 @@ public class User extends BaseTimeEntity {
         this.provider = provider;
     }
 
-    public User(Long id, String role, String providerId, String provider) {
+    public User(Long id, String userEmail, String role, String providerId, String provider) {
         this.id = id;
+        this.userEmail = userEmail;
         this.role = role;
         this.providerId = providerId;
         this.provider = provider;
