@@ -11,10 +11,7 @@ import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -36,18 +33,23 @@ public class UserController {
     public ResponseEntity<RestData> register(@RequestBody User user) {
         Long result = userSecurityService.register(user);
         if(result == 0) {
-            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "로그인 실패하였습니다.");
+            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
+        }
+        return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다."));
+    }
+
+    @PostMapping("/register/{urlId}")
+    public ResponseEntity<RestData> oauth2Register(@PathVariable("urlId") String urlId, @RequestBody User user) {
+        Long result = userSecurityService.oauth2Register(user);
+        if(result == 0) {
+            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
         }
         return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다."));
     }
 
     @PostMapping("/emailCheck")
     public ResponseEntity<RestData> getEmailCheck(@RequestBody User user) {
-
         Long cnt = userSecurityService.countByUserEmail(user.getUserEmail());
-
-        System.out.println(cnt);
-
         return Utils.spring.responseEntityOf(RestData.successOf(cnt));
     }
 

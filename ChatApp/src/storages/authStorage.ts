@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AuthResult} from '../api/types';
+import { AuthResult } from '../api/types';
 
 const key = 'auth';
 

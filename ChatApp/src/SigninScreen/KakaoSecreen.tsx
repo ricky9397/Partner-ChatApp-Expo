@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { WebView } from "react-native-webview";
 import { KAKAO_LOGIN_API_URI, } from '../api/client';
 import kakaoLogin from '../hooks/kakaoLogin';

@@ -1,5 +1,5 @@
 import client from './client';
-import {AuthResult, User} from './types';
+import { AuthResult, User } from './types';
 
 export async function register(params: RegisterParams) {
   try {
@@ -38,6 +38,19 @@ export async function kakaoLoginOrRegister(data: string) {
   return response;
 }
 
+export async function kakaoRegisterOrLogin(params: KakaoRegisterParam) {
+  try {
+    const response = await client.post<AuthResult>(
+      '/api/v1/auth/register/kakao',
+      params
+    );
+    return response;
+  } catch (error) {
+    console.log(error);   
+  }
+}
+
+
 export async function appleLoginOrRegister(identityToken: string) {
   // Apple 사이트 개발자등록 후 사용 가능 ( 유료 )
   // try {
@@ -63,6 +76,8 @@ interface RegisterParams {
   userEmail: string | undefined;
   userPassword: string;
   userPhone: string;
+  userBirthDay: string;
+  gender: string;
 }
 
 interface LoginParams {
@@ -74,4 +89,11 @@ interface EmailParam {
   userEmail: string;
 }
 
+interface KakaoRegisterParam {
+  userName: string;
+  userEmail: string | undefined;
+  userPhone: string;
+  userBirthDay: string;
+  gender: string
+}
 

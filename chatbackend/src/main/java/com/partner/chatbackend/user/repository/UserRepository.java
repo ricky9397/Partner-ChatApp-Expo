@@ -22,4 +22,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByProviderId(String providerId);
 
     Long countByUserEmail(String userEmail);
+
+    @Modifying
+    @Query(value = "UPDATE TB_USERS " +
+            "          SET USER_NAME = :#{#user.userName}," +
+            "              USER_EMAIL = :#{#user.userEmail}," +
+            "              USER_PHONE = :#{#user.userPhone}," +
+            "              GENDER = :#{#user.gender}, " +
+            "        WHERE USER_ID = :#{#user.id}", nativeQuery = true)
+    Long updateOauth2KakaoRegister(@Param("user")User user);
 }

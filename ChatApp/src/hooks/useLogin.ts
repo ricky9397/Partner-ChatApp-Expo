@@ -1,13 +1,13 @@
-import {useMutation} from 'react-query';
-import {login} from '../api/auth';
-import {AuthError} from '../api/types';
-import {useNavigation} from '@react-navigation/core';
-import {useUserState} from '../contexts/UserContext';
-import {RootStackParamList} from '../screens/types';
-import {applyToken} from '../api/client';
+import { useNavigation } from '@react-navigation/core';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useMutation } from 'react-query';
+import { login } from '../api/auth';
+import { applyToken } from '../api/client';
+import { AuthError } from '../api/types';
+import { useUserState } from '../contexts/UserContext';
+import { RootStackParamList } from '../screens/types';
 import authStorage from '../storages/authStorage';
 import useInform from './useInform';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import * as WebBrowser from 'expo-web-browser';
 

@@ -1,11 +1,10 @@
-import { createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { BottomTabNavigation } from './BottomTabNavigation';
 import { AddFeedScreen } from '../screens/AddFeedScreen';
 import { FeedListScreen } from '../screens/FeedListScreen';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { BottomTabNavigation } from './BottomTabNavigation';
 // import { FeedInfo } from '../@types/FeedInfo';
-import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 export type RootStackParamList={
     BottomTab:undefined,
     FeedList:{

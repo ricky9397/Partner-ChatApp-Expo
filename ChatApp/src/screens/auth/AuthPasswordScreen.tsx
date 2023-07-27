@@ -1,30 +1,26 @@
-import React, {useCallback, useState, useMemo} from 'react';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
     StyleSheet,
     Text,
+    TextInput,
     TouchableOpacity,
     View,
-    TextInput,
 } from 'react-native';
-import { useNavigation, RouteProp, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../screens/types';
 import useLogin from '../../hooks/useLogin';
+import { RootStackParamList } from '../../screens/types';
 
 const AuthPasswordScreen = () => {
     const route = useRoute<RouteProp<RootStackParamList, 'AuthPassword'>>();
     const userEmail = route.params?.userEmail;
+    
     const [userPassword, setPassword] = useState('');
-    const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const {mutate: login, isLoading: loginLoading} = useLogin();
 
     const isLoading = loginLoading;
 
     const onPress = () => {
-        if(userEmail === undefined) 
-            return navigate('AuthEmail');
-
         if(isLoading) {
             return;
         }

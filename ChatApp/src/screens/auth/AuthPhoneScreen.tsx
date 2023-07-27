@@ -34,10 +34,10 @@ const AuthPhoneScreen = () => {
     return null;
   }, [userPhone]);
 
-  const onPressPhoneButton = useCallback(() => {
+    const onPressPhoneButton = useCallback(() => {
 
     if(provider === "kakao") {
-      navigate('KakaoLoginSignup', {
+      navigate('KakaoSignup', {
         userEmail: userEmail,
         userPhone: userPhone,
       });
@@ -48,33 +48,32 @@ const AuthPhoneScreen = () => {
       userEmail: userEmail,
       userPhone: userPhone,
     });
+  }, [userPhone]);
 
-  }, [navigate]);
-
-  return (
-      <View style={styles.container}>
-          <View style={styles.title}>
-              <Text style={{fontSize:35,color:'#000', marginLeft: 20}}>휴대폰번호</Text>
-          </View>
-          <View style={styles.content}>
-              <TextInput 
+    return (
+        <View style={styles.container}>
+            <View style={styles.title}>
+                <Text style={{fontSize:35,color:'#000', marginLeft: 20}}>휴대폰번호</Text>
+            </View>
+            <View style={styles.content}>
+                <TextInput 
                   value={userPhone}
-                  style={styles.input}
-                  keyboardType="number-pad"
+                    style={styles.input}
+                    keyboardType="number-pad"
                   onChangeText={onChangeUserPhoneText}
-              />
-          </View>
-          <View style={styles.footer}>
-          <TouchableOpacity 
-              style={styles.button}
-              onPress={onPressPhoneButton}>
-              <Text style={styles.buttonText}>
-                  계속하기
-              </Text>
-          </TouchableOpacity>
-          </View>
-    </View>
-  );
+                />
+            </View>
+            <View style={styles.footer}>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={onPressPhoneButton}>
+                <Text style={styles.buttonText}>  
+                    계속하기
+                </Text>
+            </TouchableOpacity>
+            </View>
+      </View>
+    );
 };
 
 export default AuthPhoneScreen;

@@ -3,11 +3,10 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
-    TextInput,
+    View
 } from 'react-native';
-import {useUserState} from '../../contexts/UserContext';
-import {clearToken} from '../../api/client';
+import { clearToken } from '../../api/client';
+import { useUserState } from '../../contexts/UserContext';
 import authStorage from '../../storages/authStorage';
 
 const LoginOut = () => {

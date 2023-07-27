@@ -1,5 +1,5 @@
-import React, {createContext, useContext, useState} from 'react';
-import {User} from '../api/types';
+import React, { createContext, useContext, useState } from 'react';
+import { User } from '../api/types';
 
 // UserContext의 값은 [값, 업데이터 함수] 타입을 지닙니다.
 // useState를 통해 반환된 값을 그대로 UserContext에 담겠습니다.

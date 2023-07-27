@@ -1,14 +1,14 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useCallback, useMemo, useState } from 'react';
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { RadioButton } from 'react-native-paper';
@@ -17,7 +17,7 @@ import Colors from '../modules/Colors';
 import { RootStackParamList } from '../screens/types';
 
 const KakaoLoginSignup = () => {
-  const route = useRoute<RouteProp<RootStackParamList, 'Signup'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'KakaoSignup'>>();
   const userEmail = route.params?.userEmail;
   const userPhone = route.params?.userPhone;
 

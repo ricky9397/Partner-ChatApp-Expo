@@ -11,8 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -46,5 +44,10 @@ public class UserSecurityService implements UserDetailsService {
 
     public Long countByUserEmail(String userEmail) {
         return userRepository.countByUserEmail(userEmail);
+    }
+
+    public Long oauth2Register(User user) {
+        user.setUserPhone(bCryptPasswordEncoder.encode(user.getUserPhone()));
+        return userRepository.updateOauth2KakaoRegister(user); // 리플래쉬토큰 저장
     }
 }

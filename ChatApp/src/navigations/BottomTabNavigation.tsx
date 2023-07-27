@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { IconName } from '../components/Icons';
 import { TabIcon } from '../components/TabIcon';
+import { ChatScreen } from '../screens/ChatScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { MyPageScreen } from '../screens/MyPageScreen';
-import { ChatScreen } from '../screens/ChatScreen';
 export type  BottomTabParamList = {
     Home: undefined,
     Chat: undefined,

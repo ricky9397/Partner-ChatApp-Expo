@@ -1,5 +1,5 @@
-import {useCallback} from 'react';
-import {Alert, Platform, ToastAndroid} from 'react-native';
+import { useCallback } from 'react';
+import { Alert, Platform, ToastAndroid } from 'react-native';
 
 export default function useInform() {
   const inform = useCallback(({title, message}: InformParams) => {

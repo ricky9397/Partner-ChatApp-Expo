@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
-import {applyToken} from '../api/client';
-import {useUserState} from '../contexts/UserContext';
+import { useEffect, useState } from 'react';
+import { applyToken } from '../api/client';
+import { useUserState } from '../contexts/UserContext';
 import authStorage from '../storages/authStorage';
 
 export default function useAuthLoadEffect() {

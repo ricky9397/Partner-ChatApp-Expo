@@ -1,10 +1,10 @@
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import {
   CompositeNavigationProp,
   NavigatorScreenParams,
   RouteProp,
 } from '@react-navigation/core';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /* MainTab */
 export type MainTabParamList = {
@@ -25,7 +25,9 @@ export type RootStackParamList = {
   Auth: undefined;
   Kakao: undefined;
   RootApp: undefined;
-  AuthEmail: undefined;
+  AuthEmail: {
+    provider : string;
+  };
   AuthPhone: {
     userEmail: string | undefined;
     provider: string;
@@ -39,7 +41,7 @@ export type RootStackParamList = {
     userPhone: string;
   };
 
-  KakaoLoginSignup : {
+  KakaoSignup : {
     userEmail: string | undefined;
     userPhone: string;
   }

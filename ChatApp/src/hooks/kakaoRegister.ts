@@ -1,17 +1,17 @@
 import { useNavigation } from '@react-navigation/core';
 import { useMutation } from 'react-query';
-import { register } from '../api/auth';
+import { kakaoRegisterOrLogin } from '../api/auth';
 import { AuthError } from '../api/types';
 import { useUserState } from '../contexts/UserContext';
 import { RootStackNavigationProp } from '../screens/types';
 import useInform from './useInform';
 
-export default function useRegister() {
+export default function kakaoRegister() {
   const [, setUser] = useUserState();
   const navigation = useNavigation<RootStackNavigationProp>();
   const inform = useInform();
 
-  const mutation = useMutation(register, {
+  const mutation = useMutation(kakaoRegisterOrLogin, {
     onSuccess: data => {
       // setUser(data.user);
       // navigation.pop();

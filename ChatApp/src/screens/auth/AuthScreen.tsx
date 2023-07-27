@@ -1,18 +1,17 @@
-import React, {useCallback} from 'react';
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    Image,
-    Platform
-} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types';
+import React, { useCallback } from 'react';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { RootStackParamList } from '../types';
 
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { appleLoginOrRegister } from '../../api/auth';
 
 const AuthScreen = () => {
 
@@ -35,7 +34,9 @@ const AuthScreen = () => {
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const onPressEmailButton = useCallback(() => {
-    navigate('AuthEmail');
+    navigate('AuthEmail', {
+      provider : 'email'
+    });
   }, [navigate]);
   const onPressKakaoButton = useCallback(() => {
     navigate('Kakao');

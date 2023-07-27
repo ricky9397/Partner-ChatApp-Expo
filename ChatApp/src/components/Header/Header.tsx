@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, useWindowDimensions } from 'react-native';
-import { Spacer } from '../Spacer';
-import { HeaderTitle } from './HeaderTitle';
-import { HeaderIcon } from './HeaderIcon';
-import { HeaderGroup } from './HeaderGroup';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconName } from '../Icons';
+import { Spacer } from '../Spacer';
+import { HeaderGroup } from './HeaderGroup';
+import { HeaderIcon } from './HeaderIcon';
+import { HeaderTitle } from './HeaderTitle';
 
 type CompoundComposition = {
     Title: React.FC<{title:string}>;

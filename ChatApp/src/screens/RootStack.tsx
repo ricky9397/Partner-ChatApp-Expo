@@ -11,11 +11,11 @@ import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 // import WriteScreen from './WriteScreen';
 import GoogleScreen from '../SigninScreen/GoogleScreen';
 import KakaoScreen from '../SigninScreen/KakaoSecreen';
+import KakaoSignup from '../SignupScreen/KakaoSignupScreen';
 import AuthEmailScreen from './auth/AuthEmailScreen';
 import AuthPasswordScreen from './auth/AuthPasswordScreen';
 import AuthPhoneScreen from './auth/AuthPhoneScreen';
 import AuthScreen from './auth/AuthScreen';
-import KakaoLoginSignup from '../SignupScreen/KakaoLoginSignup';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -65,8 +65,8 @@ function RootStack() {
         options={{title: title}}
       />
       <Stack.Screen
-        name="KakaoLoginSignup"
-        component={KakaoLoginSignup}
+        name="KakaoSignup"
+        component={KakaoSignup}
         options={{title: title}}
       />
       <Stack.Screen

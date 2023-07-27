@@ -1,17 +1,17 @@
-import React, {useCallback, useState, useMemo} from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
     StyleSheet,
     Text,
+    TextInput,
     TouchableOpacity,
     View,
-    TextInput,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
-import {useUserState} from '../../contexts/UserContext';
 import validator from 'validator';
 import { getEmailCheck } from '../../api/auth';
+import { useUserState } from '../../contexts/UserContext';
+import { RootStackParamList } from '../types';
 
 interface Response {
     data : number;
@@ -22,8 +22,11 @@ interface Response {
 }
 
 const AuthEmailScreen = () => {
+    const route = useRoute<RouteProp<RootStackParamList, 'AuthEmail'>>();
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     
+    const provider = route.params?.provider;
+
     const [userEmail, setEmail] = useState('');
     const [user] = useUserState();
 
@@ -40,10 +43,16 @@ const AuthEmailScreen = () => {
 
     const onPressEmailCheck = useCallback(async () => {
         const { data } :Response = await getEmailCheck({ userEmail: userEmail });
-        if(data > 0) {
+        if(data > 0 && provider === "email") {
             navigation.navigate("AuthPassword", {userEmail: userEmail});
-        } else {
-            navigation.navigate('AuthPhone', { userEmail : userEmail });
+            return;
+        } 
+        if(data === 0 && provider === "email" || provider === "kakao") {
+            navigation.navigate('AuthPhone', { 
+                userEmail : userEmail,
+                provider : provider
+            });
+            return;
         }
     }, [userEmail]) ;
 
