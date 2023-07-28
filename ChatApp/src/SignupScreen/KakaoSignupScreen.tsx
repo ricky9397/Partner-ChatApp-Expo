@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { RadioButton } from 'react-native-paper';
-import useRegister from '../hooks/useRegister';
+import kakaoRegister from '../hooks/kakaoRegister';
 import Colors from '../modules/Colors';
 import { RootStackParamList } from '../screens/types';
 
@@ -23,12 +23,12 @@ const KakaoLoginSignup = () => {
 
   const [userName, setName] = useState('');
   const [userBirthDay, setBirthDay] = useState('');
-  const [checked, setChecked] = useState('');
+  const [gender, setGender] = useState('M');
 
   // DateTimePickerModal
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const {mutate: register, isLoading: registerLoading} = useRegister();
+  const {mutate: register, isLoading: registerLoading} = kakaoRegister();
   const isLoading = registerLoading;
 
   const onPress = () => {
@@ -36,11 +36,13 @@ const KakaoLoginSignup = () => {
       return;
     }
 
-    // register({
-    //   userEmail,
-    //   userName,
-    //   userPhone
-    // });
+    register({
+      userEmail,
+      userName,
+      userPhone,
+      userBirthDay,
+      gender
+    });
   }
 
   const showDatePicker = () => {
@@ -56,7 +58,6 @@ const KakaoLoginSignup = () => {
       onChangeBirthDayText(new Date(data).toLocaleDateString());
   };
 
-
   const nameErrorText = useMemo(() => {
     if (userName.length === 0) {
       return '이름을 입력해주세요.';
@@ -64,13 +65,19 @@ const KakaoLoginSignup = () => {
     return null;
   }, [userName.length]);
   
-
   const birthDayErrorText = useMemo(() => {
     if (userBirthDay.length === 0) {
       return '생년월일을 선택하세요.';
     }
     return null;
   }, [userBirthDay]);
+
+  const genderErrorText = useMemo(() => {
+    if(gender.length === 0) {
+      return '성별을 선택하세요.';
+    }
+    return null;
+  }, [gender]);
 
   const onChangeNameText = useCallback((text: string) => {
     setName(text);
@@ -83,11 +90,13 @@ const KakaoLoginSignup = () => {
   const signupButtonEnabled = useMemo(() => {
     return (
       nameErrorText == null &&
-      birthDayErrorText == null
+      birthDayErrorText == null &&
+      genderErrorText == null
     );
   }, [
     nameErrorText,
     birthDayErrorText,
+    genderErrorText,
   ]);
 
   const signupButtonStyle = useMemo(() => {
@@ -117,15 +126,15 @@ const KakaoLoginSignup = () => {
         </View>
         <View>
           <Text style={styles.title}>성별</Text>
-          <RadioButton
-            value="M"
-            status={ checked === 'first' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('first')} />
-          <RadioButton
-            value="F"
-            status={ checked === 'second' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('second')}
-          />
+          <RadioButton.Group onValueChange={value => setGender(value)} value={gender}>
+            <View style={styles.selectBtnText}>
+              <RadioButton.Item value="M" label='남자' style={styles.raidoBtn}/>
+              <RadioButton.Item value="F" label='여자' style={styles.raidoBtn}/>
+            </View>
+          </RadioButton.Group>
+          {nameErrorText && (
+              <Text style={styles.errorText}>{genderErrorText}</Text>
+          )}
         </View>
         <View style={styles.section}>
           <TouchableOpacity onPress={showDatePicker}>
@@ -220,5 +229,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  selectBtnText: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  raidoBtn: {
+    flex: 1,
+    marginRight: 15,
+    margin: 5
   },
 });

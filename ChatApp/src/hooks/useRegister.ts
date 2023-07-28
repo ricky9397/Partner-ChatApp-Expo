@@ -1,22 +1,25 @@
 import { useNavigation } from '@react-navigation/core';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMutation } from 'react-query';
 import { register } from '../api/auth';
+import { applyToken } from '../api/client';
 import { AuthError } from '../api/types';
 import { useUserState } from '../contexts/UserContext';
-import { RootStackNavigationProp } from '../screens/types';
+import { RootStackParamList } from '../screens/types';
+import authStorage from '../storages/authStorage';
 import useInform from './useInform';
 
 export default function useRegister() {
   const [, setUser] = useUserState();
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const inform = useInform();
 
   const mutation = useMutation(register, {
     onSuccess: data => {
-      // setUser(data.user);
-      // navigation.pop();
-      // applyToken(data.jwt);
-      // authStorage.set(data);
+      setUser(data.body.user);
+      applyToken(data.headers.auth_token, data.headers.refresh_token);
+      authStorage.set(data.body);
+      navigate('RootApp');  
     },
     onError: (error: AuthError) => {
       console.log(error);

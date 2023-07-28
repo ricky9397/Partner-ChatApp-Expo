@@ -15,6 +15,7 @@ export interface User {
   loginFailCnt: number;
   lockedYn: string;
   gender: string;
+  userBirthDay: string;
 }
 
 export interface AuthResult {

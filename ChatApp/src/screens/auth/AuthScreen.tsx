@@ -46,12 +46,12 @@ const AuthScreen = () => {
       <View style={styles.container}>
           <View style={styles.header} />
           <View style={styles.title}>
-          <Text style={{fontSize:35,color:'#3c3c3c'}}>어서와,{'\n'}소개팅은 처음이지?</Text>
+          {/* <Text style={{fontSize:35,color:'#3c3c3c'}}>어서와,{'\n'}소개팅은 처음이지?</Text> */}
           </View>
           <View style={styles.content}>
           <Image
               style={{height:'100%',width:'100%',resizeMode:'contain'}}
-              source={require('../../../assets/favicon.png')}/>
+              source={require('../../../assets/logo.png')}/>
           </View>
           <View style={styles.footer}>
           <TouchableOpacity 
@@ -61,13 +61,13 @@ const AuthScreen = () => {
                   Email 로그인
               </Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
             style={styles.button}
             onPress={onPressEmailButton}>
               <Text style={styles.buttonText}>
                   구글로그인
               </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity 
             style={styles.kakaoButton}
             onPress={onPressKakaoButton}>
@@ -95,32 +95,31 @@ export default AuthScreen;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#FDF5E6',
+      backgroundColor: 'white',
       padding: 10
     },
     header: {
       width:'100%',
       height:'5%',
-      backgroundColor: '#FDF5E6',
+      backgroundColor: 'white',
     },
     title: {
       width:'100%',
-      height:'18%',
       justifyContent: 'center',
-      backgroundColor: '#FDF5E6',
+      backgroundColor: 'white',
     },
     content: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingBottom:20,
-      backgroundColor: '#FDF5E6',
+      paddingBottom:30,
+      backgroundColor: 'white',
     },
     footer: {
       width:'100%',
-      height:'20%',
+      height:'15%',
       marginBottom: 10,
-      backgroundColor: '#FDF5E6',
+      backgroundColor: 'white',
     },
     button: {
         flex: 1,

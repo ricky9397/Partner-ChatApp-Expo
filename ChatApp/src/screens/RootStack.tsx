@@ -22,8 +22,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
   const title = '짝꿍';
-  const [user] = useUserState();
+
   useAuthLoadEffect();
+  
+  const [user] = useUserState();
+
 
   if(!!user) {
     return (

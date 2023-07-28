@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserEmail(String username);
 
-    @Modifying // update , delete Query시 @Modifying 어노테이션, nativeQuery = true 추가
+    @Modifying(clearAutomatically = true) // update , delete Query시 @Modifying 어노테이션, nativeQuery = true 추가
     @Query(value = "UPDATE TB_USERS SET REFRESH_TOKEN = :refreshToken where USER_Id = :userId", nativeQuery = true)
     void update(@Param(value = "refreshToken") String refreshToken, @Param(value = "userId") Long userId);
 
@@ -28,7 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "          SET USER_NAME = :#{#user.userName}," +
             "              USER_EMAIL = :#{#user.userEmail}," +
             "              USER_PHONE = :#{#user.userPhone}," +
-            "              GENDER = :#{#user.gender}, " +
-            "        WHERE USER_ID = :#{#user.id}", nativeQuery = true)
-    Long updateOauth2KakaoRegister(@Param("user")User user);
+            "              GENDER = :#{#user.gender}," +
+            "              USER_BIRTH_DAY = :#{#user.userBirthDay} " +
+            "        WHERE USER_EMAIL = :#{#user.userEmail} ", nativeQuery = true)
+    int updateOauth2KakaoRegister(@Param("user")User user);
 }

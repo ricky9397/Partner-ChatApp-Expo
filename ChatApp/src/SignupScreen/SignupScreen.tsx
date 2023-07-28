@@ -25,7 +25,7 @@ const SignupScreen = () => {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [userName, setName] = useState('');
   const [userBirthDay, setBirthDay] = useState('');
-  const [checked, setChecked] = useState('');
+  const [gender, setGender] = useState('M');
 
   // DateTimePickerModal
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -42,7 +42,9 @@ const SignupScreen = () => {
       userEmail,
       userPassword,
       userName,
-      userPhone
+      userPhone,
+      userBirthDay,
+      gender
     });
   }
 
@@ -82,6 +84,7 @@ const SignupScreen = () => {
     if (userPassword !== confirmedPassword) {
       return '비밀번호를 확인해주세요.';
     }
+    return null;
   }, [userPassword, confirmedPassword]);
 
   const nameErrorText = useMemo(() => {
@@ -97,37 +100,45 @@ const SignupScreen = () => {
       return '생년월일을 선택하세요.';
     }
     return null;
-  }, [userBirthDay]);
+  }, [userBirthDay.length]);
 
+  const genderErrorText = useMemo(() => {
+    if(gender.length === 0) {
+      return '성별을 선택하세요.';
+    }
+    return null;
+  }, [gender.length]);
 
   const onChangePasswordText = useCallback((text: string) => {
     setPassword(text);
-  }, []);
+  }, [userPassword]);
 
   const onChangeConfirmedPasswordText = useCallback((text: string) => {
     setConfirmedPassword(text);
-  }, []);
+  }, [confirmedPassword]);
 
   const onChangeNameText = useCallback((text: string) => {
     setName(text);
-  }, []);
+  }, [userName]);
 
   const onChangeBirthDayText = useCallback((text: string) => {
     setBirthDay(text);
-  }, []);
+  }, [userBirthDay]);
 
   const signupButtonEnabled = useMemo(() => {
     return (
       passwordErrorText == null &&
       confirmedPasswordErrorText == null &&
       nameErrorText == null &&
-      birthDayErrorText == null
+      birthDayErrorText == null &&
+      genderErrorText
     );
   }, [
     passwordErrorText,
     confirmedPasswordErrorText,
     nameErrorText,
     birthDayErrorText,
+    genderErrorText
   ]);
 
   const signupButtonStyle = useMemo(() => {
@@ -137,7 +148,6 @@ const SignupScreen = () => {
     return [styles.signupButton, styles.disabledSignupButton];
   }, [signupButtonEnabled]);
 
-  
   return (
     <View style={styles.container}>
         <KeyboardAvoidingView
@@ -181,15 +191,15 @@ const SignupScreen = () => {
         </View>
         <View>
           <Text style={styles.title}>성별</Text>
-          <RadioButton
-            value="M"
-            status={ checked === 'first' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('first')} />
-          <RadioButton
-            value="F"
-            status={ checked === 'second' ? 'checked' : 'unchecked' }
-            onPress={() => setChecked('second')}
-          />
+          <RadioButton.Group onValueChange={value => setGender(value)} value={gender}>
+            <View style={styles.selectBtnText}>
+              <RadioButton.Item value="M" label='남자' style={styles.raidoBtn}/>
+              <RadioButton.Item value="F" label='여자' style={styles.raidoBtn}/>
+            </View>
+          </RadioButton.Group>
+          {nameErrorText && (
+              <Text style={styles.errorText}>{genderErrorText}</Text>
+          )}
         </View>
         <View style={styles.section}>
           <TouchableOpacity onPress={showDatePicker}>
@@ -201,7 +211,7 @@ const SignupScreen = () => {
               onPressIn={showDatePicker}
             />
             {nameErrorText && (
-              <Text style={styles.errorText}>{nameErrorText}</Text>
+              <Text style={styles.errorText}>{birthDayErrorText}</Text>
             )}
             <DateTimePickerModal
                   isVisible={isDatePickerVisible}
@@ -284,5 +294,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  selectBtnText: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  raidoBtn: {
+    flex: 1,
+    marginRight: 15,
+    margin: 5
   },
 });

@@ -1,19 +1,22 @@
 package com.partner.chatbackend.user.controller;
 
-import com.partner.chatbackend.common.exception.AuthenticationUserException;
-import com.partner.chatbackend.common.exception.ErrorCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.partner.chatbackend.common.cm.Constants;
+import com.partner.chatbackend.common.jwt.JWTUtil;
 import com.partner.chatbackend.common.rest.RestData;
 import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserSecurityService userSecurityService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**+
      * 관리자, 유저 회원가입
@@ -29,23 +33,34 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/register")
-    public ResponseEntity<RestData> register(@RequestBody User user) {
-        Long result = userSecurityService.register(user);
-        if(result == 0) {
-            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
+    @PostMapping("/register/{urlId}")
+    public ResponseEntity<RestData> register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+
+
+        User result;
+        if(urlId.equals("email")) {
+            result = userSecurityService.register(user);
+        } else {
+            result = userSecurityService.oauth2Register(user);
         }
-        return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다."));
+
+        String refreshToken = JWTUtil.makeRefreshToken(result.getUserEmail());
+        String authToken = JWTUtil.makeAuthToken(result.getUserEmail());
+
+        userSecurityService.updateRefreshToken(refreshToken, result.getId()); // 로그인 성공 후 토큰 DB저장.
+
+        response.setHeader(Constants.REFRESH_TOKEN, refreshToken);
+        response.setHeader(Constants.AUTH_TOKEN, authToken);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("user", result);
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(resultMap));
+
+        return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다.", result));
     }
 
-    @PostMapping("/register/{urlId}")
-    public ResponseEntity<RestData> oauth2Register(@PathVariable("urlId") String urlId, @RequestBody User user) {
-        Long result = userSecurityService.oauth2Register(user);
-        if(result == 0) {
-            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
-        }
-        return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다."));
-    }
 
     @PostMapping("/emailCheck")
     public ResponseEntity<RestData> getEmailCheck(@RequestBody User user) {
@@ -69,5 +84,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+
 
 }

@@ -15,7 +15,6 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function useLogin() {
   const [, setUser] = useUserState();
-  // const navigation = useNavigation<RootStackParamList>();
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const inform = useInform();
 

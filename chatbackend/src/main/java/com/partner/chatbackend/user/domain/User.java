@@ -37,6 +37,8 @@ public class User extends BaseTimeEntity {
     @Column(name = "GENDER")
     private String gender;
 
+    @Column(name = "USER_BIRTH_DAY")
+    private String userBirthDay;
 
 //    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //    @JoinColumn(name ="USER_ID")
@@ -91,7 +93,7 @@ public class User extends BaseTimeEntity {
         this.providerId = providerId;
         this.provider = provider;
     }
-
+    @Builder
     public User(Long id, String userEmail, String role, String providerId, String provider) {
         this.id = id;
         this.userEmail = userEmail;

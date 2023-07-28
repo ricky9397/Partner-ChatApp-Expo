@@ -2,15 +2,15 @@ import client from './client';
 import { AuthResult, User } from './types';
 
 export async function register(params: RegisterParams) {
-  try {
-    const response = await client.post<AuthResult>(
-      '/api/v1/auth/register',
-      params
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);   
+  const response = await client.post<AuthResult>(
+    '/api/v1/auth/register/email',
+    params
+  )
+  const data = {
+    'headers' : response.headers,
+    'body' : response.data
   }
+  return data;
 }
 
 export async function login(params: LoginParams) {
@@ -39,15 +39,17 @@ export async function kakaoLoginOrRegister(data: string) {
 }
 
 export async function kakaoRegisterOrLogin(params: KakaoRegisterParam) {
-  try {
-    const response = await client.post<AuthResult>(
-      '/api/v1/auth/register/kakao',
-      params
-    );
-    return response;
-  } catch (error) {
-    console.log(error);   
+  
+  const response = await client.post<AuthResult>(
+    '/api/v1/auth/register/kakao',
+    params
+  );
+
+  const data = {
+    'headers' : response.headers,
+    'body' : response.data
   }
+  return data;
 }
 
 
@@ -92,7 +94,7 @@ interface EmailParam {
 interface KakaoRegisterParam {
   userName: string;
   userEmail: string | undefined;
-  userPhone: string;
+  userPhone: string | undefined;
   userBirthDay: string;
   gender: string
 }

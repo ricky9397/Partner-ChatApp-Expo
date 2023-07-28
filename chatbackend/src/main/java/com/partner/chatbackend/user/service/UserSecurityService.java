@@ -1,9 +1,12 @@
 package com.partner.chatbackend.user.service;
 
+import com.partner.chatbackend.common.exception.AuthenticationUserException;
+import com.partner.chatbackend.common.exception.ErrorCode;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,10 +28,16 @@ public class UserSecurityService implements UserDetailsService {
         return new UserDetail(userEntity);
     }
 
-    public Long register(User user){
+    public User register(User user){
         user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
         user.setUserPhone(bCryptPasswordEncoder.encode(user.getUserPhone()));
-        return userRepository.save(user).getId();
+        Long id = userRepository.save(user).getId();
+
+        if(id == 0)
+            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
+
+        User resultUser = userRepository.findById(id).orElseThrow(() -> new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "사용자가 존재하지 않습니다."));
+        return resultUser;
     }
 
     // 토큰 저장
@@ -46,8 +55,15 @@ public class UserSecurityService implements UserDetailsService {
         return userRepository.countByUserEmail(userEmail);
     }
 
-    public Long oauth2Register(User user) {
+    public User oauth2Register(User user) {
         user.setUserPhone(bCryptPasswordEncoder.encode(user.getUserPhone()));
-        return userRepository.updateOauth2KakaoRegister(user); // 리플래쉬토큰 저장
+
+        int cnt = userRepository.updateOauth2KakaoRegister(user); // 리플래쉬토큰 저장
+
+        if(cnt == 0)
+            throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
+
+        User resultUser = userRepository.findByUserEmail(user.getUserEmail()).orElseThrow(() -> new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "사용자가 존재하지 않습니다."));
+        return resultUser;
     }
 }
