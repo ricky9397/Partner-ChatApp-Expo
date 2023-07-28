@@ -31,3 +31,7 @@ https://lotuus.tistory.com/79
 # portainer (docker 관리자 모드 설치)
  - docker volume create portainer_data
  - docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+
+
+# 리액트네이티브 paper 디자인 참고자료
+ - https://callstack.github.io/react-native-paper/docs/components/Searchbar
