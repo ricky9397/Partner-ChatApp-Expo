@@ -30,6 +30,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "              USER_PHONE = :#{#user.userPhone}," +
             "              GENDER = :#{#user.gender}," +
             "              USER_BIRTH_DAY = :#{#user.userBirthDay} " +
-            "        WHERE USER_EMAIL = :#{#user.userEmail} ", nativeQuery = true)
+            "        WHERE USER_ID = :#{#user.id} ", nativeQuery = true)
     int updateOauth2KakaoRegister(@Param("user")User user);
 }

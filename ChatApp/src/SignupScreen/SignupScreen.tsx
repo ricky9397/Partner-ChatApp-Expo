@@ -21,6 +21,7 @@ const SignupScreen = () => {
   const userEmail = route.params?.userEmail;
   const userPhone = route.params?.userPhone;
 
+
   const [userPassword, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [userName, setName] = useState('');
@@ -131,7 +132,7 @@ const SignupScreen = () => {
       confirmedPasswordErrorText == null &&
       nameErrorText == null &&
       birthDayErrorText == null &&
-      genderErrorText
+      genderErrorText == null
     );
   }, [
     passwordErrorText,

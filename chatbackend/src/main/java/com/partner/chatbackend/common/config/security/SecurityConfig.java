@@ -52,8 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 시큐리티 세션을 사용하지 않음.
                 .authorizeRequests(config -> config
                                 .antMatchers("/").permitAll()
-                                .antMatchers("/api/v1/auth/register").permitAll()
-                                .antMatchers("/api/v1/auth/register/**").permitAll()
+                                .antMatchers("/api/v1/auth/register/email").permitAll()
+                                .antMatchers("/api/v1/auth/register/kakao").permitAll()
                                 .antMatchers("/api/v1/auth/login").permitAll()
                                 .antMatchers("/api/v1/auth/emailCheck").permitAll()
                                 .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .authorizeRequests(config -> config
                                     .antMatchers("/oauth2/**").permitAll()
+                                    .antMatchers("/favicon.ico").permitAll()
                                     .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 시큐리티 세션을 사용하지 않음.

@@ -26,9 +26,11 @@ export type RootStackParamList = {
   Kakao: undefined;
   RootApp: undefined;
   AuthEmail: {
+    id : number;
     provider : string;
   };
   AuthPhone: {
+    id: number;
     userEmail: string | undefined;
     provider: string;
   }; // 핸드폰 입력 화면
@@ -44,6 +46,7 @@ export type RootStackParamList = {
   KakaoSignup : {
     userEmail: string | undefined;
     userPhone: string;
+    id: number;
   }
 
   Google: undefined;
@@ -52,12 +55,11 @@ export type RootStackParamList = {
   Article: {
     id: number;
   };
+  
   MyArticles: undefined;
   Write: {
     articleId?: number;
   };
-
-  
 
 };
 export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;

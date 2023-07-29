@@ -1,8 +1,14 @@
 package com.partner.chatbackend.common.oauth2.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -28,8 +34,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if(provider.equals("kakao")) {
             String kakaoId = oAuth2User.getName();
-            Map<String, Object> map = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
-            String userEmail = String.valueOf(map.get("email"));
+            String userEmail;
+
+            try {
+                userEmail = Utils.getStringJsonParser(oAuth2User.getAttributes().get("kakao_account"), "email");
+            } catch (Exception e) {
+                throw new RuntimeException("json 파싱 에러");
+            }
 
             Iterator<? extends GrantedAuthority> iterator = (oAuth2User.getAuthorities()).iterator();
 

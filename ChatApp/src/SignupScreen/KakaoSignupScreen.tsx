@@ -18,6 +18,7 @@ import { RootStackParamList } from '../screens/types';
 
 const KakaoLoginSignup = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'KakaoSignup'>>();
+  const id = route.params?.id;
   const userEmail = route.params?.userEmail;
   const userPhone = route.params?.userPhone;
 
@@ -37,6 +38,7 @@ const KakaoLoginSignup = () => {
     }
 
     register({
+      id,
       userEmail,
       userName,
       userPhone,

@@ -5,7 +5,7 @@ import authStorage from '../storages/authStorage';
 
 export default function useAuthLoadEffect() {
   const [, setUser] = useUserState();
-  const [initialized, setInitialized] = useState(false);
+  // const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const fn = async () => {

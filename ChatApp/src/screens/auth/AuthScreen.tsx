@@ -35,6 +35,7 @@ const AuthScreen = () => {
 
   const onPressEmailButton = useCallback(() => {
     navigate('AuthEmail', {
+      id: 0,
       provider : 'email'
     });
   }, [navigate]);

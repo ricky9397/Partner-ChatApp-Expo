@@ -23,7 +23,9 @@ export default function useLogin() {
       setUser(data.body.user);
       applyToken(data.headers.auth_token, data.headers.refresh_token);
       authStorage.set(data.body);
+
       navigate('RootApp');
+
     },
     onError: (error: AuthError) => {
       const message =

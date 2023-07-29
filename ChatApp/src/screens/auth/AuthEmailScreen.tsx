@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import validator from 'validator';
 import { getEmailCheck } from '../../api/auth';
-import { useUserState } from '../../contexts/UserContext';
 import { RootStackParamList } from '../types';
 
 interface Response {
@@ -28,9 +27,11 @@ const AuthEmailScreen = () => {
     const provider = route.params?.provider;
 
     const [userEmail, setEmail] = useState('');
-    const [user] = useUserState();
 
     const emailErrorText = useMemo(() => {
+        if (userEmail.length === 0) {
+            return '이메일을 입력해주세요.';
+          }
         if (!validator.isEmail(userEmail)) {
             return '올바른 이메일이 아닙니다.';
         }
@@ -48,7 +49,9 @@ const AuthEmailScreen = () => {
             return;
         } 
         if(data === 0 && provider === "email" || provider === "kakao") {
+            const id = route.params?.id;
             navigation.navigate('AuthPhone', { 
+                id : id,
                 userEmail : userEmail,
                 provider : provider
             });
@@ -78,6 +81,9 @@ const AuthEmailScreen = () => {
                     style={styles.input}
                     onChangeText={onChangeEmailText}
                 />
+                {emailErrorText && (
+                    <Text style={styles.errorText}>{emailErrorText}</Text>
+                )}
             </View>
             <View style={styles.footer}>
             <TouchableOpacity 
@@ -154,5 +160,10 @@ const styles = StyleSheet.create({
         marginRight: 20,
         borderRadius: 20,
         backgroundColor: 'gray',
+    },
+    errorText: {
+        fontSize: 15,
+        color: 'red',
+        marginTop: 4,
     },
 });

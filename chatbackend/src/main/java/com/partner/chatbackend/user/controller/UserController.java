@@ -34,10 +34,7 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping("/register/{urlId}")
-    public ResponseEntity<RestData> register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
-
+    public void register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         User result;
         if(urlId.equals("email")) {
@@ -57,8 +54,6 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("user", result);
         response.getOutputStream().write(objectMapper.writeValueAsBytes(resultMap));
-
-        return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다.", result));
     }
 
 

@@ -27,26 +27,33 @@ function RootStack() {
   
   const [user] = useUserState();
 
+  // if(!!user) {
+  //   return (
+  //     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
+  //       <Stack.Screen
+  //         name="RootApp"
+  //         component={RootApp}
+  //         options={{headerShown: false}}
+  //       />
+  //     </Stack.Navigator>
+  //   )
+  // }
 
-  if(!!user) {
-    return (
-      <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
+  return (
+    <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
+      {!!user ? (
         <Stack.Screen
           name="RootApp"
           component={RootApp}
           options={{headerShown: false}}
         />
-      </Stack.Navigator>
-    )
-  }
-
-  return (
-    <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
+      ) : (
+        <>
       <Stack.Screen
         name="Auth"
         component={AuthScreen}
         options={{headerShown: false}}
-      />
+        />
       <Stack.Screen
         name="Kakao"
         component={KakaoScreen}
@@ -87,6 +94,8 @@ function RootStack() {
         component={ChatList}
         options={{title: '메시지'}}
       /> */}
+      </>
+      )} 
     </Stack.Navigator>
   );
 }

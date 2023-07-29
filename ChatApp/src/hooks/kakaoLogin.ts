@@ -22,6 +22,7 @@ export default function kakaoLogin() {
     onSuccess: data => {
       if(data.user.userEmail === undefined || data.user.userEmail === null || data.user.userEmail === "") {
         navigate('AuthEmail', {
+          id : data.user.id,
           provider : data.user.provider
         });
         return;
@@ -29,6 +30,7 @@ export default function kakaoLogin() {
 
       if(data.user.userPhone === undefined || data.user.userPhone === null) {
         navigate('AuthPhone', { 
+          id : data.user.id,
           userEmail : data.user.userEmail,
           provider : data.user.provider
         });

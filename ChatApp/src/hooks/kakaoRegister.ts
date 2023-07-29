@@ -23,7 +23,8 @@ export default function kakaoRegister() {
       setUser(data.body.user);
       applyToken(data.headers.auth_token, data.headers.refresh_token);
       authStorage.set(data.body);
-      navigate('RootApp');  
+
+      navigate('RootApp');
     },
     onError: (error: AuthError) => {
       console.log(error);

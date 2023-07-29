@@ -3,6 +3,8 @@ package com.partner.chatbackend.common.jwt;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
+import com.partner.chatbackend.common.exception.AuthenticationUserException;
+import com.partner.chatbackend.common.exception.ErrorCode;
 import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
@@ -109,9 +111,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
-        
-        // TODO 로그인 실패 로직
         System.out.println("===================================================로그인실패");
+
         super.unsuccessfulAuthentication(request, response, failed);
     }
 

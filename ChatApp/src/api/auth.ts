@@ -1,6 +1,8 @@
 import client from './client';
 import { AuthResult, User } from './types';
 
+
+// 일반회원가입
 export async function register(params: RegisterParams) {
   const response = await client.post<AuthResult>(
     '/api/v1/auth/register/email',
@@ -10,9 +12,11 @@ export async function register(params: RegisterParams) {
     'headers' : response.headers,
     'body' : response.data
   }
+  
   return data;
 }
 
+// 이메일 로그인
 export async function login(params: LoginParams) {
   const response = await client.post<AuthResult>(
     '/api/v1/auth/login', 
@@ -25,6 +29,7 @@ export async function login(params: LoginParams) {
   return data;
 }
 
+// 중복 이메일 체크
 export async function getEmailCheck(userEmail: EmailParam) {
     const response = await client.post(
       '/api/v1/auth/emailCheck',
@@ -33,13 +38,14 @@ export async function getEmailCheck(userEmail: EmailParam) {
     return response.data;
 }
 
+// 카카오로그인 
 export async function kakaoLoginOrRegister(data: string) {
   const response: AuthResult = JSON.parse(data);
   return response;
 }
 
+// 카카오 회원가입 
 export async function kakaoRegisterOrLogin(params: KakaoRegisterParam) {
-  
   const response = await client.post<AuthResult>(
     '/api/v1/auth/register/kakao',
     params
@@ -92,6 +98,7 @@ interface EmailParam {
 }
 
 interface KakaoRegisterParam {
+  id: number;
   userName: string;
   userEmail: string | undefined;
   userPhone: string | undefined;

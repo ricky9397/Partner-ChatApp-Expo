@@ -1,8 +1,12 @@
 package com.partner.chatbackend.common.utils;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.rest.RestData;
-import net.minidev.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -123,6 +127,15 @@ public class Utils {
             }
             return headers;
         }
+    }
+
+
+    public static String getStringJsonParser(Object object, String key) throws Exception {
+        JSONParser jsonParser = new JSONParser();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonStr = objectMapper.writeValueAsString(object);;
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonStr);
+        return String.valueOf(jsonObject.get(key));
     }
 
 

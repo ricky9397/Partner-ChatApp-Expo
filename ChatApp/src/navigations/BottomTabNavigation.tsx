@@ -24,7 +24,6 @@ export const BottomTabNavigation = ()=>{
                     return 'chatbubble'
                 } 
   
-
                 return 'home';
             }
 
