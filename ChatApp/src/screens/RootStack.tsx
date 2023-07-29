@@ -1,5 +1,6 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import { RootStackParamList } from './types';
 // import MainTab from './MainTab';
 // import ArticleScreen from './ArticleScreen';
@@ -16,28 +17,22 @@ import AuthEmailScreen from './auth/AuthEmailScreen';
 import AuthPasswordScreen from './auth/AuthPasswordScreen';
 import AuthPhoneScreen from './auth/AuthPhoneScreen';
 import AuthScreen from './auth/AuthScreen';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
-  const title = '짝꿍';
 
+  const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const title = '짝꿍';
   useAuthLoadEffect();
-  
   const [user] = useUserState();
 
-  // if(!!user) {
-  //   return (
-  //     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
-  //       <Stack.Screen
-  //         name="RootApp"
-  //         component={RootApp}
-  //         options={{headerShown: false}}
-  //       />
-  //     </Stack.Navigator>
-  //   )
-  // }
+  const onPress = () => {
+    navigate("Auth");
+  }
 
   return (
     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
@@ -62,7 +57,17 @@ function RootStack() {
       <Stack.Screen
         name="AuthEmail"
         component={AuthEmailScreen}
-        options={{title: title}}
+        options={{
+          title: title,
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity onPress={onPress}>
+              <Image
+                    style={{backgroundColor: 'red', width: 30, height: 40}}
+                    source={require('../../assets/logo.png')}/>
+            </TouchableOpacity>
+          )
+        }}
       />
       <Stack.Screen
         name="AuthPassword"

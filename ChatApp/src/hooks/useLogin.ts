@@ -20,6 +20,9 @@ export default function useLogin() {
 
   const mutation = useMutation(login, {
     onSuccess: data => {
+
+      console.log(data.body)
+
       setUser(data.body.user);
       applyToken(data.headers.auth_token, data.headers.refresh_token);
       authStorage.set(data.body);

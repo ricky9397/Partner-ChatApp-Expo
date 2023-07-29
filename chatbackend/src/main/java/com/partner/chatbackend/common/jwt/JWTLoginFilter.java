@@ -11,6 +11,7 @@ import com.partner.chatbackend.user.domain.UserDetail;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -111,9 +113,16 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
-        System.out.println("===================================================로그인실패");
+        logger.info("로그인 실패 : " + failed.getLocalizedMessage());
 
-        super.unsuccessfulAuthentication(request, response, failed);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value()); // 401
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("code", HttpStatus.UNAUTHORIZED.value());
+        body.put("error", failed.getMessage());
+
+//        super.unsuccessfulAuthentication(request, response, failed);
     }
 
 }
