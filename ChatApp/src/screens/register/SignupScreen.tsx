@@ -12,16 +12,18 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { RadioButton } from 'react-native-paper';
-import kakaoRegister from '../hooks/kakaoRegister';
-import Colors from '../modules/Colors';
-import { RootStackParamList } from '../screens/types';
+import useRegister from '../../hooks/useRegister';
+import Colors from '../../modules/Colors';
+import { RootStackParamList } from '../types';
 
-const KakaoLoginSignup = () => {
-  const route = useRoute<RouteProp<RootStackParamList, 'KakaoSignup'>>();
-  const id = route.params?.id;
+const SignupScreen = () => {
+  const route = useRoute<RouteProp<RootStackParamList, 'Signup'>>();
   const userEmail = route.params?.userEmail;
   const userPhone = route.params?.userPhone;
 
+
+  const [userPassword, setPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
   const [userName, setName] = useState('');
   const [userBirthDay, setBirthDay] = useState('');
   const [gender, setGender] = useState('M');
@@ -29,7 +31,7 @@ const KakaoLoginSignup = () => {
   // DateTimePickerModal
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const {mutate: register, isLoading: registerLoading} = kakaoRegister();
+  const {mutate: register, isLoading: registerLoading} = useRegister();
   const isLoading = registerLoading;
 
   const onPress = () => {
@@ -38,8 +40,8 @@ const KakaoLoginSignup = () => {
     }
 
     register({
-      id,
       userEmail,
+      userPassword,
       userName,
       userPhone,
       userBirthDay,
@@ -60,6 +62,32 @@ const KakaoLoginSignup = () => {
       onChangeBirthDayText(new Date(data).toLocaleDateString());
   };
 
+  const passwordErrorText = useMemo(() => {
+    if (userPassword.length === 0) {
+      return '비밀번호를 입력해주세요.';
+    }
+    if (userPassword.length < 6) {
+      return '비밀번호는 6자리 이상이여야합니다';
+    }
+    if (userPassword !== confirmedPassword) {
+      return '비밀번호를 확인해주세요.';
+    }
+    return null;
+  }, [userPassword, confirmedPassword]);
+
+  const confirmedPasswordErrorText = useMemo(() => {
+    if (confirmedPassword.length === 0) {
+      return '비밀번호를 입력해주세요.';
+    }
+    if (confirmedPassword.length < 6) {
+      return '비밀번호는 6자리 이상이여야합니다';
+    }
+    if (userPassword !== confirmedPassword) {
+      return '비밀번호를 확인해주세요.';
+    }
+    return null;
+  }, [userPassword, confirmedPassword]);
+
   const nameErrorText = useMemo(() => {
     if (userName.length === 0) {
       return '이름을 입력해주세요.';
@@ -67,19 +95,28 @@ const KakaoLoginSignup = () => {
     return null;
   }, [userName.length]);
   
+
   const birthDayErrorText = useMemo(() => {
     if (userBirthDay.length === 0) {
       return '생년월일을 선택하세요.';
     }
     return null;
-  }, [userBirthDay]);
+  }, [userBirthDay.length]);
 
   const genderErrorText = useMemo(() => {
     if(gender.length === 0) {
       return '성별을 선택하세요.';
     }
     return null;
-  }, [gender]);
+  }, [gender.length]);
+
+  const onChangePasswordText = useCallback((text: string) => {
+    setPassword(text);
+  }, [userPassword]);
+
+  const onChangeConfirmedPasswordText = useCallback((text: string) => {
+    setConfirmedPassword(text);
+  }, [confirmedPassword]);
 
   const onChangeNameText = useCallback((text: string) => {
     setName(text);
@@ -91,14 +128,18 @@ const KakaoLoginSignup = () => {
 
   const signupButtonEnabled = useMemo(() => {
     return (
+      passwordErrorText == null &&
+      confirmedPasswordErrorText == null &&
       nameErrorText == null &&
       birthDayErrorText == null &&
       genderErrorText == null
     );
   }, [
+    passwordErrorText,
+    confirmedPasswordErrorText,
     nameErrorText,
     birthDayErrorText,
-    genderErrorText,
+    genderErrorText
   ]);
 
   const signupButtonStyle = useMemo(() => {
@@ -108,13 +149,36 @@ const KakaoLoginSignup = () => {
     return [styles.signupButton, styles.disabledSignupButton];
   }, [signupButtonEnabled]);
 
-  
   return (
     <View style={styles.container}>
         <KeyboardAvoidingView
           behavior={Platform.select({ios: 'padding', android: undefined})}
           style={styles.avoid}>
         <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.section}>
+          <Text style={styles.title}>비밀번호</Text>
+          <TextInput
+            value={userPassword}
+            style={styles.input}
+            secureTextEntry
+            onChangeText={onChangePasswordText}
+          />
+          {passwordErrorText && (
+            <Text style={styles.errorText}>{passwordErrorText}</Text>
+          )}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.title}>비밀번호 확인</Text>
+          <TextInput
+            value={confirmedPassword}
+            style={styles.input}
+            secureTextEntry
+            onChangeText={onChangeConfirmedPasswordText}
+          />
+          {confirmedPasswordErrorText && (
+            <Text style={styles.errorText}>{confirmedPasswordErrorText}</Text>
+          )}
+        </View>
         <View style={styles.section}>
           <Text style={styles.title}>이름</Text>
           <TextInput
@@ -172,7 +236,7 @@ const KakaoLoginSignup = () => {
   );
 };
 
-export default KakaoLoginSignup;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {

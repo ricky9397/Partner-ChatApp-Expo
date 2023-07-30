@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { WebView } from "react-native-webview";
-import { KAKAO_LOGIN_API_URI, } from '../api/client';
-import kakaoLogin from '../hooks/kakaoLogin';
+import { KAKAO_LOGIN_API_URI, } from '../../api/client';
+import kakaoLogin from '../../hooks/kakaoLogin';
 // const REST_API_KEY = process.env.EXPO_PUBLIC_KAKAO_API_KEY;
 
 export default function KakaoScreen() {

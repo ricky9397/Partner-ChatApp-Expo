@@ -8,7 +8,7 @@ import {
     View,
 } from 'react-native';
 import useLogin from '../../hooks/useLogin';
-import { RootStackParamList } from '../../screens/types';
+import { RootStackParamList } from '../types';
 
 const AuthPasswordScreen = () => {
     const route = useRoute<RouteProp<RootStackParamList, 'AuthPassword'>>();

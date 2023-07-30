@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { IconName } from '../components/Icons';
 import { TabIcon } from '../components/TabIcon';
-import { ChatScreen } from '../screens/ChatScreen/ChatScreen';
+import { ChatScreen } from '../screens/Chat/ChatScreen';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { MyPageScreen } from '../screens/MyPageScreen';
 export type  BottomTabParamList = {
