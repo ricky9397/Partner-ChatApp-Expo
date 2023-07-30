@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '../../modules/Colors';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 
 const DATA = [
     {
@@ -27,6 +30,13 @@ type MsgList = {
 };
 
 const MyProfile = () => {
+
+    const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const onPressChatRoom = useCallback(() => {
+        navigate("ChatRoom");
+    }, []);
+
     return (
         <View style={styles.container}>
             <Text style={styles.topTextMsg}>메세지</Text>
@@ -36,7 +46,7 @@ const MyProfile = () => {
                 renderItem={({ item: user }) => (
                     <TouchableOpacity 
                         style={styles.usersListItem}
-                        onPress={() => {}}>
+                        onPress={onPressChatRoom}>
                         <Image source={require('../../../assets/favicon.png')} style={styles.profile} />
                         <View>
                             <Text style={styles.otherNameText}>{user.userName}</Text>

@@ -34,9 +34,11 @@ const AuthScreen = () => {
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const onPressEmailButton = useCallback(() => {
-    navigate('AuthProfile');
+    navigate('AuthEmail', {
+      id: 0,
+      provider : 'email'
+    });
   }, [navigate]);
-
   const onPressKakaoButton = useCallback(() => {
     navigate('Kakao');
   }, [navigate]);
@@ -62,7 +64,7 @@ const AuthScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity 
               style={styles.button}
-              onPress={onPressEmailButton}>
+              onPress={() => navigate('AuthProfile')}>
               <Text style={styles.buttonText}>
                   프로필등록 TEST용
               </Text>

@@ -15,6 +15,7 @@
 - npx expo install expo-apple-authentication (애플로그인)
 - npm install @react-navigation/stack
 
+- yarn add expo-image-picker (expo용)
 - yarn add react-native-image-crop-picker (이미지등록 라이브러리)
 
 # expo SDK4.9 버전업그레이드

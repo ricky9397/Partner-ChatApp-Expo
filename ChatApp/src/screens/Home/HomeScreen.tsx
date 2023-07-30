@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from 'react-native';
-import { Header } from '../components/Header/Header';
+import { Header } from '../../components/Header/Header';
+import ImageSliderScreen from "./ImageSliderScreen";
 
 export const HomeScreen:React.FC = () => {
     return (
@@ -8,6 +9,8 @@ export const HomeScreen:React.FC = () => {
             <Header>
                 <Header.Title title="HOME"></Header.Title>
             </Header>
+            <ImageSliderScreen />
+            {/* <ImageViewingScreent /> */}
         </View>
     )
 }

@@ -11,7 +11,7 @@ export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props)=>{
     }, [])
 
     return (
-        <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flex:1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white'}}>
             <Image
                     style={{height:'100%',width:'100%',resizeMode:'contain'}}
                     source={require('../assets/logo.png')}/>

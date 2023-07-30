@@ -19,6 +19,7 @@ import AuthPasswordScreen from './auth/AuthPasswordScreen';
 import AuthPhoneScreen from './auth/AuthPhoneScreen';
 import AuthProfile from './auth/AuthProfileScreen';
 import AuthScreen from './auth/AuthScreen';
+import ChatRoomScreen from './ChatScreen/ChatRoomScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -38,11 +39,20 @@ function RootStack() {
   return (
     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
       {!!user ? (
+        <>
         <Stack.Screen
           name="RootApp"
           component={RootApp}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="ChatRoom"
+          component={ChatRoomScreen}
+          options={{
+            title: "채팅"
+          }}
+        />
+        </>
       ) : (
         <>
       <Stack.Screen
