@@ -55,7 +55,7 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
         // Header 로 받은 auth_token을 verify 체크 후 만료되었을경우 에러
         if (!result.isSuccess()) {
             logger.info("토큰이 만료 되었습니다.");
-            throw new TokenExpiredException("401");
+            throw new TokenExpiredException("토큰이 만료 되었습니다.");
         }
 
         // auth_token이 만료가 되지 않았을 경우
@@ -65,6 +65,7 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
         UsernamePasswordAuthenticationToken userToken =
                 new UsernamePasswordAuthenticationToken(userDetail.getUsername(), null, userDetail.getAuthorities());
 
+        logger.info(userToken);
         // 강제로 시큐리티의 세션에 접근하여 Authentication 객체를 저장.
         SecurityContextHolder.getContext().setAuthentication(userToken);
 

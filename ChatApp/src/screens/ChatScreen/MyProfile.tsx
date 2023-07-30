@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '../modules/Colors';
+import Colors from '../../modules/Colors';
 
 const DATA = [
     {
@@ -27,9 +27,7 @@ type MsgList = {
 };
 
 const MyProfile = () => {
-
     return (
-        
         <View style={styles.container}>
             <Text style={styles.topTextMsg}>메세지</Text>
             <View style={{ flexDirection: "row" }}>
@@ -39,7 +37,7 @@ const MyProfile = () => {
                     <TouchableOpacity 
                         style={styles.usersListItem}
                         onPress={() => {}}>
-                        <Image source={require('../../assets/favicon.png')} style={styles.profile} />
+                        <Image source={require('../../../assets/favicon.png')} style={styles.profile} />
                         <View>
                             <Text style={styles.otherNameText}>{user.userName}</Text>
                             <Text style={styles.otherMessageText}>{user.message}</Text>

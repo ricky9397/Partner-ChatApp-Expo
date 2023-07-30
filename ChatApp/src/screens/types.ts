@@ -49,6 +49,9 @@ export type RootStackParamList = {
     id: number;
   }
 
+  AuthProfile : undefined;
+
+
   Google: undefined;
 
   MainTab: MainTabNavigationScreenParams;

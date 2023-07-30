@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from 'react-native';
-import ChatList from '../ChatScreen/ChatList';
+import ChatList from './ChatScreen/ChatList';
 import { Header } from '../components/Header/Header';
 import { useUserState } from "../contexts/UserContext";
 

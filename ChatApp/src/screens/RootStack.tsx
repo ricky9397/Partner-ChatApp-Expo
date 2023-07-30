@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Text, TouchableOpacity, Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import { RootStackParamList } from './types';
 // import MainTab from './MainTab';
 // import ArticleScreen from './ArticleScreen';
@@ -10,14 +10,15 @@ import { RootApp } from '../RootApp';
 import { useUserState } from '../contexts/UserContext';
 import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 // import WriteScreen from './WriteScreen';
+import { useNavigation } from '@react-navigation/native';
 import GoogleScreen from '../SigninScreen/GoogleScreen';
 import KakaoScreen from '../SigninScreen/KakaoSecreen';
 import KakaoSignup from '../SignupScreen/KakaoSignupScreen';
 import AuthEmailScreen from './auth/AuthEmailScreen';
 import AuthPasswordScreen from './auth/AuthPasswordScreen';
 import AuthPhoneScreen from './auth/AuthPhoneScreen';
+import AuthProfile from './auth/AuthProfileScreen';
 import AuthScreen from './auth/AuthScreen';
-import { useNavigation } from '@react-navigation/native';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -77,6 +78,11 @@ function RootStack() {
       <Stack.Screen
         name="AuthPhone"
         component={AuthPhoneScreen}
+        options={{title: title}}
+      />
+      <Stack.Screen
+        name="AuthProfile"
+        component={AuthProfile}
         options={{title: title}}
       />
       <Stack.Screen

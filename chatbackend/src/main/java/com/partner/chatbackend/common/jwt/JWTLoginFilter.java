@@ -76,6 +76,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                 } else {
                     throw new TokenExpiredException("402"); // 토큰발급 오류
                 }
+
             } else {
                 // 리플래쉬 토큰이 유효 하지 않다면 Exception ... 로그아웃
                 throw new TokenExpiredException("403");
