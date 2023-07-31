@@ -18,6 +18,15 @@ export interface User {
   userBirthDay: string;
 }
 
+export interface ChatResult {
+  matchingId : number;
+  id: number;
+  imagePath: string;
+  userName: string;
+  sendMessage: string;
+  regDate: string;
+}
+
 export interface AuthResult {
   identityToken: string;
   refresh_token: string;
@@ -39,22 +48,7 @@ export type AuthError = AxiosError<{
   data: AuthErrorData;
 }>;
 
-export interface ChatResult {
-  resultCode: number;
-  msg: string;
-  data: ChatList;
-}
 
-export interface ChatList {
-  sendMessage : string;
-  regDate : string;
-  imagePath : string;
-  matchingId : number;
-  userId : number;
-  userName : string;
-  success : boolean;
-  fail : boolean;
-}
 
 
 export interface Article {

@@ -1,8 +1,10 @@
 package com.partner.chatbackend.common.redis;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.Optional;
+
 public interface RefreshTokenRepository extends CrudRepository<RefreshToken, String> {
+
+    Optional<RefreshToken> findByRefreshToken(String refreshToken);
 }

@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '../../modules/Colors';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
+import { getChatList } from '../../api/chat';
+import { useUserState } from '../../contexts/UserContext';
 
 const DATA = [
     {
@@ -24,14 +26,26 @@ const DATA = [
     },
 ]
 
-type MsgList = {
-    userName: string, 
-    message: string
-};
-
 const MyProfile = () => {
 
     const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const [user] = useUserState();
+
+    const afterMatchingList = useCallback(async () => {
+
+        const chatListParams = {
+            id: user?.id,
+            gender: user?.gender
+        }
+
+        if(!!chatListParams) {
+            const response = await getChatList(chatListParams);
+            console.log(response);
+        }
+
+    }, []);
+
 
     const onPressChatRoom = useCallback(() => {
         navigate("ChatRoom");

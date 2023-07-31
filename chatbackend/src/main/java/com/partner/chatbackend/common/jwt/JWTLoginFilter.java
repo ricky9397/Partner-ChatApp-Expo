@@ -3,11 +3,11 @@ package com.partner.chatbackend.common.jwt;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
-import com.partner.chatbackend.common.exception.AuthenticationUserException;
-import com.partner.chatbackend.common.exception.ErrorCode;
-import com.partner.chatbackend.user.domain.UserLogin;
+import com.partner.chatbackend.common.redis.RefreshToken;
+import com.partner.chatbackend.common.redis.RefreshTokenRepository;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
+import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
@@ -33,13 +33,15 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper = new ObjectMapper(); // ObjectMapper를 이용하여 Json 타입을 객체에 담는다.
     private final AuthenticationManager authenticationManager;
     private final UserSecurityService userSecurityService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public JWTLoginFilter(
             AuthenticationManager authenticationManager,    // AuthenticationManager 주입을 받는다.
-            UserSecurityService userSecurityService
-    ) {
+            UserSecurityService userSecurityService,
+            RefreshTokenRepository refreshTokenRepository) {
         this.authenticationManager = authenticationManager;
         this.userSecurityService = userSecurityService;
+        this.refreshTokenRepository = refreshTokenRepository;
         setFilterProcessesUrl("/api/v1/auth/login");
     }
 
@@ -74,12 +76,12 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                     return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getAuthorities());
 
                 } else {
-                    throw new TokenExpiredException("402"); // 토큰발급 오류
+                    throw new TokenExpiredException("RefreshToken 토큰 발급 오류"); // 토큰발급 오류
                 }
 
             } else {
                 // 리플래쉬 토큰이 유효 하지 않다면 Exception ... 로그아웃
-                throw new TokenExpiredException("403");
+                throw new TokenExpiredException("refreshToken 토큰 유효 기간이 끝났습니다.");
             }
         }
     }
@@ -93,10 +95,11 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         UserDetail userDetail = (UserDetail) authResult.getPrincipal(); // 성공한 유저정보를 UserDetail객체에 담는다.
 
-        String refreshToken = JWTUtil.makeRefreshToken(userDetail.getName());
-        String authToken = JWTUtil.makeAuthToken(userDetail.getName());
+        String refreshToken = JWTUtil.makeRefreshToken(userDetail.getUsername());
+        String authToken = JWTUtil.makeAuthToken(userDetail.getUsername());
 
-        userSecurityService.updateRefreshToken(refreshToken, userDetail.getUser().getId()); // 로그인 성공 후 토큰 DB저장.
+        refreshTokenRepository.save(new RefreshToken(refreshToken, userDetail.getUser().getId()));
+//        userSecurityService.updateRefreshToken(refreshToken, userDetail.getUser().getId()); // 로그인 성공 후 토큰 DB저장.
 
         response.setHeader(Constants.REFRESH_TOKEN, refreshToken);
         response.setHeader(Constants.AUTH_TOKEN, authToken);

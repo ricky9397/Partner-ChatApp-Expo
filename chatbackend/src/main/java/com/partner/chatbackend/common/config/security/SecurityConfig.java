@@ -5,6 +5,7 @@ import com.partner.chatbackend.common.jwt.JWTCheckFilter;
 import com.partner.chatbackend.common.jwt.JWTLoginFilter;
 import com.partner.chatbackend.common.oauth2.handler.OAuth2SuccessHandler;
 import com.partner.chatbackend.common.oauth2.service.PrincipalOauth2UserService;
+import com.partner.chatbackend.common.redis.RefreshTokenRepository;
 import com.partner.chatbackend.user.service.UserSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OidcUserService principalOidcUserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -56,10 +58,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/api/v1/auth/register/kakao").permitAll()
                                 .antMatchers("/api/v1/auth/login").permitAll()
                                 .antMatchers("/api/v1/auth/emailCheck").permitAll()
-                                .antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
+                                .antMatchers(HttpMethod.POST, "/api/v2/**").authenticated()
+                                .antMatchers(HttpMethod.GET, "/api/v2/**").authenticated()
                 )
-                .addFilterAt(new JWTLoginFilter(authenticationManager(), userSecurityService), UsernamePasswordAuthenticationFilter.class) // 로그인처리필터
-                .addFilterAt(new JWTCheckFilter(authenticationManager(), userSecurityService), BasicAuthenticationFilter.class); // 토큰검증필터
+                .addFilterAt(new JWTLoginFilter(authenticationManager(), userSecurityService, refreshTokenRepository), UsernamePasswordAuthenticationFilter.class) // 로그인처리필터
+                .addFilterAt(new JWTCheckFilter(authenticationManager(), userSecurityService, refreshTokenRepository), BasicAuthenticationFilter.class); // 토큰검증필터
 
 
         http

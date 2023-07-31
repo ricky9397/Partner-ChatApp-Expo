@@ -16,7 +16,7 @@ public interface AfterMatchingRepository extends JpaRepository<AfterMatching, Lo
             "SELECT A.MATCHING_ID AS matchingId " +
             "     , B.USER_ID AS id " +
             "     , B.IMAGE_PATH AS imagePath" +
-            "     , C.USER_NAME AS username" +
+            "     , C.USER_NAME AS userName" +
             "     , D.SEND_MESSAGE AS sendMessage" +
             "     , D.REG_DATE AS regDate" +
 //            "     , ( CASE " +

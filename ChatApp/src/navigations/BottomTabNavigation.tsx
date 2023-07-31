@@ -43,8 +43,8 @@ export const BottomTabNavigation = ()=>{
 
             }
         }}>
-            <BottomTab.Screen name='Home' component={HomeScreen}/>
-            <BottomTab.Screen name='Chat' component={ChatScreen}/>
+            <BottomTab.Screen name='Home' component={HomeScreen} />
+            <BottomTab.Screen name='Chat' component={ChatScreen} />
             <BottomTab.Screen name='MyPage' component={MyPageScreen}/>
         </BottomTab.Navigator>
     )

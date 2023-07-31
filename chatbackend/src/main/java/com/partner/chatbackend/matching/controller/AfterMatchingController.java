@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/matching")
+@RequestMapping("/api/v2/matching")
 public class AfterMatchingController {
 
     private final AfterMatchingService afterMatchingService;
@@ -30,9 +32,8 @@ public class AfterMatchingController {
      * @return
      */
     @PostMapping("/chatList")
-    public ResponseEntity<RestData> getAfterMatchingRoom(@RequestBody User user) {
+    public ResponseEntity<RestData> getAfterMatchingRoom(@RequestBody User user, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         List<ChatList> chatLists = afterMatchingService.getAfterMatchingRoomList(user);
-
         if(chatLists.isEmpty()) {
             return Utils.spring.responseEntityOf(RestData.of(500, "채팅방이 존재하지 않습니다."));
         }

@@ -1,13 +1,13 @@
 import client from './client';
-import { User } from './types';
+import { ChatResult } from './types';
 
 export async function chat(params: chatParams){
 
 }
 
-export async function getChatList(params: chatList){
-  const response = await client.post<User>(
-    '/matching/chatList',
+export async function getChatList(params: chatListParams){
+  const response = await client.post<ChatResult>(
+    '/api/v2/matching/chatList',
     params
   );
   return response.data;
@@ -18,7 +18,10 @@ interface chatParams {
   userEmail: string;
   userPassword: string;
 }
-interface chatList {
-  userEmail: string;
-  userPassword: string;
+
+interface chatListParams {
+  id: number | undefined;
+  gender: string | undefined;
 }
+
+
