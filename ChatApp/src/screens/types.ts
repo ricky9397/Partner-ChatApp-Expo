@@ -50,7 +50,9 @@ export type RootStackParamList = {
   }
 
   AuthProfile : undefined;
-  ChatRoom: undefined;
+  ChatRoom: {
+    matchingId : number;
+  };
 
 
   Google: undefined;

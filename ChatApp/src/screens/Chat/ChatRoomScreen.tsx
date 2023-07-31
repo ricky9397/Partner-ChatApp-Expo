@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { TextInput } from "react-native-paper";
 import Message from '../../components/Chat/Message';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../types';
 
 const messages = [
     {
@@ -25,6 +27,8 @@ const messages = [
 ]
 
 const ChatRoomScreen = () => {
+    const { params } = useRoute<RouteProp<RootStackParamList, 'ChatRoom'>>();
+    const { matchingId } = params;
 
     const [text, setText] = useState('');
     const sendDisabled = useMemo(() => text.length === 0, [text]);

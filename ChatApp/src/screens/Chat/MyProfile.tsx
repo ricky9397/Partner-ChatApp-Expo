@@ -21,10 +21,6 @@ const DATA = [
         userName: '김영웅',
         message: '내로남불~~~~~~~~~~~~~~~~~~'
     },
-    {
-        userName: '김영준',
-        message: '저아세요~~~~~~~~~~~~~~?'
-    },
 ]
 
 
@@ -60,20 +56,20 @@ const MyProfile = () => {
         afterMatchingList();
     }, [afterMatchingList]);
 
-    const onPressChatRoom = useCallback(() => {
-        navigate("ChatRoom");
-    }, []);
-
     return (
         <View style={styles.container}>
             <Text style={styles.topTextMsg}>메세지</Text>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", marginBottom: '10%' }}>
             <FlatList 
                 data={chatLists}
                 renderItem={({ item: user }) => (
                     <TouchableOpacity 
                         style={styles.usersListItem}
-                        onPress={onPressChatRoom}>
+                        onPress={() => {
+                            navigate("ChatRoom", {
+                                matchingId : user.matchingId
+                            })
+                        }}>
                         <Image source={require('../../../assets/favicon.png')} style={styles.profile} />
                         <View>
                             <Text style={styles.otherNameText}>{user.userName}</Text>
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
         marginRight: 13,
     },
     usersListItem: {
-        padding: 7,
+        padding: 8,
         flexDirection: 'row',
     },
     otherNameText: {
