@@ -24,7 +24,7 @@ export interface ChatResult {
   imagePath: string;
   userName: string;
   sendMessage: string;
-  regDate: string;
+  regDate: string[];
 }
 
 export interface AuthResult {

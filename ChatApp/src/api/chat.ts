@@ -1,4 +1,4 @@
-import client from './client';
+import client, { applyToken } from './client';
 import { ChatResult } from './types';
 
 export async function chat(params: chatParams){
@@ -6,11 +6,11 @@ export async function chat(params: chatParams){
 }
 
 export async function getChatList(params: chatListParams){
+  
   const response = await client.post<ChatResult>(
     '/api/v2/matching/chatList',
-    params
+    params,
   );
-  
   return response.data;
 }
 

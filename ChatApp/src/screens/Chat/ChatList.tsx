@@ -6,11 +6,11 @@ import MyProfile from "./MyProfile";
 const ChatList = () => {
 
     return (
-        <ScrollView>
-            <View>
-                <MyProfile />
-            </View>
-        </ScrollView>
+        // <ScrollView>
+        // </ScrollView>
+        <View>
+            <MyProfile />
+        </View>
     );
 };
 

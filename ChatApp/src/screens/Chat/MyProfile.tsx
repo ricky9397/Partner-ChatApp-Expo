@@ -27,6 +27,12 @@ const DATA = [
     },
 ]
 
+
+const data =
+ [{"id": 2, "imagePath": "/img/bbb", "matchingId": 1, "regDate": [Array], "sendMessage": "안녕하세요", "userName": "김태희"}
+ , {"id": 3, "imagePath": "/img/cccc", "matchingId": 2, "regDate": [Array], "sendMessage": "hi", "userName": "한소희"}];
+ 
+
 const MyProfile = () => {
     const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -44,8 +50,6 @@ const MyProfile = () => {
                 setLodingChatLists(true);
                 const response: any = await getChatList(chatListParams);
                 setChatLists(response);
-
-                console.log(response)
             }
         }finally {
             setLodingChatLists(false);

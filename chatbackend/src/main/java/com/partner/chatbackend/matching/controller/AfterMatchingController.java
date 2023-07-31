@@ -8,6 +8,7 @@ import com.partner.chatbackend.matching.service.AfterMatchingService;
 import com.partner.chatbackend.profile.domain.Profile;
 import com.partner.chatbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,12 +33,9 @@ public class AfterMatchingController {
      * @return
      */
     @PostMapping("/chatList")
-    public ResponseEntity<RestData> getAfterMatchingRoom(@RequestBody User user, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public ResponseEntity<List<ChatList>> getAfterMatchingRoom(@RequestBody User user, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         List<ChatList> chatLists = afterMatchingService.getAfterMatchingRoomList(user);
-        if(chatLists.isEmpty()) {
-            return Utils.spring.responseEntityOf(RestData.of(500, "채팅방이 존재하지 않습니다."));
-        }
-        return Utils.spring.responseEntityOf(RestData.of(200, "채팅방 목록 불러오기 성공", chatLists));
+        return new ResponseEntity<>(chatLists, HttpStatus.OK);
     }
 
     /**
