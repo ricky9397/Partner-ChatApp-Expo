@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '../../modules/Colors';
 import { RootStackParamList } from '../types';
 import { getChatList } from '../../api/chat';
 import { useUserState } from '../../contexts/UserContext';
+import { ChatResult } from '../../api/types';
 
 const DATA = [
     {
@@ -27,25 +28,33 @@ const DATA = [
 ]
 
 const MyProfile = () => {
-
     const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const [user] = useUserState();
+    const [lodingChatLists, setLodingChatLists] = useState(false);
+    const [chatLists, setChatLists] = useState<ChatResult[]>([]);
 
     const afterMatchingList = useCallback(async () => {
-
         const chatListParams = {
             id: user?.id,
             gender: user?.gender
         }
+        try {
+            if(!!chatListParams) {
+                setLodingChatLists(true);
+                const response: any = await getChatList(chatListParams);
+                setChatLists(response);
 
-        if(!!chatListParams) {
-            const response = await getChatList(chatListParams);
-            console.log(response);
+                console.log(response)
+            }
+        }finally {
+            setLodingChatLists(false);
         }
-
     }, []);
 
+    useEffect(() => {
+        afterMatchingList();
+    }, [afterMatchingList]);
 
     const onPressChatRoom = useCallback(() => {
         navigate("ChatRoom");
@@ -56,7 +65,7 @@ const MyProfile = () => {
             <Text style={styles.topTextMsg}>메세지</Text>
             <View style={{ flexDirection: "row" }}>
             <FlatList 
-                data={DATA}
+                data={chatLists}
                 renderItem={({ item: user }) => (
                     <TouchableOpacity 
                         style={styles.usersListItem}
@@ -64,7 +73,7 @@ const MyProfile = () => {
                         <Image source={require('../../../assets/favicon.png')} style={styles.profile} />
                         <View>
                             <Text style={styles.otherNameText}>{user.userName}</Text>
-                            <Text style={styles.otherMessageText}>{user.message}</Text>
+                            <Text style={styles.otherMessageText}>{user.sendMessage}</Text>
                         </View>
                     </TouchableOpacity>
                 )}

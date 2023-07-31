@@ -10,6 +10,7 @@ export async function getChatList(params: chatListParams){
     '/api/v2/matching/chatList',
     params
   );
+  
   return response.data;
 }
 
