@@ -2,11 +2,10 @@ import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMutation } from 'react-query';
 import { kakaoLoginOrRegister } from '../api/auth';
-import { applyToken } from '../api/client';
 import { AuthError } from '../api/types';
 import { useUserState } from '../contexts/UserContext';
 import { RootStackParamList } from '../screens/types';
-import authStorage from '../storages/authStorage';
+import { Token, authStorage } from '../storages/authStorage';
 import useInform from './useInform';
 
 import * as WebBrowser from 'expo-web-browser';
@@ -39,8 +38,12 @@ export default function kakaoLogin() {
 
       if(data.auth_token && data.refresh_token) {
         setUser(data.user);
-        applyToken(data.refresh_token, data.refresh_token);
-        authStorage.set(data);
+        // applyToken(data.refresh_token, data.refresh_token);
+        const token: Token = {
+          auth_token: data.auth_token,
+          refresh_token: data.refresh_token,
+        }
+        authStorage.setToken(token);
         navigate('RootApp');
       }
       
@@ -56,3 +59,5 @@ export default function kakaoLogin() {
   });
   return mutation;
 }
+
+

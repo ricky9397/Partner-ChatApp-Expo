@@ -8,8 +8,8 @@ import { RootStackParamList } from '../screens/types';
 import useInform from './useInform';
 
 import * as WebBrowser from 'expo-web-browser';
-import { applyToken } from '../api/client';
-import authStorage from '../storages/authStorage';
+//import { applyToken } from '../api/client';
+import { Token, authStorage } from '../storages/authStorage';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -21,8 +21,12 @@ export default function kakaoRegister() {
   const mutation = useMutation(kakaoRegisterOrLogin, {
     onSuccess: data => {
       setUser(data.body.user);
-      applyToken(data.headers.auth_token, data.headers.refresh_token);
-      authStorage.set(data.body);
+      // applyToken(data.headers.auth_token, data.headers.refresh_token);
+      const token: Token = {
+        auth_token: data.headers.auth_token,
+        refresh_token: data.headers.refresh_token,
+      }
+      authStorage.setToken(data.body);
 
       navigate('RootApp');
     },

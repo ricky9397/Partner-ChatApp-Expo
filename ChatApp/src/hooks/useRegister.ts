@@ -2,11 +2,11 @@ import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMutation } from 'react-query';
 import { register } from '../api/auth';
-import { applyToken } from '../api/client';
+// import { applyToken } from '../api/client';
 import { AuthError } from '../api/types';
 import { useUserState } from '../contexts/UserContext';
 import { RootStackParamList } from '../screens/types';
-import authStorage from '../storages/authStorage';
+import { Token, authStorage } from '../storages/authStorage';
 import useInform from './useInform';
 
 export default function useRegister() {
@@ -17,8 +17,12 @@ export default function useRegister() {
   const mutation = useMutation(register, {
     onSuccess: data => {
       setUser(data.body.user);
-      applyToken(data.headers.auth_token, data.headers.refresh_token);
-      authStorage.set(data.body);
+      //applyToken(data.headers.auth_token, data.headers.refresh_token);
+      const token: Token = {
+        auth_token: data.headers.auth_token,
+        refresh_token: data.headers.refresh_token,
+      }
+      authStorage.setToken(token);
       navigate('RootApp');
     },
     onError: (error: AuthError) => {

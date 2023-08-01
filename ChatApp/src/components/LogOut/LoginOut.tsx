@@ -5,9 +5,9 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { clearToken } from '../../api/client';
+// import { clearToken } from '../../api/client';
 import { useUserState } from '../../contexts/UserContext';
-import authStorage from '../../storages/authStorage';
+import { authStorage } from '../../storages/authStorage';
 
 const LoginOut = () => {
 
@@ -15,8 +15,9 @@ const LoginOut = () => {
  
     const onLogout = () => {
         setUser(null);
-        clearToken();
-        const res = authStorage.clear();
+        const res = authStorage.clearToken();
+        console.log("로그아웃 : ", res);
+        // clearToken();
     };
 
     return (

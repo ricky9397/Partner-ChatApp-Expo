@@ -2,11 +2,11 @@ import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMutation } from 'react-query';
 import { login } from '../api/auth';
-import { applyToken } from '../api/client';
+// import { applyToken } from '../api/client';
 import { AuthError } from '../api/types';
 import { useUserState } from '../contexts/UserContext';
 import { RootStackParamList } from '../screens/types';
-import authStorage from '../storages/authStorage';
+import { Token, authStorage } from '../storages/authStorage';
 import useInform from './useInform';
 
 import * as WebBrowser from 'expo-web-browser';
@@ -20,13 +20,13 @@ export default function useLogin() {
 
   const mutation = useMutation(login, {
     onSuccess: data => {
-
-      console.log(data.body)
-
       setUser(data.body.user);
-      applyToken(data.headers.auth_token, data.headers.refresh_token);
-      authStorage.set(data.body);
-
+      // applyToken(data.headers.auth_token, data.headers.refresh_token);
+      const token: Token = {
+        auth_token: data.headers.auth_token,
+        refresh_token: data.headers.refresh_token,
+      }
+      authStorage.setToken(token);
       navigate('RootApp');
 
     },

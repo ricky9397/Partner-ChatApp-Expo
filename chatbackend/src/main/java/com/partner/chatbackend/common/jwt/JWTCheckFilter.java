@@ -36,7 +36,7 @@ public class JWTCheckFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        String path = request.getServletPath();
+;        String path = request.getServletPath();
         // 로그인일 경우 건너뛰기
         if(path.startsWith("/api/v1/auth/emailCheck") || path.startsWith("/api/v1/auth/register/emai")) {
             chain.doFilter(request, response);

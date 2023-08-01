@@ -8,7 +8,7 @@ import SignupScreen from './register/SignupScreen';
 // import MyArticlesScreen from './MyArticlesScreen';
 import { RootApp } from '../RootApp';
 import { useUserState } from '../contexts/UserContext';
-import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
+// import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 // import WriteScreen from './WriteScreen';
 import { useNavigation } from '@react-navigation/native';
 import GoogleScreen from './Login/GoogleScreen';
@@ -29,7 +29,7 @@ function RootStack() {
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const title = '짝꿍';
-  useAuthLoadEffect();
+  // useAuthLoadEffect();
   const [user] = useUserState();
 
   const onPress = () => {

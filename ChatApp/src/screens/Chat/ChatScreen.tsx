@@ -1,9 +1,7 @@
 import React from "react";
 import { View } from 'react-native';
-import ChatList from './ChatList';
 import { Header } from '../../components/Header/Header';
-import { useUserState } from "../../contexts/UserContext";
-import MyProfile from "./MyProfile";
+import ChatList from './ChatList';
 
 export const ChatScreen:React.FC = () => {
 
@@ -12,7 +10,7 @@ export const ChatScreen:React.FC = () => {
             <Header>
                 <Header.Title title="CHATTING"></Header.Title>
             </Header>
-            <MyProfile />
+            <ChatList />
         </View>
 
     )

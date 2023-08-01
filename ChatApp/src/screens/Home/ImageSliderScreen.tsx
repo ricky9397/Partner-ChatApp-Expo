@@ -46,7 +46,7 @@ export default class Slideshow extends React.Component {
             })}
           </ScrollView>
         </View>
-        <View
+        {/* <View
           style={{ flexDirection: 'row' }} // this will layout our dots horizontally (row) instead of vertically (column)
           >
           {photos.map((_, i) => { // the _ just means we won't use that parameter
@@ -64,7 +64,7 @@ export default class Slideshow extends React.Component {
               />
             );
           })}
-        </View>
+        </View> */}
       </View>
     );
   }
