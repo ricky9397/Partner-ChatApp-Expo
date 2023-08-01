@@ -18,6 +18,8 @@
 - yarn add expo-image-picker (expo용)
 - yarn add react-native-image-crop-picker (이미지등록 라이브러리)
 
+- https://github.com/meliorence/react-native-snap-carousel (이미지 슬라이더 snap 참고)
+
 # expo SDK4.9 버전업그레이드
 - npm i -g eas-cli
 - yarn add expo@^49.0.0
@@ -48,4 +50,5 @@ https://lotuus.tistory.com/79
  - KAFKA_ADVERTISED_LISTENERS : kafka 브로커를 가리키는 사용 가능 주소로 초기연결시에 클라이언트에 전달되는 메타 데이터
  - KAFKA_DEFAULT_REPLICATION_FACTOR : 자동으로 생성되는 topic의 기본 복제 수
  - KAFKA_NUM_PARTITIONS : 토픽이 몇 개의 파티션으로 생성되는지. 기본 값은 1개이다. 토픽의 파티션 개수는 증가만 가능하고 감소될 수 없다.
+
 

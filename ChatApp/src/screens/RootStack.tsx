@@ -36,6 +36,8 @@ function RootStack() {
     navigate("Auth");
   }
 
+  console.log(user);
+
   return (
     <Stack.Navigator screenOptions={{headerBackTitle: '닫기'}}>
       {!!user ? (
