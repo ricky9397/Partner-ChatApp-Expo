@@ -19,6 +19,7 @@
 - yarn add react-native-image-crop-picker (이미지등록 라이브러리)
 
 - https://github.com/meliorence/react-native-snap-carousel (이미지 슬라이더 snap 참고)
+- yarn react-native-snap-carousel @types/react-native-snap-carousel
 
 # expo SDK4.9 버전업그레이드
 - npm i -g eas-cli
