@@ -15,8 +15,9 @@ export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props)=>{
             <Image
                     style={{height:'100%',width:'100%',resizeMode:'contain'}}
                     source={require('../assets/logo.png')}/>
-            {/* <Typography fontSize={36}>짝궁 베이비~</Typography> */}
         </View>
     )
 
 }
+
+

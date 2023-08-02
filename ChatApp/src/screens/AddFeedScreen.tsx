@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Header } from '../components/Header/Header';
 
 
-export const AddFeedScreen:React.FC = () => {
+export const AddFeedScreen = () => {
     return (
         <View style={{flex:1}}>
             <Header>

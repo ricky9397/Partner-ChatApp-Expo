@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Header } from '../../components/Header/Header';
 import ChatList from './ChatList';
 
-export const ChatScreen:React.FC = () => {
+export const ChatScreen = () => {
 
     return (
         <View style={{flex:1}}>

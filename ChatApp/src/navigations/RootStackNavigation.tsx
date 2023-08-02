@@ -22,7 +22,7 @@ export type RootStackParamList={
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export const RootStackNavigation:React.FC = ()=>{
+export const RootStackNavigation = ()=>{
 
     return (
         <Stack.Navigator

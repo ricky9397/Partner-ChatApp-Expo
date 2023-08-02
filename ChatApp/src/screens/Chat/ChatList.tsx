@@ -34,6 +34,7 @@ const ChatList = () => {
                 setLodingChatLists(true);
                 const response: any  = await getChatList(chatListParams);
                 setChatLists(response);
+                console.log(response)
             }
         } finally {
             setLodingChatLists(false);

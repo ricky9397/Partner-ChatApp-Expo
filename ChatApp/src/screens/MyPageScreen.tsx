@@ -3,9 +3,8 @@ import { View } from 'react-native';
 import { Header } from '../components/Header/Header';
 import LoginOut from "../components/LogOut/LoginOut";
 
-export const MyPageScreen:React.FC = () => {
+export const MyPageScreen = () => {
     
-
     return (
         <View style={{flex:1}}>
             <Header>
