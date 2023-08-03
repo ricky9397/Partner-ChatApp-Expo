@@ -21,6 +21,8 @@
 - https://github.com/meliorence/react-native-snap-carousel (이미지 슬라이더 snap 참고)
 - yarn add react-native-snap-carousel @types/react-native-snap-carousel
 
+- npx expo install expo-linear-gradient
+
 # expo SDK4.9 버전업그레이드
 - npm i -g eas-cli
 - yarn add expo@^49.0.0
