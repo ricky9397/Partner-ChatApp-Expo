@@ -4,6 +4,7 @@ import com.partner.chatbackend.common.exception.AuthenticationUserException;
 import com.partner.chatbackend.common.exception.ErrorCode;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
+import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;

@@ -22,6 +22,9 @@ export async function login(params: LoginParams) {
     '/api/v1/auth/login', 
     params,
   )
+
+    console.log(response.data)
+
   const data = {
     'headers' : response.headers,
     'body' : response.data

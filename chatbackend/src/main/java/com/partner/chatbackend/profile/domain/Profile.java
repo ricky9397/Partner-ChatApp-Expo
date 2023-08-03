@@ -3,10 +3,8 @@ package com.partner.chatbackend.profile.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -15,11 +13,18 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_PROFILE")
-public class Profile {
+public class Profile implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROFILE_ID")
+    private Long profileId;
+
     @Column(name = "USER_ID")
-    private Long id;
+    private Long userId;
+
+    @Column(name = "IMAGE_ID")
+    private int imageId;
 
     @Column(name = "IMAGE_NAME")
     private String imageName;
@@ -27,16 +32,8 @@ public class Profile {
     @Column(name = "IMAGE_PATH")
     private String imagePath;
 
-//    @Column(name = "IMAGE_PATH2")
-//    private String imagePath2;
-//
-//    @Column(name = "IMAGE_PATH3")
-//    private String imagePath3;
-//
-//    @Column(name = "IMAGE_PATH4")
-//    private String imagePath4;
-//
-//    @Column(name = "IMAGE_PATH5")
-//    private String imagePath5;
+
+
+
 
 }

@@ -1,26 +1,17 @@
 package com.partner.chatbackend.common.oauth2.handler;
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
 import com.partner.chatbackend.common.jwt.JWTUtil;
-import com.partner.chatbackend.common.jwt.VerifyResult;
-import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.user.domain.KakaoUser;
 import com.partner.chatbackend.user.domain.User;
-import com.partner.chatbackend.user.domain.UserDetail;
-import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
-import net.minidev.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -30,7 +21,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor

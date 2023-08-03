@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError } from "axios";
 
 export interface User {
   id: number;
@@ -6,7 +6,6 @@ export interface User {
   userEmail: string | undefined;
   userPhone: string;
   provider: string;
-  // confirmed: boolean;
   blocked: null | boolean;
   role: string;
   regDate: string;
@@ -16,10 +15,19 @@ export interface User {
   lockedYn: string;
   gender: string;
   userBirthDay: string;
+  profile: Profile;
+}
+
+export interface Profile {
+  profileId: number;
+  userId: number;
+  imageId: number;
+  imageName: string;
+  imagePath: string;
 }
 
 export interface ChatResult {
-  matchingId : number;
+  matchingId: number;
   id: number;
   imagePath: string;
   userName: string;
@@ -48,9 +56,6 @@ export type AuthError = AxiosError<{
   data: AuthErrorData;
 }>;
 
-
-
-
 export interface Article {
   id: number;
   title: string;
@@ -58,7 +63,7 @@ export interface Article {
   user: User;
   published_at: string;
   created_at: string;
-  updated_at: string; 
+  updated_at: string;
 }
 
 export interface Comment {

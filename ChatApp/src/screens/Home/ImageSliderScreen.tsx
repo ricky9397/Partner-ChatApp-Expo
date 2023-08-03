@@ -1,7 +1,7 @@
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import ViewPager from "react-native-pager-view";
-import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 
 interface ImageItem {
   id: number;

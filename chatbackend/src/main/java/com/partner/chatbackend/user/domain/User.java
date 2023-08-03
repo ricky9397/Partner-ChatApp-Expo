@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,12 +41,9 @@ public class User extends BaseTimeEntity {
     @Column(name = "USER_BIRTH_DAY")
     private String userBirthDay;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name ="USER_ID")
-//    private Set<Authority> authorities;
-
-    @OneToOne
-    private Profile profile;
+    @OneToMany(fetch = FetchType.EAGER,cascade =  CascadeType.ALL)
+    @JoinColumn(name = "USER_ID")
+    private Set<Profile> profile;
 
     @ColumnDefault(value = "0")
     @Column(name = "LOGIN_FAIL_CNT")
