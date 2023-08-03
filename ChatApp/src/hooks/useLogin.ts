@@ -29,10 +29,7 @@ export default function useLogin() {
       };
       authStorage.setToken(token);
 
-      if (
-        data.body.user.profile === null ||
-        data.body.user.profile === undefined
-      ) {
+      if (data.body.user.profile === null || data.body.user.profile === undefined || data.body.user.profile.length === 0 || Array.isArray(data.body.user.profile)) {
         navigate("AuthProfile");
       } else {
         navigate("RootApp");

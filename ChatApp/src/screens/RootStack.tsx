@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import React from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { RootStackParamList } from "./types";
 // import MainTab from './MainTab';
 // import ArticleScreen from './ArticleScreen';
@@ -13,19 +13,17 @@ import { RootApp } from "../RootApp";
 import { useUserState } from "../contexts/UserContext";
 // import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 // import WriteScreen from './WriteScreen';
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import GoogleScreen from "./Login/GoogleScreen";
-import KakaoScreen from "./Login/KakaoSecreen";
-import KakaoSignup from "./register/KakaoSignupScreen";
+import { authStorage } from "../storages/authStorage";
 import AuthEmailScreen from "./Auth/AuthEmailScreen";
 import AuthPasswordScreen from "./Auth/AuthPasswordScreen";
 import AuthPhoneScreen from "./Auth/AuthPhoneScreen";
-import AuthProfile from "./Auth/AuthProfileScreen";
+import AuthProfileScreen from "./Auth/AuthProfileScreen";
 import AuthScreen from "./Auth/AuthScreen";
 import ChatRoomScreen from "./Chat/ChatRoomScreen";
-import AuthProfileScreen from "./Auth/AuthProfileScreen";
-import { AntDesign } from "@expo/vector-icons";
-import { authStorage } from "../storages/authStorage";
+import KakaoScreen from "./Login/KakaoSecreen";
+import KakaoSignup from "./register/KakaoSignupScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -113,11 +111,6 @@ function RootStack() {
           <Stack.Screen
             name="AuthPhone"
             component={AuthPhoneScreen}
-            options={{ title: title }}
-          />
-          <Stack.Screen
-            name="AuthProfile"
-            component={AuthProfile}
             options={{ title: title }}
           />
           <Stack.Screen

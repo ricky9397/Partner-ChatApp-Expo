@@ -47,19 +47,18 @@ export default function kakaoLogin() {
         refresh_token: data.refresh_token,
       };
 
-      if (data.user.profile === null && data.user.profile === undefined) {
-        setUser(data.user);
-        // applyToken(data.refresh_token, data.refresh_token);
-        authStorage.setToken(token);
+      setUser(data.user);
+      // applyToken(data.refresh_token, data.refresh_token);
+      authStorage.setToken(token);
+
+      if (data.user.profile === null || data.user.profile === undefined || data.user.profile.length === 0 || Array.isArray(data.user.profile)) {
         navigate("AuthProfile");
         return;
       }
 
       if (data.auth_token && data.refresh_token) {
-        setUser(data.user);
-        // applyToken(data.refresh_token, data.refresh_token);
-        authStorage.setToken(token);
         navigate("RootApp");
+        return;
       }
     },
     onError: (error: AuthError) => {

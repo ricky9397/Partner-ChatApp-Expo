@@ -15,7 +15,7 @@ export interface User {
   lockedYn: string;
   gender: string;
   userBirthDay: string;
-  profile: Profile;
+  profile: Profile[];
 }
 
 export interface Profile {

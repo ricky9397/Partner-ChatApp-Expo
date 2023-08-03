@@ -28,6 +28,8 @@ export default function kakaoRegister() {
         refresh_token: data.headers.refresh_token,
       };
       authStorage.setToken(data.body);
+
+      
       navigate("AuthProfile");
       //navigate('RootApp');
     },

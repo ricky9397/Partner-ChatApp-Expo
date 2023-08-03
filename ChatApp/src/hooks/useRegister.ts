@@ -10,7 +10,7 @@ import { Token, authStorage } from "../storages/authStorage";
 import useInform from "./useInform";
 
 export default function useRegister() {
-  const [, setUser] = useUserState();
+  const [user, setUser] = useUserState();
   const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const inform = useInform();
@@ -24,6 +24,7 @@ export default function useRegister() {
         refresh_token: data.headers.refresh_token,
       };
       authStorage.setToken(token);
+
       navigate("AuthProfile");
       //navigate('RootApp');
     },
