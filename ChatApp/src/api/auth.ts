@@ -12,7 +12,6 @@ export async function register(params: RegisterParams) {
     'headers' : response.headers,
     'body' : response.data
   }
-  
   return data;
 }
 
@@ -22,9 +21,6 @@ export async function login(params: LoginParams) {
     '/api/v1/auth/login', 
     params,
   )
-
-    console.log(response.data)
-
   const data = {
     'headers' : response.headers,
     'body' : response.data
