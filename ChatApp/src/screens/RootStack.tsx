@@ -48,6 +48,24 @@ function RootStack() {
     }, 20);
   };
 
+  if (!!user && (user.profile === null || user.profile === undefined || user.profile.length === 0 )) {
+    return <Stack.Navigator screenOptions={{ headerBackTitle: "닫기" }}>
+      <Stack.Screen
+        name="AuthProfile"
+        component={AuthProfileScreen}
+        options={{
+          title: title,
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity onPress={imageOnPress}>
+              <AntDesign name="arrowleft" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </Stack.Navigator>;
+  }
+
   return (
     <Stack.Navigator screenOptions={{ headerBackTitle: "닫기" }}>
       {!!user ? (
@@ -62,19 +80,6 @@ function RootStack() {
             component={ChatRoomScreen}
             options={{
               title: "채팅",
-            }}
-          />
-          <Stack.Screen
-            name="AuthProfile"
-            component={AuthProfileScreen}
-            options={{
-              title: title,
-              headerTitleAlign: "center",
-              headerLeft: () => (
-                <TouchableOpacity onPress={imageOnPress}>
-                  <AntDesign name="arrowleft" size={24} color="black" />
-                </TouchableOpacity>
-              ),
             }}
           />
         </>

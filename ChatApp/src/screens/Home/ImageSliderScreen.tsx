@@ -58,12 +58,6 @@ const ImageSliderScreen = () => {
     }
   };
 
-  console.log(
-    images[0].map((item) => {
-      console.log(item);
-    })
-  );
-
   const handleImagePress = () => {
     if (currentIndex < images[currentIndex].length - 1) {
       setCurrentIndex(currentIndex + 1);

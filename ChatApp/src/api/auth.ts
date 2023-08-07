@@ -61,6 +61,14 @@ export async function kakaoRegisterOrLogin(params: KakaoRegisterParam) {
   return data;
 }
 
+export async function profileSave(params: profileParam) {
+  const response = await client.post<AuthResult>(
+    '/api/v1/auth/profileSave',
+    params
+  );
+  return response;
+};
+
 
 export async function appleLoginOrRegister(identityToken: string) {
   // Apple 사이트 개발자등록 후 사용 가능 ( 유료 )
@@ -109,3 +117,9 @@ interface KakaoRegisterParam {
   gender: string
 }
 
+interface profileParam {
+  userId: number;
+  imageId: number;
+  imageName: string;
+  imagePath: string;
+}

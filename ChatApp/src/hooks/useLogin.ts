@@ -29,10 +29,12 @@ export default function useLogin() {
       };
       authStorage.setToken(token);
 
-      if (data.body.user.profile === null || data.body.user.profile === undefined || data.body.user.profile.length === 0 || Array.isArray(data.body.user.profile)) {
+      if (data.body.user.profile === null || data.body.user.profile === undefined || data.body.user.profile.length === 0) {
         navigate("AuthProfile");
+        return;
       } else {
         navigate("RootApp");
+        return;
       }
     },
     onError: (error: AuthError) => {

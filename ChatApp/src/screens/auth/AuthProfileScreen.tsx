@@ -80,7 +80,10 @@ export default function AuthProfileScreen() {
     return [styles.nextButton, styles.disabledNextButton];
   }, [nextButtonEnabled]);
 
-  const onPressPhoneButton = useCallback(() => {}, []);
+  const onPressProfileButton = useCallback(() => {
+
+    console.log()
+  }, [images]);
 
   return (
     <LinearGradient colors={["#FFA07A", "#FFE5CB"]} style={styles.container}>
@@ -119,7 +122,7 @@ export default function AuthProfileScreen() {
       </View>
       <TouchableOpacity
         style={nextButtonStyle}
-        onPress={onPressPhoneButton}
+        onPress={onPressProfileButton}
         disabled={!nextButtonEnabled}
       >
         <Text style={styles.buttonText}>등록하기</Text>
