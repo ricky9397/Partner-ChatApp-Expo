@@ -10,7 +10,7 @@
 - yarn add react-native-async-storage/async-storage
 - yarn add validator
 - yarn add @types/validator --dev
-- yarn add styled-components
+- yarn add styled-components 
 
 - npx expo install expo-apple-authentication (애플로그인)
 - npm install @react-navigation/stack
