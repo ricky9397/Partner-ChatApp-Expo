@@ -35,6 +35,13 @@ export interface ChatResult {
   regDate: string[];
 }
 
+export interface ImageResult {
+  profileId: number;
+  imageId: number;
+  imageName: string;
+  imagePath: string;
+}
+
 export interface AuthResult {
   identityToken: string;
   refresh_token: string;

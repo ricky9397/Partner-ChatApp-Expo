@@ -1,15 +1,12 @@
-// import client, { applyToken } from './client';
 import { authStorage } from "../storages/authStorage";
 import client from "./client";
-import { ChatResult } from "./types";
-
-export async function chat(params: chatParams) {}
+import { ImageResult } from "./types";
 
 // 채팅방 목록 리스트 조회
-export async function getChatList(params: chatListParams) {
+export async function getImageList(params: imageListParam) {
   const token = await authStorage.getToken();
-  const response = await client.post<ChatResult>(
-    "/api/v2/matching/chatList",
+  const response = await client.post<ImageResult>(
+    "/api/v2/images/imageList",
     params,
     {
       headers: {
@@ -21,12 +18,7 @@ export async function getChatList(params: chatListParams) {
   return response.data;
 }
 
-interface chatParams {
-  userEmail: string;
-  userPassword: string;
-}
-
-interface chatListParams {
+interface imageListParam {
   id: number | undefined;
   gender: string | undefined;
 }

@@ -1,25 +1,39 @@
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import ViewPager from "react-native-pager-view";
+import { getImageList } from "../../api/image";
+import { useUserState } from "../../contexts/UserContext";
+
 
 interface ImageData {
+  profileId: number;
   id: number;
-  imageUrl: string;
+  imageUrl1: string;
+  imageUrl2: string | undefined;
+}
+
+interface ImageResult {
+  profileId: number;
+  imageId: number;
+  imageName: string;
+  imagePath: string;
 }
 
 const images: ImageData[] = [
-  { id: 1, imageUrl: "https://picsum.photos/id/237/200/300" }, // 각 이미지의 실제 URL을 사용해주세요
-  { id: 2, imageUrl: "https://picsum.photos/seed/picsum/200/300" },
-  { id: 3, imageUrl: "https://picsum.photos/seed/picsum/200/300" },
-  { id: 4, imageUrl: "https://picsum.photos/seed/picsum/200/300" },
-  { id: 5, imageUrl: "https://picsum.photos/seed/picsum/200/300" },
-  { id: 6, imageUrl: "https://picsum.photos/seed/picsum/200/300" },
+  { profileId:1, id: 1, imageUrl1: "https://picsum.photos/id/237/200/300",  imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
+  { profileId:2, id: 2, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/id/237/200/300" },
+  { profileId:3, id: 3, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
+  { profileId:4, id: 4, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
+  { profileId:5, id: 5, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
   // ... 다른 이미지 데이터들
 ];
 
 export default function ImageSliderScreen() {
+  // const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imageLists, setImageLists] = useState<ImageResult[]>([]);
+  const [user] = useUserState();
 
   const handleNextImage = () => {
     const nextIndex = (currentIndex + 1) % images.length;
@@ -33,6 +47,23 @@ export default function ImageSliderScreen() {
     setCurrentIndex(previousIndex);
   };
 
+  const imageList = useCallback(async () => {
+    const imageListParams = {
+      id: user?.id,
+      gender: user?.gender
+    }
+
+    const response = await getImageList(imageListParams);
+
+    // console.log(response);
+
+  },[]);
+  
+  useEffect(() => {
+    imageList();
+  }, [setImageLists]);
+
+
   return (
     <View style={styles.container}>
       {/* <View style={styles.imageContainer}>
@@ -44,9 +75,9 @@ export default function ImageSliderScreen() {
       </View> */}
       <ViewPager style={styles.imageContainer} initialPage={0} onPageSelected={(e) => console.log(e)}>
         {images.map((image) => (
-          <View key={image.id} style={styles.imageContainer}>
+          <View key={image.profileId} style={styles.imageContainer}>
             <Image
-              source={{ uri: image.imageUrl }}
+              source={{ uri: image.imageUrl1 }}
               style={styles.image}
               resizeMode="cover"
             />
@@ -121,6 +152,7 @@ const styles = StyleSheet.create({
   touchPrevArea: {
     width: "50%",
     height: "100%",
+    backgroundColor: 'red'
   },
   touchNextArea: {
     width: "50%",
