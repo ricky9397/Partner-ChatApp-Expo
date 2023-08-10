@@ -1,16 +1,25 @@
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import ViewPager from "react-native-pager-view";
+import {
+  Animated,
+  Image,
+  PanResponder,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { getImageList } from "../../api/image";
 import { useUserState } from "../../contexts/UserContext";
-
 
 interface ImageData {
   profileId: number;
   id: number;
   imageUrl1: string;
-  imageUrl2: string | undefined;
+  imageUrl2: any;
+  imageUrl3: any;
+  imageUrl4: any;
+  imageUrl5: any;
+  imageUrl6: any;
 }
 
 interface ImageResult {
@@ -21,79 +30,235 @@ interface ImageResult {
 }
 
 const images: ImageData[] = [
-  { profileId:1, id: 1, imageUrl1: "https://picsum.photos/id/237/200/300",  imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
-  { profileId:2, id: 2, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/id/237/200/300" },
-  { profileId:3, id: 3, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
-  { profileId:4, id: 4, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
-  { profileId:5, id: 5, imageUrl1: "https://picsum.photos/seed/picsum/200/300", imageUrl2: "https://picsum.photos/seed/picsum/200/300"},
-  // ... 다른 이미지 데이터들
+  {
+    profileId: 1,
+    id: 1,
+    imageUrl1: "https://picsum.photos/id/237/200/300",
+    imageUrl2: "https://picsum.photos/seed/picsum/200/300",
+    imageUrl3: null,
+    imageUrl4: null,
+    imageUrl5: null,
+    imageUrl6: null,
+  },
+  {
+    profileId: 2,
+    id: 2,
+    imageUrl1: "https://picsum.photos/seed/picsum/200/300",
+    imageUrl2: "https://picsum.photos/id/237/200/300",
+    imageUrl3: null,
+    imageUrl4: null,
+    imageUrl5: null,
+    imageUrl6: null,
+  },
+  {
+    profileId: 3,
+    id: 3,
+    imageUrl1: "https://picsum.photos/seed/picsum/200/300",
+    imageUrl2: "https://picsum.photos/id/237/200/300",
+    imageUrl3: null,
+    imageUrl4: null,
+    imageUrl5: null,
+    imageUrl6: null,
+  },
+  {
+    profileId: 4,
+    id: 4,
+    imageUrl1: "https://picsum.photos/seed/picsum/200/300",
+    imageUrl2: "https://picsum.photos/id/237/200/300",
+    imageUrl3: null,
+    imageUrl4: null,
+    imageUrl5: null,
+    imageUrl6: null,
+  },
 ];
 
 export default function ImageSliderScreen() {
-  // const [currentIndex, setCurrentIndex] = useState(0);
+  const position = new Animated.ValueXY();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [moveImageUrl, setMoveImageUrl] = useState(0);
   const [imageLists, setImageLists] = useState<ImageResult[]>([]);
   const [user] = useUserState();
 
-  const handleNextImage = () => {
-    const nextIndex = (currentIndex + 1) % images.length;
-    setCurrentIndex(nextIndex);
-  };
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (_, gestureState) => {
+      position.setValue({ x: gestureState.dx, y: gestureState.dy });
+    },
+    onPanResponderRelease: (_, gestureState) => {
+      if (gestureState.dx !== 0) {
+        if (gestureState.dx > 50) {
+          // Swipe right
+          // if (currentIndex > 0) {
+          // }
+          if (images.length - 1 > currentIndex) {
+            setCurrentIndex(currentIndex + 1);
+            console.log("right");
+          } else {
+            console.log("주변찾기 로직")
+          }
 
-  const handlePreviousImage = () => {
-    const previousIndex =
-      currentIndex === 0 ? images.length - 1 : currentIndex - 1;
 
-    setCurrentIndex(previousIndex);
+        } else if (gestureState.dx < -50) {
+          // Swipe left
+          // if (currentIndex < images.length - 1) {
+          // }
+          if (images.length - 1 > currentIndex) {
+            setCurrentIndex(currentIndex + 1);
+            console.log("left");
+          }
+        }
+        position.setValue({ x: 0, y: 0 });
+      } else if (gestureState.dx === 0) {
+        if (gestureState.x0 > 210) {
+          if (moveImageUrl < 5) {
+            if (images[currentIndex].imageUrl2 !== null) {
+              setMoveImageUrl(1);
+            }
+            if (images[currentIndex].imageUrl3 !== null) {
+              setMoveImageUrl(2);
+            }
+            if (images[currentIndex].imageUrl4 !== null) {
+              setMoveImageUrl(3);
+            }
+            if (images[currentIndex].imageUrl5 !== null) {
+              setMoveImageUrl(4);
+            }
+            if (images[currentIndex].imageUrl6 !== null) {
+              setMoveImageUrl(5);
+            }
+          }
+        } else if (gestureState.x0 < 210) {
+          if (moveImageUrl > -1) {
+            if (images[currentIndex].imageUrl2 !== null) {
+              setMoveImageUrl(0);
+            }
+            if (images[currentIndex].imageUrl3 !== null) {
+              setMoveImageUrl(1);
+            }
+            if (images[currentIndex].imageUrl4 !== null) {
+              setMoveImageUrl(2);
+            }
+            if (images[currentIndex].imageUrl5 !== null) {
+              setMoveImageUrl(3);
+            }
+            if (images[currentIndex].imageUrl6 !== null) {
+              setMoveImageUrl(4);
+            }
+          }
+        }
+      }
+    },
+  });
+
+  const animatedStyle = {
+    transform: position.getTranslateTransform(),
   };
 
   const imageList = useCallback(async () => {
     const imageListParams = {
       id: user?.id,
-      gender: user?.gender
-    }
+      gender: user?.gender,
+    };
 
     const response = await getImageList(imageListParams);
 
     // console.log(response);
+  }, []);
 
-  },[]);
-  
   useEffect(() => {
     imageList();
   }, [setImageLists]);
 
+  const imageSwipe = () => {
+    if (moveImageUrl === 0) {
+      return (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl1 }}
+          style={styles.image}
+        />
+      );
+    }
+    if (moveImageUrl === 1) {
+      return images[currentIndex].imageUrl2 !== null ? (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl2 }}
+          style={styles.image}
+        />
+      ) : (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl1 }}
+          style={styles.image}
+        />
+      );
+    }
+    if (moveImageUrl === 2) {
+      return images[currentIndex].imageUrl3 !== null ? (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl3 }}
+          style={styles.image}
+        />
+      ) : (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl2 }}
+          style={styles.image}
+        />
+      );
+    }
+    if (moveImageUrl === 3) {
+      return images[currentIndex].imageUrl4 !== null ? (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl4 }}
+          style={styles.image}
+        />
+      ) : (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl3 }}
+          style={styles.image}
+        />
+      );
+    }
+    if (moveImageUrl === 4 && images[currentIndex].imageUrl5 !== null) {
+      return images[currentIndex].imageUrl5 !== null ? (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl5 }}
+          style={styles.image}
+        />
+      ) : (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl4 }}
+          style={styles.image}
+        />
+      );
+    }
+    if (moveImageUrl === 5 && images[currentIndex].imageUrl6 !== null) {
+      return images[currentIndex].imageUrl6 !== null ? (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl6 }}
+          style={styles.image}
+        />
+      ) : (
+        <Image
+          source={{ uri: images[currentIndex].imageUrl5 }}
+          style={styles.image}
+        />
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.imageContainer}>
+      <Animated.View
+        {...panResponder.panHandlers}
+        style={[styles.imageContainer, animatedStyle]}
+      >
+        {imageSwipe()}
+      </Animated.View>
+      {images.length - 1 > currentIndex ? (
         <Image
-          source={{ uri: images[currentIndex].imageUrl }}
-          style={styles.image}
-          resizeMode="cover" // 이미지가 100% 채우도록 설정
+          source={{ uri: images[currentIndex + 1].imageUrl1 }}
+          style={styles.backGroundImage}
         />
-      </View> */}
-      <ViewPager style={styles.imageContainer} initialPage={0} onPageSelected={(e) => console.log(e)}>
-        {images.map((image) => (
-          <View key={image.profileId} style={styles.imageContainer}>
-            <Image
-              source={{ uri: image.imageUrl1 }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          </View>
-        ))}
-      </ViewPager>
-      <View style={styles.touchAreaContainer}>
-        <TouchableOpacity
-          style={styles.touchPrevArea}
-          onPress={handlePreviousImage}
-        ></TouchableOpacity>
-        <TouchableOpacity
-          style={styles.touchNextArea}
-          onPress={handleNextImage}
-        ></TouchableOpacity>
-      </View>
+      ) : undefined}
       <TouchableOpacity
         style={styles.heartCircleButton}
         onPress={() => console.log("Circle Button Pressed")}
@@ -129,34 +294,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageContainer: {
-    flex: 1,
+    position: "absolute",
+    width: "98%",
+    height: "99%",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    height: "100%",
+    zIndex: 1,
   },
   image: {
     width: "100%",
     height: "100%",
-    borderRadius: 10,
+    resizeMode: "cover",
+    borderRadius: 15,
     borderWidth: 1,
+    zIndex: 1,
     borderColor: "#ccc",
   },
-  touchAreaContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    height: "100%",
-  },
-  touchPrevArea: {
-    width: "50%",
-    height: "100%",
-    backgroundColor: 'red'
-  },
-  touchNextArea: {
-    width: "50%",
-    height: "100%",
+  backGroundImage: {
+    width: "98%",
+    height: "99%",
+    resizeMode: "cover",
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
   heartCircleButton: {
     position: "absolute",

@@ -32,6 +32,9 @@ public class Profile implements Serializable {
     @Column(name = "IMAGE_PATH")
     private String imagePath;
 
+    @Column(name = "IMAGE_PATH2")
+    private String imagePath2;
+
 
 
 

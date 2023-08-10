@@ -17,6 +17,7 @@ public interface ImageRepository extends JpaRepository<Profile, Long> {
             "      ,A.IMAGE_ID AS imageId" +
             "      ,A.IMAGE_NAME AS imageName " +
             "      ,A.IMAGE_PATH AS imagePath" +
+            "      ,A.IMAGE_PATH2 AS imagePath2" +
             " FROM TB_PROFILE A", nativeQuery = true)
     List<ImageList> findByImageList(User user);
 }

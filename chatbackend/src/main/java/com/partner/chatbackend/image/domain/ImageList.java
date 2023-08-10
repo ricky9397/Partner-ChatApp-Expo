@@ -11,4 +11,6 @@ public interface ImageList {
 
     String getImagePath();
 
+    String getImagePath2();
+
 }

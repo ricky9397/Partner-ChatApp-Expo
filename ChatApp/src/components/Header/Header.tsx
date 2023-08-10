@@ -27,7 +27,8 @@ export const Header:React.FC<{
                 height:56,
                 borderBottomColor:'gray',
                 borderBottomWidth:1, 
-                alignItems:'center'
+                alignItems:'center',
+                zIndex: 2,
             }}>
                <Spacer horizontal={true} space={12}/>
                 <View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
