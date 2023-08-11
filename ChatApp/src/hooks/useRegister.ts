@@ -24,9 +24,7 @@ export default function useRegister() {
         refresh_token: data.headers.refresh_token,
       };
       authStorage.setToken(token);
-
       navigate("AuthProfile");
-      //navigate('RootApp');
     },
     onError: (error: AuthError) => {
       console.log(error);

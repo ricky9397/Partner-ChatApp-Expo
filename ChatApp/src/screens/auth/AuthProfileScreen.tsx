@@ -4,22 +4,16 @@ import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
-    Image,
-    Pressable,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { profileImageSave } from "../../api/image";
+import FormData from "form-data";
 
-interface ImageData {
-  imagePath1: string;
-  imagePath2: string;
-  imagePath3: string;
-  imagePath4: string;
-  imagePath5: string;
-  imagePath6: string;
-}
 
 export default function AuthProfileScreen() {
   const [images, setImages] = useState<string[]>([]);
@@ -37,7 +31,7 @@ export default function AuthProfileScreen() {
   }, []);
 
   const pickImage = useCallback(async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -81,9 +75,31 @@ export default function AuthProfileScreen() {
   }, [nextButtonEnabled]);
 
   const onPressProfileButton = useCallback(() => {
+    // const filePath = result.assets[0].uri;
+    // const fileNmae = filePath.split('/').pop();
+    // const fileExt = /\.(\w+)$/.exec(fileNmae ?? '');
+    // const type = fileExt ? `image/${fileExt[1]}` : `image`;
 
-    console.log()
-  }, [images]);
+    
+
+    const body = new FormData();
+    images.map((item, index) => {
+      const filePath = item;
+      const fileName = filePath[index].split("/").pop();
+      const fileExt = /\.(\w+)$/.exec(fileName ?? "");
+      const type = fileExt ? `image/${fileExt[1]}` : `image`;
+      var file = {
+        uri: filePath,
+        type: type,
+        name: fileName,
+      };
+      body.append("files", file);
+    })
+    
+
+    console.log(body)
+    profileImageSave(body);
+  }, []);
 
   return (
     <LinearGradient colors={["#FFA07A", "#FFE5CB"]} style={styles.container}>
@@ -172,9 +188,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   disabledNextButton: {
-    width: '84%',
-    height: '7%',
-    marginTop: '10%',
+    width: "84%",
+    height: "7%",
+    marginTop: "10%",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
@@ -185,9 +201,9 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: "#FF9100",
-    width: '84%',
-    height: '7%',
-    marginTop: '10%',
+    width: "84%",
+    height: "7%",
+    marginTop: "10%",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,

@@ -24,9 +24,9 @@ interface ImageData {
 
 interface ImageResult {
   profileId: number;
-  imageId: number;
-  imageName: string;
-  imagePath: string;
+  fileNo: number;
+  fileName: string;
+  filePath: string;
 }
 
 const images: ImageData[] = [

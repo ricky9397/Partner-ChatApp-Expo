@@ -8,11 +8,6 @@ const baseURL = 'http://10.220.102.229:8080';
   // : 'https://articles.example.com';
 
 const client = axios.create({
-  headers: {
-    'Access-Control-Allow-Origin' : '*',
-    'Access-Control-Allow-Headers' : 'Content-Type',
-    'Content-Type' : 'application/json',
-  },
   baseURL, 
 });
 

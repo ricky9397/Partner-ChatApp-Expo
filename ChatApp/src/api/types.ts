@@ -22,8 +22,8 @@ export interface Profile {
   profileId: number;
   userId: number;
   imageId: number;
-  imageName: string;
-  imagePath: string;
+  fileName: string;
+  filePath: string;
 }
 
 export interface ChatResult {
@@ -37,9 +37,10 @@ export interface ChatResult {
 
 export interface ImageResult {
   profileId: number;
-  imageId: number;
-  imageName: string;
-  imagePath: string;
+  userId: number;
+  fileNo: number;
+  fileName: string;
+  filePath: string;
 }
 
 export interface AuthResult {

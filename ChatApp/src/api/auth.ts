@@ -8,10 +8,12 @@ export async function register(params: RegisterParams) {
     '/api/v1/auth/register/email',
     params
   )
+
   const data = {
     'headers' : response.headers,
     'body' : response.data
   }
+
   return data;
 }
 

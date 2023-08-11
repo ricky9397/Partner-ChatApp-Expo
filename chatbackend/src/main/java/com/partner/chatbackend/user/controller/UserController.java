@@ -3,6 +3,8 @@ package com.partner.chatbackend.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.partner.chatbackend.common.cm.Constants;
 import com.partner.chatbackend.common.jwt.JWTUtil;
+import com.partner.chatbackend.common.redis.RefreshToken;
+import com.partner.chatbackend.common.redis.RefreshTokenRepository;
 import com.partner.chatbackend.common.rest.RestData;
 import com.partner.chatbackend.common.utils.Utils;
 import com.partner.chatbackend.user.domain.User;
@@ -24,6 +26,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserSecurityService userSecurityService;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**+
@@ -34,7 +37,7 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping("/register/{urlId}")
-    public ResponseEntity<RestData> register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResponseEntity<User> register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         User result;
         if(urlId.equals("email")) {
@@ -46,7 +49,7 @@ public class UserController {
         String refreshToken = JWTUtil.makeRefreshToken(result.getUserEmail());
         String authToken = JWTUtil.makeAuthToken(result.getUserEmail());
 
-        userSecurityService.updateRefreshToken(refreshToken, result.getId()); // 로그인 성공 후 토큰 DB저장.
+        refreshTokenRepository.save(new RefreshToken(refreshToken, result.getId()));
 
         response.setHeader(Constants.REFRESH_TOKEN, refreshToken);
         response.setHeader(Constants.AUTH_TOKEN, authToken);
@@ -55,7 +58,7 @@ public class UserController {
         resultMap.put("user", result);
         response.getOutputStream().write(objectMapper.writeValueAsBytes(resultMap));
 
-        return Utils.spring.responseEntityOf(RestData.of(200, "회원가입 성공 하였습니다.", result));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -81,11 +84,5 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
-
-    @PostMapping("/profileSave")
-    public ResponseEntity<?> profileSave() {
-        return null;
-    }
-
 
 }

@@ -1,12 +1,13 @@
 import { authStorage } from "../storages/authStorage";
 import client from "./client";
 import { ImageResult } from "./types";
+import FormData from "form-data";
 
-// 채팅방 목록 리스트 조회
+// 사용자 이미지 리스트
 export async function getImageList(params: imageListParam) {
   const token = await authStorage.getToken();
   const response = await client.post<ImageResult>(
-    "/api/v2/images/imageList",
+    "/api/v2/profile/imageList",
     params,
     {
       headers: {
@@ -18,7 +19,31 @@ export async function getImageList(params: imageListParam) {
   return response.data;
 }
 
+export async function profileImageSave(params: FormData) {
+
+  const token = await authStorage.getToken();
+  const response = await client.post(
+    "/api/v2/profile/imagesSave", 
+    params, 
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        auth_token: `Bearer ${token?.auth_token}`,
+        refresh_token: token?.refresh_token,
+      },
+    }
+  );
+  console.log(response.data);
+  return response.data;
+}
+
 interface imageListParam {
   id: number | undefined;
   gender: string | undefined;
+}
+
+interface profileParam {
+  userId: number;
+  fileName: string;
+  filePath: string;
 }
