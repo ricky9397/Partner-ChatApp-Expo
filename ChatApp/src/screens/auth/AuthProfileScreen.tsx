@@ -4,6 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  Alert,
   Image,
   Pressable,
   StyleSheet,
@@ -13,7 +14,6 @@ import {
 } from "react-native";
 import { profileImageSave } from "../../api/image";
 import FormData from "form-data";
-
 
 export default function AuthProfileScreen() {
   const [images, setImages] = useState<string[]>([]);
@@ -74,31 +74,18 @@ export default function AuthProfileScreen() {
     return [styles.nextButton, styles.disabledNextButton];
   }, [nextButtonEnabled]);
 
-  const onPressProfileButton = useCallback(() => {
-    // const filePath = result.assets[0].uri;
-    // const fileNmae = filePath.split('/').pop();
-    // const fileExt = /\.(\w+)$/.exec(fileNmae ?? '');
-    // const type = fileExt ? `image/${fileExt[1]}` : `image`;
+  const onPressProfileButton = useCallback(async () => {
+    const formData = new FormData();
 
-    
+    images.forEach((uri) => {
+      formData.append("files", {
+        uri,
+        type: `image/${uri.split(".").pop()}`,
+        name: uri.split("/").pop(),
+      });
+    });
+    profileImageSave(formData);
 
-    const body = new FormData();
-    images.map((item, index) => {
-      const filePath = item;
-      const fileName = filePath[index].split("/").pop();
-      const fileExt = /\.(\w+)$/.exec(fileName ?? "");
-      const type = fileExt ? `image/${fileExt[1]}` : `image`;
-      var file = {
-        uri: filePath,
-        type: type,
-        name: fileName,
-      };
-      body.append("files", file);
-    })
-    
-
-    console.log(body)
-    profileImageSave(body);
   }, []);
 
   return (

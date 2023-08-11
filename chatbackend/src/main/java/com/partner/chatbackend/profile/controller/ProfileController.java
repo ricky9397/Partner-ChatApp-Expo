@@ -5,6 +5,7 @@ import com.partner.chatbackend.profile.domain.Profile;
 import com.partner.chatbackend.profile.service.ProfileService;
 import com.partner.chatbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,21 +30,8 @@ public class ProfileController {
     }
 
     @PostMapping("/imagesSave")
-    public ResponseEntity<?> profileImageSave(@RequestPart(value = "files",required = false) MultipartFile multipartFile) {
-//        profileService.profileImageSave(multipartHttpServletRequest);
-        return null;
-    }
-    @PostMapping("/imagesSave2")
-    public ResponseEntity<?> profileImageSave2(@RequestParam("files") MultipartFile file) {
-        System.out.println(file.getOriginalFilename());
-//        profileService.profileImageSave(multipartHttpServletRequest);
-        return null;
-    }
-    @PostMapping("/imagesSave3")
-    public ResponseEntity<?> profileImageSave3(MultipartHttpServletRequest multipartHttpServletRequest) {
-        List<MultipartFile> fileList = multipartHttpServletRequest.getFiles("files");
-        System.out.println(fileList);
-//        profileService.profileImageSave(multipartHttpServletRequest);
+    public ResponseEntity<?> profileImageSave(@RequestParam("files") MultipartFile[] file) {
+        profileService.profileSave(file);
         return null;
     }
 

@@ -1,3 +1,4 @@
+import { Header } from "@react-navigation/stack";
 import { authStorage } from "../storages/authStorage";
 import client from "./client";
 import { ImageResult } from "./types";
@@ -31,7 +32,7 @@ export async function profileImageSave(params: FormData) {
         auth_token: `Bearer ${token?.auth_token}`,
         refresh_token: token?.refresh_token,
       },
-    }
+    },
   );
   console.log(response.data);
   return response.data;

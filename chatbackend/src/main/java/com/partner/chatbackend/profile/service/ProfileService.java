@@ -6,6 +6,7 @@ import com.partner.chatbackend.profile.repository.ProfileRepository;
 import com.partner.chatbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public class ProfileService {
         return profileRepository.findByImageList(user);
     }
 
+    public void profileSave(MultipartFile[] file) {
+
+    }
 }
