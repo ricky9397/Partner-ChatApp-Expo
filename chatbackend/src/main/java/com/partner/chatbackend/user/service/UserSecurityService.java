@@ -4,10 +4,8 @@ import com.partner.chatbackend.common.exception.AuthenticationUserException;
 import com.partner.chatbackend.common.exception.ErrorCode;
 import com.partner.chatbackend.user.domain.User;
 import com.partner.chatbackend.user.domain.UserDetail;
-import com.partner.chatbackend.user.domain.UserLogin;
 import com.partner.chatbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,16 +23,16 @@ public class UserSecurityService implements UserDetailsService {
 
     @Override // 시큐리티 session(내부 Authentication(내부 UserDetails))
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByUserEmail(username).orElseThrow(()->new IllegalArgumentException(username + " 사용자가 존재하지 않습니다"));
+        User userEntity = userRepository.findByUserEmail(username).orElseThrow(() -> new IllegalArgumentException(username + " 사용자가 존재하지 않습니다"));
         return new UserDetail(userEntity);
     }
 
-    public User register(User user){
+    public User register(User user) {
         user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
         user.setUserPhone(bCryptPasswordEncoder.encode(user.getUserPhone()));
         Long id = userRepository.save(user).getId();
 
-        if(id == 0)
+        if (id == 0)
             throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
 
         User resultUser = userRepository.findById(id).orElseThrow(() -> new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "사용자가 존재하지 않습니다."));
@@ -61,7 +59,7 @@ public class UserSecurityService implements UserDetailsService {
 
         int cnt = userRepository.updateOauth2KakaoRegister(user); // 리플래쉬토큰 저장
 
-        if(cnt == 0)
+        if (cnt == 0)
             throw new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "회원가입 실패 하였습니다.");
 
         User resultUser = userRepository.findByUserEmail(user.getUserEmail()).orElseThrow(() -> new AuthenticationUserException(ErrorCode.USERNAME_DUPLICATED, "사용자가 존재하지 않습니다."));

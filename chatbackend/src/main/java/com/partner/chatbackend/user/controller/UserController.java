@@ -37,14 +37,9 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping("/register/{urlId}")
-    public ResponseEntity<User> register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Void> register(@PathVariable("urlId") String urlId, @RequestBody User user, HttpServletResponse response) throws IOException {
 
-        User result;
-        if(urlId.equals("email")) {
-            result = userSecurityService.register(user);
-        } else {
-            result = userSecurityService.oauth2Register(user);
-        }
+        User result = urlId.equals("email") ? userSecurityService.register(user) : userSecurityService.oauth2Register(user);
 
         String refreshToken = JWTUtil.makeRefreshToken(result.getUserEmail());
         String authToken = JWTUtil.makeAuthToken(result.getUserEmail());
@@ -64,8 +59,9 @@ public class UserController {
 
     @PostMapping("/emailCheck")
     public ResponseEntity<RestData> getEmailCheck(@RequestBody User user) {
-        Long cnt = userSecurityService.countByUserEmail(user.getUserEmail());
-        return Utils.spring.responseEntityOf(RestData.successOf(cnt));
+        Long count  = userSecurityService.countByUserEmail(user.getUserEmail());
+        return ResponseEntity.ok(RestData.successOf(count));
+
     }
 
 
@@ -78,11 +74,7 @@ public class UserController {
      */
     @PostMapping("/check")
     public ResponseEntity<?> getSuccessCheck(@RequestBody User user) throws Exception {
-        if (!Utils.isEmpty(user)) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
 }

@@ -53,13 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 시큐리티 세션을 사용하지 않음.
                 .authorizeRequests(config -> config
-                                .antMatchers("/").permitAll()
-                                .antMatchers("/api/v1/auth/register/email").permitAll()
-                                .antMatchers("/api/v1/auth/register/kakao").permitAll()
-                                .antMatchers("/api/v1/auth/login").permitAll()
-                                .antMatchers("/api/v1/auth/emailCheck").permitAll()
-                                .antMatchers(HttpMethod.POST, "/api/v2/**").authenticated()
-                                .antMatchers(HttpMethod.GET, "/api/v2/**").authenticated()
+                        .antMatchers("/").permitAll()
+                        .antMatchers("/api/v1/auth/register/email").permitAll()
+                        .antMatchers("/api/v1/auth/register/kakao").permitAll()
+                        .antMatchers("/api/v1/auth/login").permitAll()
+                        .antMatchers("/api/v1/auth/emailCheck").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/v2/**").authenticated()
+                        .antMatchers(HttpMethod.GET, "/api/v2/**").authenticated()
                 )
                 .addFilterAt(new JWTLoginFilter(authenticationManager(), userSecurityService, refreshTokenRepository), UsernamePasswordAuthenticationFilter.class) // 로그인처리필터
                 .addFilterAt(new JWTCheckFilter(authenticationManager(), userSecurityService, refreshTokenRepository), BasicAuthenticationFilter.class); // 토큰검증필터
@@ -71,21 +71,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests(config -> config
-                                    .antMatchers("/oauth2/**").permitAll()
-                                    .antMatchers("/favicon.ico").permitAll()
-                                    .anyRequest().authenticated()
+                        .antMatchers("/oauth2/**").permitAll()
+                        .antMatchers("/favicon.ico").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 시큐리티 세션을 사용하지 않음.
                 .oauth2Login( // oauth2Login 설정 시작
                         oauth2 -> oauth2.userInfoEndpoint( // oauth2Login 성공 이후의 설정을 시작
-                                userInfo -> userInfo.userService(principalOauth2UserService) // 카카오 페이스북 등 Oauth2User
-                                        .oidcUserService(principalOidcUserService) // google OidcUser
-                        )
+                                        userInfo -> userInfo.userService(principalOauth2UserService) // 카카오 페이스북 등 Oauth2User
+                                                .oidcUserService(principalOidcUserService) // google OidcUser
+                                )
                                 .successHandler(oAuth2SuccessHandler)
-                                .and()
+//                                .and()
 //                                .addFilterBefore(new JWTAuthenticationFilter(), OAuth2LoginAuthenticationFilter.class)
                 );
-
 
 
     }
