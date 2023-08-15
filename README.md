@@ -59,8 +59,7 @@ https://lotuus.tistory.com/79
 이미지 슬라이드 고민...ㅠㅠ
 # 데이트앱 참고자료
 - https://appmaster.io/ko/blog/deiteu-aebeul-gucughaneun-bangbeob
-- https://codingbutterfly.tistory.com/7 ( 이미지업로드 참고자료 ) axios 문제.
-
+- https://codingbutterfly.tistory.com/7 ( 이미지업로드 참고자료 ) axios 문제
 
 
 
