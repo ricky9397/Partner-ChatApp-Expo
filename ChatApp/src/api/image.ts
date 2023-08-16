@@ -20,6 +20,8 @@ export async function getImageList(params: imageListParam) {
   return response.data;
 }
 
+
+// 프로필 사진 저장 multipart
 export async function profileImageSave(params: FormData) {
 
   const token = await authStorage.getToken();

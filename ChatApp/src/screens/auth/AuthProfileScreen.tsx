@@ -2,18 +2,17 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import FormData from "form-data";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Alert,
   Image,
   Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { profileImageSave } from "../../api/image";
-import FormData from "form-data";
 
 export default function AuthProfileScreen() {
   const [images, setImages] = useState<string[]>([]);

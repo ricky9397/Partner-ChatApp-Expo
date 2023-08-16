@@ -31,7 +31,7 @@ public class FileUploadUtils {
 
     public static HashMap<String, Object> upload(MultipartFile file, String basePath, String subPath, String additionalPath) throws IllegalStateException, IOException {
         /* 결과 */
-        HashMap<String , Object> result = new HashMap<String, Object>();
+        HashMap<String , Object> result = new HashMap<>();
 
         String now      = DateFormatUtils.getMillisecondsTime();
         Random random   = new Random(System.currentTimeMillis());
