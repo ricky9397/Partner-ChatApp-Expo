@@ -18,8 +18,6 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
 
-//    private String path = "C:\\"
-
     public List<ImageList> getImageList(User user) {
         return profileRepository.findByImageList(user);
     }
@@ -36,8 +34,6 @@ public class ProfileService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
 
     }
 }
