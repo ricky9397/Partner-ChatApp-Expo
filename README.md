@@ -67,7 +67,7 @@ https://lotuus.tistory.com/79
 - https://github.com/search?q=chat+mysql+mongodb&type=repositories
 
 
-8/22 ~ 8/28 휴가
+8/22 ~ 9/6 휴가
 
 
 
