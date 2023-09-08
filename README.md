@@ -56,7 +56,9 @@ https://lotuus.tistory.com/79
  - KAFKA_DEFAULT_REPLICATION_FACTOR : 자동으로 생성되는 topic의 기본 복제 수
  - KAFKA_NUM_PARTITIONS : 토픽이 몇 개의 파티션으로 생성되는지. 기본 값은 1개이다. 토픽의 파티션 개수는 증가만 가능하고 감소될 수 없다.
 
-패캠: 카프카
+패캠: 카프카 + Redis 연동 
+
+클라이언트(메시지발송) -> 웹소켓 -> 카프카(프로듀스) -> 카프카(커슈머) -> redis -> 사용자메시지 전달
 
 # 데이트앱 참고자료
 - https://appmaster.io/ko/blog/deiteu-aebeul-gucughaneun-bangbeob
