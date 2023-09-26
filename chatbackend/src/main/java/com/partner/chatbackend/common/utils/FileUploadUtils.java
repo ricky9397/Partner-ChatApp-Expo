@@ -22,7 +22,7 @@ public class FileUploadUtils {
 
 
     public static final String FILE_SIZE    = "fileSize";
-    public static final String FILE_PATH    = "flpth";
+    public static final String FILE_PATH    = "filePath";
     public static final String FILE_NAME    = "orginlFileNm";
     public static final String FILE_RE_NAME = "sysFileNm";
     public static final String FILE_EXT     = "fileExtsn";

@@ -26,8 +26,8 @@ public class Profile implements Serializable {
     @Column(name = "FILE_NO")
     private int fileNo;
 
-    @Column(name = "FILE_NAME")
-    private String fileName;
+//    @Column(name = "FILE_NAME")
+//    private String fileName;
 
     @Column(name = "FILE_SIZE")
     private String fileSize;
@@ -35,8 +35,19 @@ public class Profile implements Serializable {
     @Column(name = "FILE_PATH")
     private String filePath;
 
+    @Column(name = "FILE_NAME")
+    private String orginlFileNm;
+
+    @Column(name = "FILE_RE_NAME")
+    private String sysFileNm;
+
+//    @Column(name = "FILE_EXT")
+//    private String fileExt;
     @Column(name = "FILE_EXT")
-    private String fileExt;
+    private String fileExtsn;
+
+    @Column(name = "FILE_OBJ")
+    private String fileObject;
 
 //    @Column(name = "FILE_PATH2")
 //    private String filePath2;

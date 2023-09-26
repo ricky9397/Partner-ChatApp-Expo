@@ -25,11 +25,11 @@ public class ProfileService {
     public void profileSave(MultipartFile[] file) {
         try {
 
-            for (MultipartFile multipartFile : file) {
-                HashMap<String, Object> map = FileUploadUtils.upload(multipartFile, "C:\\test", "","");
-
+            if(file != null) {
+                for (MultipartFile multipartFile : file) {
+                    HashMap<String, Object> map = FileUploadUtils.upload(multipartFile, "C:\\test", "\\profile","");
+                }
             }
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
