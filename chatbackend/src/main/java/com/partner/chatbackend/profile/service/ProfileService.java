@@ -2,6 +2,7 @@ package com.partner.chatbackend.profile.service;
 
 import com.partner.chatbackend.common.utils.FileUploadUtils;
 import com.partner.chatbackend.profile.domain.ImageList;
+import com.partner.chatbackend.profile.domain.Profile;
 import com.partner.chatbackend.profile.repository.ProfileRepository;
 import com.partner.chatbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,9 @@ public class ProfileService {
             if(file != null) {
                 for (MultipartFile multipartFile : file) {
                     HashMap<String, Object> map = FileUploadUtils.upload(multipartFile, "C:\\test", "\\profile","");
+
+
+
                 }
             }
 

@@ -64,7 +64,17 @@ public class Profile implements Serializable {
 //    @Column(name = "FILE_PATH6")
 //    private String filePath6;
 
+    @Builder
 
-
-
+    public Profile(Long profileId, Long userId, int fileNo, String fileSize, String filePath, String orginlFileNm, String sysFileNm, String fileExtsn, String fileObject) {
+        this.profileId = profileId;
+        this.userId = userId;
+        this.fileNo = fileNo;
+        this.fileSize = fileSize;
+        this.filePath = filePath;
+        this.orginlFileNm = orginlFileNm;
+        this.sysFileNm = sysFileNm;
+        this.fileExtsn = fileExtsn;
+        this.fileObject = fileObject;
+    }
 }
