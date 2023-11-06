@@ -68,8 +68,8 @@ https://lotuus.tistory.com/79
 # 채팅 참고 소스
 - https://github.com/search?q=chat+mysql+mongodb&type=repositories
 
-
-8/22 ~ 9/6 휴가
+# CQRS 구현
+- 참고자료 (Toss, 배민)
 
 
 
